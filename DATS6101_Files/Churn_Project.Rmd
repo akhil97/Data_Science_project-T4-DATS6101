@@ -1,0 +1,87 @@
+---
+title: "ABC Bank Customer Churn"
+author: "T4"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    code_folding: hide
+    number_sections: true
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+---
+```{r init, include=FALSE}
+library(ezids)
+library(vtable)
+loadPkg("Hmisc") 
+knitr::opts_chunk$set(warning = F, results = "hide", message = F)
+options(scientific=T, digits = 3) 
+```
+
+# EDA
+
+**Reading the file with all the customer churn details as a data frame.Then displaying the structure of the data frame**
+
+```{r Churn_data_file, include=T,echo=TRUE,results="rpois"}
+churn_data<-data.frame(read.csv("Bank_Customer_Churn_Prediction.csv",header=TRUE))
+str(churn_data)
+```
+The churn data frame as `r nrow(churn_data)` observations with `r ncol(churn_data)` variables.
+
+
+**Checking for duplicates in the data frame.**
+```{r duplicates}
+nrow(unique(churn_data))
+```
+
+There are `r nrow(unique(churn_data))` rows of unique records in the data.Hence we the data frame has no duplicates records.We can proceed with next step of analysis.
+
+
+**Checking for summary of the churn data frame.**
+
+```{r churn_summary,results='apois'}
+summary(churn_data)
+```
+
+
+**Checking for outliers in the data frame  for credit_score,age,tenure,balance,estimated_salary variables  using outlierKD function.**
+
+```{r credit_score}
+credit_score_clean <- outlierKD2(churn_data, credit_score, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
+xkablesummary(credit_score_clean)
+```
+The proportion outliers for age variable if 0.2% and it was removed succesfully using outlierKD function.
+
+
+```{r age}
+age_clean <- outlierKD2(churn_data, age, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
+xkablesummary(age_clean)
+```
+The proportion outliers for age variable if 3.7% and it was removed succesfully using outlierKD function.
+
+
+```{r tenure}
+tenure_clean <- outlierKD2(churn_data, tenure, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
+xkablesummary(tenure_clean)
+```
+There is no outliers found for tenure variable.
+
+
+```{r balance}
+balance_clean <- outlierKD2(churn_data, balance, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
+xkablesummary(balance_clean)
+```
+There is no outliers found for balance variable.
+
+
+```{r estimated_salary}
+salary_clean <- outlierKD2(churn_data, estimated_salary, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
+xkablesummary(salary_clean)
+```
+There is no outliers found for balance variable.
+
+
+

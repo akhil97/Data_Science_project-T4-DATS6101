@@ -49,18 +49,24 @@ summary(churn_data)
 
 ## Independent variable EDA
 
-**Converting Boolean values into desired values **
-```{r bool_conversion,results='apois'}
-churn_data$credit_card <- as.character(churn_data$credit_card)
-churn_data$active_member <- as.character(churn_data$active_member)
-churn_data$churn <- as.character(churn_data$churn)
-
-require(dplyr)
-customer_updated <- churn_data %>% mutate(credit_card = ifelse(credit_card == "Credit_Card",1,0) )
-head(customer_updated)
-
-
+**Converting required variables into categorical values**
+```{r category}
+str(churn_data)
+churn_data_category=churn_data
+churn_data_category$credit_card=factor(churn_data$credit_card)
+churn_data_category$active_member=factor(churn_data$active_member)
+churn_data_category$churn=factor(churn_data$churn)
+churn_data_category$gender=factor(churn_data$gender)
+churn_data_category$tenure =factor(churn_data$tenure )
+churn_data_category$products_number=factor(churn_data$products_number)
+str(churn_data_category)
 ```
+
+We decided to convert these variables into categorical (factor):  
+`credit_card`, `active_member`, `churn` and `gender`. Notice that 
+the data frame `churn_data` still has all variables numerical, while the data frame `churn_data_category` 
+include categorical columns that we just converted. 
+
 
 **Checking for outliers in the data frame  for credit_score,age,tenure,balance,estimated_salary variables  using outlierKD function.**
 
@@ -68,36 +74,90 @@ head(customer_updated)
 credit_score_clean <- outlierKD2(churn_data, credit_score, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(credit_score_clean)
 ```
-The proportion outliers for age variable if 0.2% and it was removed succesfully using outlierKD function.
+The proportion outliers for credit_card variable if 0.2% and it was removed successfully using outlierKD function.
 
 
 ```{r age}
 age_clean <- outlierKD2(churn_data, age, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(age_clean)
 ```
-The proportion outliers for age variable if 3.7% and it was removed succesfully using outlierKD function.
-
 
 ```{r tenure}
 tenure_clean <- outlierKD2(churn_data, tenure, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(tenure_clean)
 ```
-There is no outliers found for tenure variable.
 
 
 ```{r balance}
 balance_clean <- outlierKD2(churn_data, balance, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(balance_clean)
 ```
-There is no outliers found for balance variable.
 
 
 ```{r estimated_salary}
 salary_clean <- outlierKD2(churn_data, estimated_salary, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(salary_clean)
 ```
-There is no outliers found for balance variable.
+
+By using outlierKD function we can observe that outliers where found only in `age` and `credit_card` variables i.e,3.7% and 0.2%
+
+**Customer Analysis**
+
+```{r credit_score}
+
+library(ggplot2)
+ggplot(data=churn_data, aes(x=credit_score)) + 
+  geom_histogram(col="black",bins=30,
+                 fill="dark orange", 
+                  alpha =.5) + # opacity
+  labs(title="`ggplot`") +
+  labs(x="Credit_Score", y="Frequency") 
+print(mean(churn_data$credit_score))
+print(sd(churn_data$credit_score))
+
+```
+
+**The average `credit score` of the customer is `r mean(churn_data$credit_score)`,most of the customer having credit score fall between 600 to 700 and standard deviation is `r sd(churn_data$credit_score)`.**
+
+
+```{r Country}
+ggplot(data=churn_data,aes(x=country,fill=country))+
+  geom_bar()+
+  scale_fill_brewer(palette="Reds") +
+  labs(title = "Bank Cusomter vs Country",x="Country",y="Customer Count")+
+  theme_minimal()
+
+```
+**The customers are grouped by the countries in which they have their accounts.As we see from the plot France has more than 50% of customer account which is the highest among all other countries.**
+
+
+```{r Age}
+ggplot(churn_data, aes(x = age,fill=cut(age,100),bins=25)) + 
+  geom_histogram(show.legend = FALSE)+
+  scale_fill_discrete(h=c(240,10),c=120,l=70)+
+  theme_minimal()+
+  labs(x="Age",y="Count")+
+  ggtitle("age")
 
 
 
+
+print(mean(churn_data$age))
+print(sd(churn_data$age))
+```
+**The majority of the bank customer's fall below the age of 30 with average age of `r mean(churn_data$age)` and with standard deviation of `r sd(churn_data$age))`.**
+
+```{r tenure}
+
+library(ggplot2)
+ggplot(data=churn_data, aes(x=tenure)) + 
+  geom_histogram(col="black",bins=11,
+                 fill="Yellow", 
+                  alpha =.5) + # opacity
+  labs(title="`ggplot`") +
+  labs(x="Credit_Score", y="Frequency") 
+
+```
+
+**Most of the customer as been with bank for more than a year.**
 

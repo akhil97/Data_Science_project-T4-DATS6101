@@ -119,6 +119,8 @@ P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus,
 library(ggplot2)
 
 ggplot(churn_data, aes(fill=churn, y=churn, x=credit_card)) + 
-  geom_bar(position='stack', stat='identity')
+  geom_bar(position='stack', stat='identity') + theme_minimal() + 
+  labs(x='Credit Card', y='Number of Customers', title='Customer Churn in Customers with and without Credit Cards')  +
+  scale_fill_manual('Position', values=c('red', 'lightblue'))
 ```
 

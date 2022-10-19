@@ -101,3 +101,24 @@ There is no outliers found for salary variable.
 
 
 
+```{r credit card-churn}
+churn_data[, 11:12][churn_data[, 11:12] == 1] <- 'Churn'
+churn_data[, 11:12][churn_data[, 11:12] == 0] <- 'No Churn'
+
+cc_churn <- table(churn_data$churn, churn_data$credit_card)
+cc_churn
+
+chitestccchurn <- chisq.test(cc_churn)
+chitestccchurn
+```
+Credit Card vs Churn
+P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occuring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
+
+```{r}
+
+library(ggplot2)
+
+ggplot(churn_data, aes(fill=churn, y=churn, x=credit_card)) + 
+  geom_bar(position='stack', stat='identity')
+```
+

@@ -17,6 +17,7 @@ output:
 library(ezids)
 library(vtable)
 loadPkg("Hmisc") 
+library(dplyr)
 knitr::opts_chunk$set(warning = F, results = "hide", message = F)
 options(scientific=T, digits = 3) 
 ```
@@ -46,6 +47,20 @@ There are `r nrow(unique(churn_data))` rows of unique records in the data.Hence 
 summary(churn_data)
 ```
 
+## Independent variable EDA
+
+**Converting Boolean values into desired values **
+```{r bool_conversion,results='apois'}
+churn_data$credit_card <- as.character(churn_data$credit_card)
+churn_data$active_member <- as.character(churn_data$active_member)
+churn_data$churn <- as.character(churn_data$churn)
+
+require(dplyr)
+customer_updated <- churn_data %>% mutate(credit_card = ifelse(credit_card == "Credit_Card",1,0) )
+head(customer_updated)
+
+
+```
 
 **Checking for outliers in the data frame  for credit_score,age,tenure,balance,estimated_salary variables  using outlierKD function.**
 

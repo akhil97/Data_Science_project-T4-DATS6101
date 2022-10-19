@@ -96,7 +96,7 @@ There is no outliers found for balance variable.
 salary_clean <- outlierKD2(churn_data, estimated_salary, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(salary_clean)
 ```
-There is no outliers found for balance variable.
+There is no outliers found for salary variable.
 
 
 

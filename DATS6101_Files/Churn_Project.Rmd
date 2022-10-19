@@ -104,7 +104,7 @@ By using outlierKD function we can observe that outliers where found only in `ag
 
 **Customer Analysis**
 
-```{r credit_score}
+```{r Credit_score}
 
 library(ggplot2)
 ggplot(data=churn_data, aes(x=credit_score)) + 
@@ -129,8 +129,8 @@ ggplot(data=churn_data,aes(x=country,fill=country))+
   theme_minimal()
 
 ```
-**The customers are grouped by the countries in which they have their accounts.As we see from the plot France has more than 50% of customer account which is the highest among all other countries.**
 
+**The customers are grouped by the countries in which they have their accounts.As we see from the plot France has more than 50% of customer account which is the highest among all other countries.**
 
 ```{r Age}
 ggplot(churn_data, aes(x = age,fill=cut(age,100),bins=25)) + 
@@ -139,7 +139,7 @@ ggplot(churn_data, aes(x = age,fill=cut(age,100),bins=25)) +
   theme_minimal()+
   labs(x="Age",y="Count")+
   ggtitle("age")
-
+```
 
 
 
@@ -153,24 +153,23 @@ cc_churn
 chitestccchurn <- chisq.test(cc_churn)
 chitestccchurn
 ```
+
 Credit Card vs Churn
 P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occuring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
 
 ```{r}
-
 library(ggplot2)
-
 ggplot(churn_data, aes(fill=churn, y=churn, x=credit_card)) + 
   geom_bar(position='stack', stat='identity')
 ```
 
 print(mean(churn_data$age))
 print(sd(churn_data$age))
+
 ```
-**The majority of the bank customer's fall below the age of 30 with average age of `r mean(churn_data$age)` and with standard deviation of `r sd(churn_data$age))`.**
+**The majority of the bank customer's fall below the age of 30 with average age of `r mean(churn_data$age)` and with standard deviation of `r sd(churn_data$age)`.**
 
-```{r tenure}
-
+```{r Tenure}
 library(ggplot2)
 ggplot(data=churn_data, aes(x=tenure)) + 
   geom_histogram(col="black",bins=11,

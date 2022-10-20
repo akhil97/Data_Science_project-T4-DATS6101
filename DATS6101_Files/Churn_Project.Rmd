@@ -61,8 +61,8 @@ churn_data_category$products_number=factor(churn_data$products_number)
 str(churn_data_category)
 ```
 
-```{r Checking for NA}
-
+```{r Check for NA in the dataframe}
+sum(is.na(churn_data) == 'TRUE')
 ```
 
 
@@ -92,9 +92,7 @@ churn_data$churn[churn_data$churn== 0]<-"Retained"
 credit_score_clean <- outlierKD2(churn_data, credit_score, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(credit_score_clean)
 ```
-```{r Check for NA in the dataframe}
-sum(is.na(churn_data) == 'TRUE')
-```
+
 
 
 The proportion outliers for credit_card variable if 0.2% and it was removed successfully using outlierKD function.

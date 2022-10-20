@@ -15,7 +15,6 @@ output:
 ---
 ```{r init, include=FALSE}
 library(ezids)
-library(vtable)
 loadPkg("Hmisc") 
 library(dplyr)
 knitr::opts_chunk$set(warning = F, results = "hide", message = F)
@@ -61,6 +60,11 @@ churn_data_category$tenure =factor(churn_data$tenure )
 churn_data_category$products_number=factor(churn_data$products_number)
 str(churn_data_category)
 ```
+
+```{r Checking for NA}
+
+```
+
 
 We decided to convert these variables into categorical (factor):  
 `credit_card`, `active_member`, `churn` and `gender`. Notice that 
@@ -298,3 +302,6 @@ P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus,
 
 
 
+```{r country}
+
+```

@@ -15,7 +15,6 @@ output:
 ---
 ```{r init, include=FALSE}
 library(ezids)
-library(vtable)
 loadPkg("Hmisc") 
 library(dplyr)
 knitr::opts_chunk$set(warning = F, results = "hide", message = F)
@@ -74,6 +73,11 @@ include categorical columns that we just converted.
 credit_score_clean <- outlierKD2(churn_data, credit_score, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(credit_score_clean)
 ```
+```{r Check for NA in the dataframe}
+sum(is.na(churn_data) == 'TRUE')
+```
+
+
 The proportion outliers for credit_card variable if 0.2% and it was removed successfully using outlierKD function.
 
 

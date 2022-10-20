@@ -61,6 +61,7 @@ churn_data_category$products_number=factor(churn_data$products_number)
 str(churn_data_category)
 ```
 
+**Checking if there are any NA values in the dataframe**
 ```{r Check for NA in the dataframe}
 sum(is.na(churn_data) == 'TRUE')
 ```

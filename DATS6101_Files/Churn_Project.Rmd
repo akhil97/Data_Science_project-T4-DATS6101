@@ -46,6 +46,14 @@ There are `r nrow(unique(churn_data))` rows of unique records in the data.Hence 
 summary(churn_data)
 ```
 
+**Customer ID is not an important attribute that impacts churn rate**
+```{r Remove cutomer_id from the dataframe, include=TRUE, echo=TRUE}
+churn_data <- churn_data[-c(1)]
+ncol(churn_data)
+summary(churn_data)
+```
+
+
 ## Independent variable EDA
 
 **Converting required variables into categorical values**
@@ -60,6 +68,7 @@ churn_data_category$tenure =factor(churn_data$tenure )
 churn_data_category$products_number=factor(churn_data$products_number)
 str(churn_data_category)
 ```
+After removing customer_id attribute from the dataframe we now have 11 columns.
 
 **Checking if there are any NA values in the dataframe**
 ```{r Check for NA in the dataframe}
@@ -288,8 +297,8 @@ ggplot(df, aes(x = "", y = perc, fill = churn)) +
 
 #### SMART Questions:
 ```{r credit card-churn}
-churn_data[, 11:12][churn_data[, 11:12] == 1] <- 'Churn'
-churn_data[, 11:12][churn_data[, 11:12] == 0] <- 'No Churn'
+churn_data[, 10:11][churn_data[, 10:11] == 1] <- 'Churn'
+churn_data[, 10:11][churn_data[, 10:11] == 0] <- 'No Churn'
 
 cc_churn <- table(churn_data$churn, churn_data$credit_card)
 cc_churn

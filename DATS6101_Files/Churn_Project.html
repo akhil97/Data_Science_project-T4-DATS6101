@@ -1653,6 +1653,11 @@ analysis.</p>
 ##  Mean   :0.706   Mean   :0.515   Mean   :100090   Mean   :0.204  
 ##  3rd Qu.:1.000   3rd Qu.:1.000   3rd Qu.:149388   3rd Qu.:0.000  
 ##  Max.   :1.000   Max.   :1.000   Max.   :199992   Max.   :1.000</code></pre>
+<p><strong>Customer ID is not an important attribute that impacts churn
+rate</strong></p>
+<pre class="r"><code>churn_data &lt;- churn_data[-c(1)]
+ncol(churn_data)
+summary(churn_data)</code></pre>
 <div id="independent-variable-eda" class="section level2">
 <h2>Independent variable EDA</h2>
 <p><strong>Converting required variables into categorical
@@ -1666,6 +1671,8 @@ churn_data_category$gender=factor(churn_data$gender)
 churn_data_category$tenure =factor(churn_data$tenure )
 churn_data_category$products_number=factor(churn_data$products_number)
 str(churn_data_category)</code></pre>
+<p><strong>Checking if there are any NA values in the
+dataframe</strong></p>
 <pre class="r"><code>sum(is.na(churn_data) == &#39;TRUE&#39;)</code></pre>
 <p>We decided to convert these variables into categorical
 (factor):<br />
@@ -1858,8 +1865,8 @@ remaining 20% where churned out.</strong></p>
 <h3>Churned Customer Analysis</h3>
 <div id="smart-questions" class="section level4">
 <h4>SMART Questions:</h4>
-<pre class="r"><code>churn_data[, 11:12][churn_data[, 11:12] == 1] &lt;- &#39;Churn&#39;
-churn_data[, 11:12][churn_data[, 11:12] == 0] &lt;- &#39;No Churn&#39;
+<pre class="r"><code>churn_data[, 10:11][churn_data[, 10:11] == 1] &lt;- &#39;Churn&#39;
+churn_data[, 10:11][churn_data[, 10:11] == 0] &lt;- &#39;No Churn&#39;
 
 cc_churn &lt;- table(churn_data$churn, churn_data$credit_card)
 cc_churn

@@ -318,3 +318,18 @@ P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus,
 ```{r country}
 
 ```
+
+
+```{r Correlation between credit score and customer churn, include=TRUE, echo=TRUE}
+library(corrplot)
+churn_data_numeric <- select_if(churn_data, is.numeric)
+str(churn_data_numeric)
+cor <- cor(churn_data_numeric)
+corrplot(cor, method = 'square')
+cor_score <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
+print(cor_score)
+```
+**The credit score is weakly correlated with customer churn with a score of -0.0271**
+
+```{r Chisq test of independence between country and customer churn rate}
+```

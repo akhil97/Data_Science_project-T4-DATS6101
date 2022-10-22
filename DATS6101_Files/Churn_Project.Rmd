@@ -332,4 +332,16 @@ print(cor_score)
 **The credit score is weakly correlated with customer churn with a score of -0.0271**
 
 ```{r Chisq test of independence between country and customer churn rate}
+#Contingency table
+loadPkg("MASS")
+contable = table(churn_data$country, churn_data$churn)
+xkabledply(contable, title="Contingency table for Country (Customer belongs to) vs Churn (0 or 1)")
+
+#Chisquare Test of independency
+chitest <- chisq.test(contable)
+chitest
+
+chitest$statistic
+chitest$parameter
+chitest$p.value
 ```

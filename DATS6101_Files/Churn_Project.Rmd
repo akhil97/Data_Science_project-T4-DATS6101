@@ -52,7 +52,7 @@ churn_data <- churn_data[-c(1)]
 ncol(churn_data)
 summary(churn_data)
 ```
-
+After removing customer_id attribute from the dataframe we now have 11 columns.
 
 ## Independent variable EDA
 
@@ -68,7 +68,13 @@ churn_data_category$tenure =factor(churn_data$tenure )
 churn_data_category$products_number=factor(churn_data$products_number)
 str(churn_data_category)
 ```
-After removing customer_id attribute from the dataframe we now have 11 columns.
+
+
+
+We decided to convert these variables into categorical (factor):  
+`credit_card`, `active_member`, `churn` and `gender`. Notice that 
+the data frame `churn_data` still has all variables numerical, while the data frame `churn_data_category` 
+include categorical columns that we just converted. 
 
 **Checking if there are any NA values in the dataframe**
 ```{r Check for NA in the dataframe}
@@ -76,10 +82,6 @@ sum(is.na(churn_data) == 'TRUE')
 ```
 
 
-We decided to convert these variables into categorical (factor):  
-`credit_card`, `active_member`, `churn` and `gender`. Notice that 
-the data frame `churn_data` still has all variables numerical, while the data frame `churn_data_category` 
-include categorical columns that we just converted. 
 
 **Converting Boolean values into Character format**
 ```{r}
@@ -313,10 +315,6 @@ chitests
 
 We have $\chi^2$  value of the test from `chitests$statistic` = `r chitests$statistic`,while extracting the p-value from `chitests$p.value` = `r chitests$p.value` which is less than significance level of 0.05 ,Hence we reject the null hypothesis and we conclude that the churn rate dependent on gender of the customer.
 
-```{r}
-xkabledply(chitests$expected, title = "Cross table for the expected frequencies between Smoke (habit) vs Exercise (level) in library 'MASS'")
-```
-
 ```{r Gender_churns}
 ggplot(data=churn_data,aes(x=gender,fill=churn))+
   geom_bar(col="black")+
@@ -347,6 +345,21 @@ summary(anovaRes)
 xkabledply(anovaRes, title = "ANOVA result summary")
 ```
 
+```{r Correlation between balance and customer churn, include=TRUE, echo=TRUE}
+library(corrplot)
+churn_data_numeric <- select_if(churn_data, is.numeric)
+str(churn_data_numeric)
+corr <- cor(churn_data_numeric)
+corrplot(corr, method = 'number')
+cor_scores <- cor(churn_data_numeric)
+cor_scores
+```
+
+```{r model1}
+fits <- lm(balance ~ churn, data = churn_data)
+#summary(fits)
+ #vif(fits)
+```
 
 ```{r credit card-churn}
 churn_data[, 10:11][churn_data[, 10:11] == 1] <- 'Churn'
@@ -362,14 +375,6 @@ Credit Card vs Churn
 P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occuring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
 
 
-
-
-
-
-
-```{r country}
-
-```
 
 
 ```{r Correlation between credit score and customer churn, include=TRUE, echo=TRUE}

@@ -196,7 +196,7 @@ df <- churn_data %>%
   mutate(labels = scales::percent(perc))
 str(df)
 
-ggplot(df, aes(x = "", y = perc, fill = gender)) +
+ggplot(df, aes(x = "", y = perc, fill =gender )) +
   geom_col(color="black") +
   geom_text(aes(label = labels),color = c("black", "black"),
             position = position_stack(vjust = 0.5)) +
@@ -293,9 +293,61 @@ ggplot(df, aes(x = "", y = perc, fill = churn)) +
 
 **The bank managed to retain 80% of their customers with the remaining 20% where churned out.**
 
-### Churned Customer Analysis
+## Churned Customer Analysis
 
-#### SMART Questions:
+### SMART Questions:
+
+### Does churn depend on Gender?
+
+**We are doing chi-square test to determine if the churn rate depends on Gender?**
+
+```{r chi_tests_ind}
+contable = table(churn_data$churn, churn_data$gender)
+xkabledply(contable, title="Contingency table ")
+```
+
+```{r, results="markup"}
+chitests = chisq.test(contable)
+chitests
+```
+
+We have $\chi^2$  value of the test from `chitests$statistic` = `r chitests$statistic`,while extracting the p-value from `chitests$p.value` = `r chitests$p.value` which is less than significance level of 0.05 ,Hence we reject the null hypothesis and we conclude that the churn rate dependent on gender of the customer.
+
+```{r}
+xkabledply(chitests$expected, title = "Cross table for the expected frequencies between Smoke (habit) vs Exercise (level) in library 'MASS'")
+```
+
+```{r Gender_churns}
+ggplot(data=churn_data,aes(x=gender,fill=churn))+
+  geom_bar(col="black")+
+  scale_fill_brewer(palette="Blues") +
+  labs(title = "Gender vs Churn",x="Gender",y="Chrun")+
+  theme_minimal()
+
+```   
+We observed that majority of the churned customers were female despite the total population of the bank being predominantly male.
+
+### Does a higher/lower account balance of the customer affect churn? 
+
+**We are performing ANOVA test to determine whether churn rate depend on account balance in the customer account.**
+```{r}
+ggplot(data=churn_data,aes(x=churn,y=balance))+
+  geom_boxplot(aes(fill=churn),outlier.color="red",outlier.shape=8,outlier.size=4)+
+  labs(title="Account balance vs Churn",x="Customer Churn", y ="Account Balance")
+  
+```
+
+
+```{r}
+anovaRes = aov(balance ~ churn, data=churn_data)
+summary(anovaRes)
+```
+
+```{r,results='markup'}
+xkabledply(anovaRes, title = "ANOVA result summary")
+```
+
+
 ```{r credit card-churn}
 churn_data[, 10:11][churn_data[, 10:11] == 1] <- 'Churn'
 churn_data[, 10:11][churn_data[, 10:11] == 0] <- 'No Churn'

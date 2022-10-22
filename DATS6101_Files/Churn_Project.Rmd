@@ -17,6 +17,8 @@ output:
 library(ezids)
 loadPkg("Hmisc") 
 library(dplyr)
+loadPkg("MASS")
+library(ggplot2)
 knitr::opts_chunk$set(warning = F, results = "hide", message = F)
 options(scientific=T, digits = 3) 
 ```
@@ -68,15 +70,12 @@ churn_data_category$tenure =factor(churn_data$tenure )
 churn_data_category$products_number=factor(churn_data$products_number)
 str(churn_data_category)
 ```
-
-
-
 We decided to convert these variables into categorical (factor):  
 `credit_card`, `active_member`, `churn` and `gender`. Notice that 
 the data frame `churn_data` still has all variables numerical, while the data frame `churn_data_category` 
 include categorical columns that we just converted. 
 
-**Checking if there are any NA values in the dataframe**
+**Checking if there are any NA values in the data frame**
 ```{r Check for NA in the dataframe}
 sum(is.na(churn_data) == 'TRUE')
 ```
@@ -303,14 +302,17 @@ ggplot(df, aes(x = "", y = perc, fill = churn)) +
 
 **We are doing chi-square test to determine if the churn rate depends on Gender?**
 
-```{r chi_tests_ind}
-contable = table(churn_data$churn, churn_data$gender)
-xkabledply(contable, title="Contingency table ")
-```
+```{r Chisq test of independence between Gender and customer churn rate}
+#Contingency table
+contab = table(churn_data$churn, churn_data$gender)
 
-```{r, results="markup"}
-chitests = chisq.test(contable)
+#Chisquare Test of independency
+chitests = chisq.test(contab)
 chitests
+
+chitests$statistic
+chitests$parameter
+chitests$p.value
 ```
 
 We have $\chi^2$  value of the test from `chitests$statistic` = `r chitests$statistic`,while extracting the p-value from `chitests$p.value` = `r chitests$p.value` which is less than significance level of 0.05 ,Hence we reject the null hypothesis and we conclude that the churn rate dependent on gender of the customer.
@@ -328,38 +330,8 @@ We observed that majority of the churned customers were female despite the total
 ### Does a higher/lower account balance of the customer affect churn? 
 
 **We are performing ANOVA test to determine whether churn rate depend on account balance in the customer account.**
-```{r}
-ggplot(data=churn_data,aes(x=churn,y=balance))+
-  geom_boxplot(aes(fill=churn),outlier.color="red",outlier.shape=8,outlier.size=4)+
-  labs(title="Account balance vs Churn",x="Customer Churn", y ="Account Balance")
-  
-```
 
 
-```{r}
-anovaRes = aov(balance ~ churn, data=churn_data)
-summary(anovaRes)
-```
-
-```{r,results='markup'}
-xkabledply(anovaRes, title = "ANOVA result summary")
-```
-
-```{r Correlation between balance and customer churn, include=TRUE, echo=TRUE}
-library(corrplot)
-churn_data_numeric <- select_if(churn_data, is.numeric)
-str(churn_data_numeric)
-corr <- cor(churn_data_numeric)
-corrplot(corr, method = 'number')
-cor_scores <- cor(churn_data_numeric)
-cor_scores
-```
-
-```{r model1}
-fits <- lm(balance ~ churn, data = churn_data)
-#summary(fits)
- #vif(fits)
-```
 
 ```{r credit card-churn}
 churn_data[, 10:11][churn_data[, 10:11] == 1] <- 'Churn'
@@ -372,10 +344,7 @@ chitestccchurn <- chisq.test(cc_churn)
 chitestccchurn
 ```
 Credit Card vs Churn
-P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occuring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
-
-
-
+P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occurring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
 
 ```{r Correlation between credit score and customer churn, include=TRUE, echo=TRUE}
 library(corrplot)
@@ -388,16 +357,17 @@ churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn)
 str(churn_data_to_numeric)
 churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
 str(churn_data_numeric)
-cor <- cor(churn_data_numeric)
-corrplot(cor, method = 'square')
-corscore <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
-print(corscore)
+cors <- cor(churn_data_numeric)
+corrplot(cors, method = 'square')
+
+cor_scores <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
+cor_scores
 ```
 **The credit score is weakly correlated with customer churn with a score of -0.0271**
 
 ```{r Chisq test of independence between country and customer churn rate}
 #Contingency table
-loadPkg("MASS")
+
 contable = table(churn_data$country, churn_data$churn)
 xkabledply(contable, title="Contingency table for Country (Customer belongs to) vs Churn (0 or 1)")
 
@@ -409,3 +379,8 @@ chitest$statistic
 chitest$parameter
 chitest$p.value
 ```
+
+
+
+
+

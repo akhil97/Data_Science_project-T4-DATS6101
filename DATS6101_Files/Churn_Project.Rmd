@@ -379,12 +379,19 @@ P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus,
 
 ```{r Correlation between credit score and customer churn, include=TRUE, echo=TRUE}
 library(corrplot)
-churn_data_numeric <- select_if(churn_data, is.numeric)
+churn_data_to_numeric <- churn_data
+
+churn_data$churn[churn_data$churn== "Churned"]<-1
+churn_data$churn[churn_data$churn== "Retained"]<-0
+
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+str(churn_data_to_numeric)
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
 str(churn_data_numeric)
 cor <- cor(churn_data_numeric)
 corrplot(cor, method = 'square')
-cor_score <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
-print(cor_score)
+corscore <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
+print(corscore)
 ```
 **The credit score is weakly correlated with customer churn with a score of -0.0271**
 

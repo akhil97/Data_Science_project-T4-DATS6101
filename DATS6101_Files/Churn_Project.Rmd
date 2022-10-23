@@ -103,9 +103,6 @@ churn_data$churn[churn_data$churn== 0]<-"Retained"
 credit_score_clean <- outlierKD2(churn_data, credit_score, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(credit_score_clean)
 ```
-
-
-
 The proportion outliers for credit_card variable if 0.2% and it was removed successfully using outlierKD function.
 
 
@@ -131,6 +128,7 @@ salary_clean <- outlierKD2(churn_data, estimated_salary, rm = TRUE, boxplt = TRU
 xkablesummary(salary_clean)
 ```
 By using outlierKD function we can observe that outliers where found only in `age` and `credit_card` variables i.e,3.7% and 0.2%
+
 
 ### Customer Analysis 
 
@@ -291,8 +289,108 @@ ggplot(df, aes(x = "", y = perc, fill = churn)) +
   scale_fill_brewer(palette="Purples")+
   labs(title="Percentage of customer retained",x="", y="") 
 ```  
-
 **The bank managed to retain 80% of their customers with the remaining 20% where churned out.**
+
+## Inferential statstics
+
+**Inferential statistics for customer credit scores**
+
+```{r,means and SD for credit score,results='apois'}
+mean.credit_score = mean(churn_data$credit_score, na.rm = TRUE); #mean of the customer credit scores
+str(mean.credit_score)
+sd_credit_score = sd(churn_data$credit_score)
+str(sd_credit_score)
+
+```
+Mean  and SD for the entire population of credit_score in churn_data data frame mean=`r format(mean.credit_score, digits=5)` and sd=`r format(sd_credit_score, digits=5)`.
+
+Now let us create a smaller sample of the credit score out of the entire population, and call it churn_credit_sample.
+```{r churn_credit_sample,results='apois'}
+set.seed(321) 
+churn_credit_sample = churn_data[ sample(nrow(churn_data),4000), ]
+format(mean(churn_credit_sample$credit_score), digits=5)
+
+```
+
+```{r Z interval for customer credit scores,}
+loadPkg("BSDA") 
+
+ztestcredit95 = z.test(churn_credit_sample$credit_score, sigma.x = 96.7) # default conf.level = 0.95
+ztestcredit95
+ztestcredit99 = z.test(churn_credit_sample$credit_score, sigma.x = 96.7, conf.level=0.99 )
+ztestcredit99
+ztestcredit50 = z.test(churn_credit_sample$credit_score, sigma.x = 96.7, conf.level=0.50 )
+ztestcredit50
+
+ztestcredit95$conf.int
+ztestcredit99$conf.int
+ztestcredit50$conf.int
+```
+
+```{r T interval for customer credit scores,}
+loadPkg("BSDA") 
+
+ttestcredit95 = t.test(churn_credit_sample$credit_score) # default conf.level = 0.95
+ttestcredit95
+ttestcredit99 = t.test(churn_credit_sample$credit_score, conf.level=0.99 )
+ttestcredit99
+ttestcredit50 = t.test(churn_credit_sample$credit_score,  conf.level=0.50 )
+ttestcredit50
+
+ttestcredit95$conf.int
+ttestcredit99$conf.int
+ttestcredit50$conf.int
+```
+
+**Inferential statistics for customer account balance.**
+
+```{r,means and SD for  account balance,results='apois'}
+mean.balance= mean(churn_data$balance, na.rm = TRUE); #mean of the customer account balance
+str(mean.balance)
+sd_balance = sd(churn_data$balance)
+str(sd_balance)
+
+```
+Mean  and SD for the entire population of credit_score in churn_data data frame mean=`r format(mean.balance, digits=5)` and sd=`r format(sd_balance, digits=5)`.
+
+Now let us create a smaller sample of the account balance out of the entire population, and call it churn_balance_sample.
+```{r churn_balance_sample,results='apois'}
+set.seed(321) 
+churn_balance_sample = churn_data[ sample(nrow(churn_data),4000), ]
+format(mean(churn_balance_sample$balance), digits=5)
+
+```
+
+```{r Z interval for customer account balance,}
+loadPkg("BSDA") 
+
+ztestbalance95 = z.test(churn_balance_sample$balance, sigma.x = 62397.4) # default conf.level = 0.95
+ztestbalance95
+ztestbalance99 = z.test(churn_balance_sample$balance, sigma.x = 62397.4, conf.level=0.99 )
+ztestbalance99
+ztestbalance50 = z.test(churn_balance_sample$balance, sigma.x = 62397.4, conf.level=0.50 )
+ztestbalance50
+
+ztestbalance95$conf.int
+ztestbalance99$conf.int
+ztestbalance50$conf.int
+```
+
+```{r T interval for customer account balance,}
+loadPkg("BSDA") 
+
+ttestbalance95 = t.test(churn_balance_sample$balance) # default conf.level = 0.95
+ttestbalance95
+ttestbalance99 = t.test(churn_balance_sample$balance, conf.level=0.99 )
+ttestbalance99
+ttestbalance50 = t.test(churn_balance_sample$balance,  conf.level=0.50 )
+ttestbalance50
+
+ttestbalance95$conf.int
+ttestbalance99$conf.int
+ttestbalance50$conf.int
+```
+
 
 ## Churned Customer Analysis
 
@@ -329,7 +427,23 @@ We observed that majority of the churned customers were female despite the total
 
 ### Does a higher/lower account balance of the customer affect churn? 
 
-**We are performing ANOVA test to determine whether churn rate depend on account balance in the customer account.**
+```{r Correlation between balance and customer churn, include=TRUE, echo=TRUE}
+library(corrplot)
+churn_data_to_numeric <- churn_data
+
+churn_data$churn[churn_data$churn== "Churned"]<-1
+churn_data$churn[churn_data$churn== "Retained"]<-0
+
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+str(churn_data_to_numeric)
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+str(churn_data_numeric)
+cors <- cor(churn_data_numeric)
+corrplot(cors, method = 'number')
+
+cor_scores <- cor(churn_data_numeric$balance, churn_data_numeric$churn)
+cor_scores
+```
 
 
 

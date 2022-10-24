@@ -529,5 +529,28 @@ ggplot(data=churn_data,aes(x=products_number,fill=churn))+
   theme_minimal()
 ```  
 
+### Does churn depend on status of active account users?
 
+```{r Chisq test of independence between Active members and customer churn rate}
+#Contingency table
+contab = table(churn_data$churn, churn_data$active_member)
+
+#Chisquare Test of independency
+chitests = chisq.test(contab)
+chitests
+
+chitests$statistic
+chitests$parameter
+chitests$p.value
+```
+
+We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$statistic`, while the p-value is less than the significance level of 0.05 from `chitests$p.value` = `r chitests$p.value`. As a result, we reject the null hypothesis and find that the churn rate is reliant on the customer's banking services.
+
+```{r Active_members_churns}
+ggplot(data=churn_data,aes(x=active_member,fill=churn))+
+  geom_bar(col="black")+
+  scale_fill_brewer(palette="Green") +
+  labs(title = "Active Members vs Churn",x="Active Members",y="Chrun")+
+  theme_minimal()
+```  
 

@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output:
   html_document:
     code_folding: hide
-    number_sections: true
+    number_sections: false
     toc: yes
     toc_depth: 3
     toc_float: yes
@@ -15,9 +15,10 @@ output:
 ---
 ```{r init, include=FALSE}
 library(ezids)
-library(vtable)
 loadPkg("Hmisc") 
 library(dplyr)
+loadPkg("MASS")
+library(ggplot2)
 knitr::opts_chunk$set(warning = F, results = "hide", message = F)
 options(scientific=T, digits = 3) 
 ```
@@ -47,63 +48,408 @@ There are `r nrow(unique(churn_data))` rows of unique records in the data.Hence 
 summary(churn_data)
 ```
 
+**Customer ID is not an important attribute that impacts churn rate**
+```{r Remove cutomer_id from the dataframe, include=TRUE, echo=TRUE}
+churn_data <- churn_data[-c(1)]
+ncol(churn_data)
+summary(churn_data)
+```
+After removing customer_id attribute from the dataframe we now have 11 columns.
+
 ## Independent variable EDA
 
-**Converting Boolean values into desired values **
-```{r bool_conversion,results='apois'}
-churn_data$credit_card <- as.character(churn_data$credit_card)
-churn_data$active_member <- as.character(churn_data$active_member)
-churn_data$churn <- as.character(churn_data$churn)
+**Converting required variables into categorical values**
+```{r category}
+str(churn_data)
+churn_data_category=churn_data
+churn_data_category$credit_card=factor(churn_data$credit_card)
+churn_data_category$active_member=factor(churn_data$active_member)
+churn_data_category$churn=factor(churn_data$churn)
+churn_data_category$gender=factor(churn_data$gender)
+churn_data_category$tenure =factor(churn_data$tenure )
+churn_data_category$products_number=factor(churn_data$products_number)
+str(churn_data_category)
+```
+We decided to convert these variables into categorical (factor):  
+`credit_card`, `active_member`, `churn` and `gender`. Notice that 
+the data frame `churn_data` still has all variables numerical, while the data frame `churn_data_category` 
+include categorical columns that we just converted. 
 
-require(dplyr)
-customer_updated <- churn_data %>% mutate(credit_card = ifelse(credit_card == "Credit_Card",1,0) )
-head(customer_updated)
+**Checking if there are any NA values in the data frame**
+```{r Check for NA in the dataframe}
+sum(is.na(churn_data) == 'TRUE')
+```
 
+
+
+**Converting Boolean values into Character format**
+```{r}
+churn_data$active_member[churn_data$active_member== 1]<-"Active"
+churn_data$active_member[churn_data$active_member== 0]<-"In Active"
+
+churn_data$credit_card[churn_data$credit_card== 1]<-"Credit Card"
+churn_data$credit_card[churn_data$credit_card== 0]<-"No-Credit Card"
+
+churn_data$churn[churn_data$churn== 1]<-"Churned"
+churn_data$churn[churn_data$churn== 0]<-"Retained"
 
 ```
 
-**Checking for outliers in the data frame  for credit_score,age,tenure,balance,estimated_salary variables  using outlierKD function.**
+### Ouliers For Customer data
 
-```{r credit_score}
+***Checking for outliers in the data frame  for credit_score,age,tenure,balance,estimated_salary variables  using outlierKD function.***
+
+```{r customer_credit_score}
 credit_score_clean <- outlierKD2(churn_data, credit_score, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(credit_score_clean)
 ```
-The proportion outliers for age variable if 0.2% and it was removed succesfully using outlierKD function.
+The proportion outliers for credit_card variable if 0.2% and it was removed successfully using outlierKD function.
 
 
-```{r age}
+```{r customer_age}
 age_clean <- outlierKD2(churn_data, age, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(age_clean)
 ```
-The proportion outliers for age variable if 3.7% and it was removed succesfully using outlierKD function.
 
-
-```{r tenure}
+```{r Cutomer_tenure}
 tenure_clean <- outlierKD2(churn_data, tenure, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(tenure_clean)
 ```
-There is no outliers found for tenure variable.
 
 
 ```{r balance}
 balance_clean <- outlierKD2(churn_data, balance, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(balance_clean)
 ```
-There is no outliers found for balance variable.
 
 
 ```{r estimated_salary}
 salary_clean <- outlierKD2(churn_data, estimated_salary, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(salary_clean)
 ```
-There is no outliers found for salary variable.
+By using outlierKD function we can observe that outliers where found only in `age` and `credit_card` variables i.e,3.7% and 0.2%
 
+
+### Customer Analysis 
+
+```{r Credit_score}
+
+library(ggplot2)
+ggplot(data=churn_data, aes(x=credit_score)) + 
+  geom_histogram(col="black",bins=30,
+                 fill="dark orange", 
+                  alpha =.7) + # opacity
+  labs(title="`ggplot`") +
+  labs(title="Customer's Credit Scores",x="Credit_Score", y="Customer Count") 
+print(mean(churn_data$credit_score))
+print(sd(churn_data$credit_score))
+
+```
+
+**The average `credit score` of the customer is `r mean(churn_data$credit_score)`,most of the customer having credit score fall between 600 to 700 and standard deviation is `r sd(churn_data$credit_score)`.**
+
+
+```{r Country}
+ggplot(data=churn_data,aes(x=country,fill=country))+
+  geom_bar(col="black")+
+  scale_fill_brewer(palette="Reds") +
+  labs(title = "Bank Cusomter vs Country",x="Country",y="Customer Count")+
+  theme_minimal()
+
+```
+
+**The customers are grouped by the countries in which they have their accounts.As we see from the plot France has more than 50% of customer account which is the highest among all other countries.**
+
+```{r Age}
+ggplot(churn_data, aes(x = age,fill=cut(age,100))) + 
+  geom_histogram(show.legend = FALSE,col="black",bins=30)+
+  scale_fill_discrete(h=c(240,10),c=120,l=70)+
+  theme_minimal()+
+  labs(x=" Customer Age",y=" Customer Count")+
+  ggtitle("Customer ages")
+print(mean(churn_data$age))
+print(sd(churn_data$age))
+```
+**The majority of the bank customer's fall below the age of 30 with average age of `r mean(churn_data$age)` and with standard deviation of `r sd(churn_data$age)`.**
+
+```{r tenure}
+
+library(ggplot2)
+ggplot(data=churn_data, aes(x=tenure)) + 
+  geom_histogram(col="black",bins=11,
+                 fill="Yellow", 
+                  alpha =.7) + 
+  labs(title="Years spent as customer",x="Number of years", y="Customer Count") 
+
+```
+
+**Most of the customer as been with bank for more than a year.**
+
+```{r Gender}
+df <- churn_data %>% 
+  group_by(gender) %>% # Variable to be transformed
+  count() %>% 
+  ungroup() %>% 
+  mutate(perc = `n` / sum(`n`)) %>% 
+  arrange(perc) %>%
+  mutate(labels = scales::percent(perc))
+str(df)
+
+ggplot(df, aes(x = "", y = perc, fill =gender )) +
+  geom_col(color="black") +
+  geom_text(aes(label = labels),color = c("black", "black"),
+            position = position_stack(vjust = 0.5)) +
+  coord_polar(theta = "y")+
+  labs(title="Percentage of Male and Female customers in bank",x="", y="") 
+```  
+**The Male customers are highest in percent of 55% and remaining 45% are Female customers.**
+
+```{r Active_Memebers}
+
+df <- churn_data %>% 
+  group_by(active_member) %>% # Variable to be transformed
+  count() %>% 
+  ungroup() %>% 
+  mutate(perc = `n` / sum(`n`)) %>% 
+  arrange(perc) %>%
+  mutate(labels = scales::percent(perc))
+str(df)
+
+
+ggplot(df, aes(x = "", y = perc, fill = active_member)) +
+  geom_col(color="black") +
+  geom_label(aes(label = labels),color = c("black", "white"),
+             position = position_stack(vjust = 0.5),
+             show.legend = FALSE) +
+  coord_polar(theta = "y")+
+  scale_fill_grey()+
+  labs(title="Percentage of active members in bank",x="", y="") 
+```  
+**We can see that 48% of the customers accounts are inactive**
+
+```{r Credit_Card}
+df <- churn_data %>% 
+  group_by(credit_card) %>% # Variable to be transformed
+  count() %>% 
+  ungroup() %>% 
+  mutate(perc = `n` / sum(`n`)) %>% 
+  arrange(perc) %>%
+  mutate(labels = scales::percent(perc))
+str(df)
+
+ggplot(df, aes(x = "", y = perc, fill = credit_card)) +
+  geom_col(color="black") +
+  geom_label(aes(label = labels),color = c("black", "black"),
+             position = position_stack(vjust = 0.5),
+             show.legend = FALSE) +
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette="Greens")
+  labs(title="Percentage of customer use credit card",x="", y="") 
+```  
+**Predominantly 71% of the Bank customer use credit_card and only 29% do not make use of it.**
+
+```{r Products}
+df <- churn_data %>% 
+  group_by(products_number) %>% # Variable to be transformed
+  count() %>% 
+  ungroup() %>% 
+  mutate(perc = `n` / sum(`n`)) %>% 
+  arrange(perc) %>%
+  mutate(labels = scales::percent(perc))
+str(df)
+
+ggplot(df, aes(x = "", y = perc, fill = products_number)) +
+  geom_col(color="black") +
+  geom_label(aes(label = labels),color = c("white", "white","white","white"),
+             position = position_stack(vjust = 0.5),
+             show.legend = FALSE) +
+  coord_polar(theta = "y")+
+  labs(title="Percentage of  different products used by customers ",x="", y="") 
+  
+``` 
+**Most of the customer user product 1 which is 50% and product 4 is the least used with 0.6%.**
+
+
+```{r Customer_churn}
+df <- churn_data %>% 
+  group_by(churn) %>% 
+  count() %>% 
+  ungroup() %>% 
+  mutate(perc = `n` / sum(`n`)) %>% 
+  arrange(perc) %>%
+  mutate(labels = scales::percent(perc))
+str(df)
+
+ggplot(df, aes(x = "", y = perc, fill = churn)) +
+  geom_col(color="black") +
+  geom_label(aes(label = labels),color = c("black", "black"),
+             position = position_stack(vjust = 0.5),
+             show.legend = FALSE) +
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette="Purples")+
+  labs(title="Percentage of customer retained",x="", y="") 
+```  
+**The bank managed to retain 80% of their customers with the remaining 20% where churned out.**
+
+## Inferential statstics
+
+**Inferential statistics for customer credit scores**
+
+```{r,means and SD for credit score,results='apois'}
+mean.credit_score = mean(churn_data$credit_score, na.rm = TRUE); #mean of the customer credit scores
+str(mean.credit_score)
+sd_credit_score = sd(churn_data$credit_score)
+str(sd_credit_score)
+
+```
+Mean  and SD for the entire population of credit_score in churn_data data frame mean=`r format(mean.credit_score, digits=5)` and sd=`r format(sd_credit_score, digits=5)`.
+
+Now let us create a smaller sample of the credit score out of the entire population, and call it churn_credit_sample.
+```{r churn_credit_sample,results='apois'}
+set.seed(321) 
+churn_credit_sample = churn_data[ sample(nrow(churn_data),4000), ]
+format(mean(churn_credit_sample$credit_score), digits=5)
+
+```
+
+```{r Z interval for customer credit scores,}
+loadPkg("BSDA") 
+
+ztestcredit95 = z.test(churn_credit_sample$credit_score, sigma.x = 96.7) # default conf.level = 0.95
+ztestcredit95
+ztestcredit99 = z.test(churn_credit_sample$credit_score, sigma.x = 96.7, conf.level=0.99 )
+ztestcredit99
+ztestcredit50 = z.test(churn_credit_sample$credit_score, sigma.x = 96.7, conf.level=0.50 )
+ztestcredit50
+
+ztestcredit95$conf.int
+ztestcredit99$conf.int
+ztestcredit50$conf.int
+```
+
+```{r T interval for customer credit scores,}
+loadPkg("BSDA") 
+
+ttestcredit95 = t.test(churn_credit_sample$credit_score) # default conf.level = 0.95
+ttestcredit95
+ttestcredit99 = t.test(churn_credit_sample$credit_score, conf.level=0.99 )
+ttestcredit99
+ttestcredit50 = t.test(churn_credit_sample$credit_score,  conf.level=0.50 )
+ttestcredit50
+
+ttestcredit95$conf.int
+ttestcredit99$conf.int
+ttestcredit50$conf.int
+```
+
+**Inferential statistics for customer account balance.**
+
+```{r,means and SD for  account balance,results='apois'}
+mean.balance= mean(churn_data$balance, na.rm = TRUE); #mean of the customer account balance
+str(mean.balance)
+sd_balance = sd(churn_data$balance)
+str(sd_balance)
+
+```
+Mean  and SD for the entire population of credit_score in churn_data data frame mean=`r format(mean.balance, digits=5)` and sd=`r format(sd_balance, digits=5)`.
+
+Now let us create a smaller sample of the account balance out of the entire population, and call it churn_balance_sample.
+```{r churn_balance_sample,results='apois'}
+set.seed(321) 
+churn_balance_sample = churn_data[ sample(nrow(churn_data),4000), ]
+format(mean(churn_balance_sample$balance), digits=5)
+
+```
+
+```{r Z interval for customer account balance,}
+loadPkg("BSDA") 
+
+ztestbalance95 = z.test(churn_balance_sample$balance, sigma.x = 62397.4) # default conf.level = 0.95
+ztestbalance95
+ztestbalance99 = z.test(churn_balance_sample$balance, sigma.x = 62397.4, conf.level=0.99 )
+ztestbalance99
+ztestbalance50 = z.test(churn_balance_sample$balance, sigma.x = 62397.4, conf.level=0.50 )
+ztestbalance50
+
+ztestbalance95$conf.int
+ztestbalance99$conf.int
+ztestbalance50$conf.int
+```
+
+```{r T interval for customer account balance,}
+loadPkg("BSDA") 
+
+ttestbalance95 = t.test(churn_balance_sample$balance) # default conf.level = 0.95
+ttestbalance95
+ttestbalance99 = t.test(churn_balance_sample$balance, conf.level=0.99 )
+ttestbalance99
+ttestbalance50 = t.test(churn_balance_sample$balance,  conf.level=0.50 )
+ttestbalance50
+
+ttestbalance95$conf.int
+ttestbalance99$conf.int
+ttestbalance50$conf.int
+```
+
+
+## Churned Customer Analysis
+
+### SMART Questions:
+
+### Does churn depend on Gender?
+
+**We are doing chi-square test to determine if the churn rate depends on Gender?**
+
+```{r Chisq test of independence between Gender and customer churn rate}
+#Contingency table
+contab = table(churn_data$churn, churn_data$gender)
+
+#Chisquare Test of independency
+chitests = chisq.test(contab)
+chitests
+
+chitests$statistic
+chitests$parameter
+chitests$p.value
+```
+
+We have $\chi^2$  value of the test from `chitests$statistic` = `r chitests$statistic`,while extracting the p-value from `chitests$p.value` = `r chitests$p.value` which is less than significance level of 0.05 ,Hence we reject the null hypothesis and we conclude that the churn rate dependent on gender of the customer.
+
+```{r Gender_churns}
+ggplot(data=churn_data,aes(x=gender,fill=churn))+
+  geom_bar(col="black")+
+  scale_fill_brewer(palette="Blues") +
+  labs(title = "Gender vs Churn",x="Gender",y="Chrun")+
+  theme_minimal()
+
+```   
+We observed that majority of the churned customers were female despite the total population of the bank being predominantly male.
+
+### Does a higher/lower account balance of the customer affect churn? 
+
+```{r Correlation between balance and customer churn, include=TRUE, echo=TRUE}
+library(corrplot)
+churn_data_to_numeric <- churn_data
+
+churn_data$churn[churn_data$churn== "Churned"]<-1
+churn_data$churn[churn_data$churn== "Retained"]<-0
+
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+str(churn_data_to_numeric)
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+str(churn_data_numeric)
+cors <- cor(churn_data_numeric)
+corrplot(cors, method = 'number')
+
+cor_scores <- cor(churn_data_numeric$balance, churn_data_numeric$churn)
+cor_scores
+```
 
 
 
 ```{r credit card-churn}
-churn_data[, 11:12][churn_data[, 11:12] == 1] <- 'Churn'
-churn_data[, 11:12][churn_data[, 11:12] == 0] <- 'No Churn'
+churn_data[, 10:11][churn_data[, 10:11] == 1] <- 'Churn'
+churn_data[, 10:11][churn_data[, 10:11] == 0] <- 'No Churn'
 
 cc_churn <- table(churn_data$churn, churn_data$credit_card)
 cc_churn
@@ -112,15 +458,43 @@ chitestccchurn <- chisq.test(cc_churn)
 chitestccchurn
 ```
 Credit Card vs Churn
-P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occuring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
+P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occurring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
 
-```{r}
+```{r Correlation between credit score and customer churn, include=TRUE, echo=TRUE}
+library(corrplot)
+churn_data_to_numeric <- churn_data
 
-library(ggplot2)
+churn_data$churn[churn_data$churn== "Churned"]<-1
+churn_data$churn[churn_data$churn== "Retained"]<-0
 
-ggplot(churn_data, aes(fill=churn, y=churn, x=credit_card)) + 
-  geom_bar(position='stack', stat='identity') + theme_minimal() + 
-  labs(x='Credit Card', y='Number of Customers', title='Customer Churn in Customers with and without Credit Cards')  +
-  scale_fill_manual('Position', values=c('red', 'lightblue'))
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+str(churn_data_to_numeric)
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+str(churn_data_numeric)
+cors <- cor(churn_data_numeric)
+corrplot(cors, method = 'square')
+
+cor_scores <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
+cor_scores
 ```
+**The credit score is weakly correlated with customer churn with a score of -0.0271**
+
+```{r Chisq test of independence between country and customer churn rate}
+#Contingency table
+
+contable = table(churn_data$country, churn_data$churn)
+xkabledply(contable, title="Contingency table for Country (Customer belongs to) vs Churn (0 or 1)")
+
+#Chisquare Test of independency
+chitest <- chisq.test(contable)
+chitest
+
+chitest$statistic
+chitest$parameter
+chitest$p.value
+```
+
+
+
+
 

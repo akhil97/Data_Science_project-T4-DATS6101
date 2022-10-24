@@ -504,7 +504,30 @@ chitest$p.value
 ### 7290530e7885e0b0a98352236618e34354265333
 ```
 
+### Does churn depends on different banking service provide by the banks?
 
+```{r Chisq test of independence between Bank Services and customer churn rate}
+#Contingency table
+contab = table(churn_data$churn, churn_data$products_number)
+
+#Chisquare Test of independency
+chitests = chisq.test(contab)
+chitests
+
+chitests$statistic
+chitests$parameter
+chitests$p.value
+```
+
+We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$statistic`, while the p-value is less than the significance level of 0.05 from `chitests$p.value` = `r chitests$p.value`. As a result, we reject the null hypothesis and find that the churn rate is reliant on the customer's active status.
+
+```{r Bank_Services_churns}
+ggplot(data=churn_data,aes(x=products_number,fill=churn))+
+  geom_bar(col="black")+
+  scale_fill_brewer(palette="Green") +
+  labs(title = "Bank Services vs Churn",x="Bank Services",y="Chrun")+
+  theme_minimal()
+```  
 
 
 

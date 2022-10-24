@@ -202,6 +202,7 @@ ggplot(df, aes(x = "", y = perc, fill =gender )) +
   coord_polar(theta = "y")+
   labs(title="Percentage of Male and Female customers in bank",x="", y="") 
 ```  
+
 **The Male customers are highest in percent of 55% and remaining 45% are Female customers.**
 
 ```{r Active_Memebers}
@@ -225,6 +226,7 @@ ggplot(df, aes(x = "", y = perc, fill = active_member)) +
   scale_fill_grey()+
   labs(title="Percentage of active members in bank",x="", y="") 
 ```  
+
 **We can see that 48% of the customers accounts are inactive**
 
 ```{r Credit_Card}
@@ -246,6 +248,7 @@ ggplot(df, aes(x = "", y = perc, fill = credit_card)) +
   scale_fill_brewer(palette="Greens")
   labs(title="Percentage of customer use credit card",x="", y="") 
 ```  
+
 **Predominantly 71% of the Bank customer use credit_card and only 29% do not make use of it.**
 
 ```{r Products}
@@ -267,6 +270,7 @@ ggplot(df, aes(x = "", y = perc, fill = products_number)) +
   labs(title="Percentage of  different products used by customers ",x="", y="") 
   
 ``` 
+
 **Most of the customer user product 1 which is 50% and product 4 is the least used with 0.6%.**
 
 
@@ -289,6 +293,7 @@ ggplot(df, aes(x = "", y = perc, fill = churn)) +
   scale_fill_brewer(palette="Purples")+
   labs(title="Percentage of customer retained",x="", y="") 
 ```  
+
 **The bank managed to retain 80% of their customers with the remaining 20% where churned out.**
 
 ## Inferential statstics
@@ -423,6 +428,7 @@ ggplot(data=churn_data,aes(x=gender,fill=churn))+
   theme_minimal()
 
 ```   
+
 We observed that majority of the churned customers were female despite the total population of the bank being predominantly male.
 
 ### Does a higher/lower account balance of the customer affect churn? 
@@ -447,7 +453,6 @@ cor_scores
 ```
 
 
-
 ```{r credit card-churn}
 churn_data[, 10:11][churn_data[, 10:11] == 1] <- 'Churn'
 churn_data[, 10:11][churn_data[, 10:11] == 0] <- 'No Churn'
@@ -465,6 +470,7 @@ ggplot(churn_data, aes(fill=churn, y=churn, x=credit_card)) +
 
 
 ```
+
 Credit Card vs Churn
 P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occurring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
 
@@ -524,10 +530,12 @@ We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$s
 ```{r Bank_Services_churns}
 ggplot(data=churn_data,aes(x=products_number,fill=churn))+
   geom_bar(col="black")+
-  scale_fill_brewer(palette="Green") +
+  scale_fill_manual('Position', values=c('red', 'green')) +
   labs(title = "Bank Services vs Churn",x="Bank Services",y="Chrun")+
   theme_minimal()
 ```  
+
+We can notice that most of the customers with lower and higher products i.e) 1, 3 and 4 are about to churned when compared to customers with two products.
 
 ### Does churn depend on status of active account users?
 
@@ -549,8 +557,9 @@ We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$s
 ```{r Active_members_churns}
 ggplot(data=churn_data,aes(x=active_member,fill=churn))+
   geom_bar(col="black")+
-  scale_fill_brewer(palette="Green") +
+  scale_fill_manual('Position', values=c('red', 'green')) +
   labs(title = "Active Members vs Churn",x="Active Members",y="Chrun")+
   theme_minimal()
 ```  
 
+Here, we can interpret that most of the Inactive customers are about to churned.

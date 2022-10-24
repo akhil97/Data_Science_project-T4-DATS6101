@@ -153,7 +153,7 @@ print(sd(churn_data$credit_score))
 ggplot(data=churn_data,aes(x=country,fill=country))+
   geom_bar(col="black")+
   scale_fill_brewer(palette="Reds") +
-  labs(title = "Bank Cusomter vs Country",x="Country",y="Customer Count")+
+  labs(title = "Bank Customer vs Country",x="Country",y="Customer Count")+
   theme_minimal()
 
 ```
@@ -456,6 +456,13 @@ cc_churn
 
 chitestccchurn <- chisq.test(cc_churn)
 chitestccchurn
+
+ggplot(churn_data, aes(fill=churn, y=churn, x=credit_card)) + 
+  geom_bar(position='stack', stat='identity') + theme_minimal() + 
+  labs(x='Credit Card', y='Number of Customers', title='Customer Churn in Customers with and without Credit Cards')  +
+  scale_fill_manual('Position', values=c('red', 'lightblue'))
+
+
 ```
 Credit Card vs Churn
 P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occurring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
@@ -466,6 +473,7 @@ churn_data_to_numeric <- churn_data
 
 churn_data$churn[churn_data$churn== "Churned"]<-1
 churn_data$churn[churn_data$churn== "Retained"]<-0
+
 
 churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
 str(churn_data_to_numeric)
@@ -492,6 +500,7 @@ chitest
 chitest$statistic
 chitest$parameter
 chitest$p.value
+### 7290530e7885e0b0a98352236618e34354265333
 ```
 
 

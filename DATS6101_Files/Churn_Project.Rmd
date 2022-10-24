@@ -434,6 +434,7 @@ churn_data_to_numeric <- churn_data
 churn_data$churn[churn_data$churn== "Churned"]<-1
 churn_data$churn[churn_data$churn== "Retained"]<-0
 
+
 churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
 str(churn_data_to_numeric)
 churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)

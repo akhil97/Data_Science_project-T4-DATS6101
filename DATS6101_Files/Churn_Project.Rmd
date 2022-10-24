@@ -440,7 +440,7 @@ str(churn_data_to_numeric)
 churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
 str(churn_data_numeric)
 cors <- cor(churn_data_numeric)
-corrplot(cors, method = 'number')
+corrplot(cors, method = 'square')
 
 cor_scores <- cor(churn_data_numeric$balance, churn_data_numeric$churn)
 cor_scores

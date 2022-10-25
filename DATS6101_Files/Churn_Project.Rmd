@@ -595,3 +595,22 @@ ggplot(data=churn_data,aes(x=active_member,fill=churn))+
 ```  
 
 Here, we can interpret that most of the Inactive customers are about to churned.
+
+```{r}
+ggplot(churn_data, aes(x=age, fill=churn)) +
+  geom_histogram( color='#e9ecef', alpha=0.5, position='identity') + scale_fill_manual('Position', values=c('red', 'pink1')) +
+  labs(title = "Age Distribution across Churned and No Churn Account Holders",x="Age of Account Holders",y="Frequency")
+
+#Contingency table
+churn_age = table(churn_data$churn, churn_data$age)
+
+#Chisquare Test of independency
+chichurn_age = chisq.test(churn_age)
+chichurn_age
+
+chichurn_age$statistic
+chichurn_age$parameter
+chichurn_age$p.value
+
+```
+

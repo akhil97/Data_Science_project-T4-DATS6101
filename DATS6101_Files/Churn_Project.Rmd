@@ -610,5 +610,21 @@ chichurn_age$statistic
 chichurn_age$parameter
 chichurn_age$p.value
 
+churn_data$churn[churn_data$churn== "Churn"]<-1
+churn_data$churn[churn_data$churn== "No Churn"]<-0
+
+
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+str(churn_data_to_numeric)
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+str(churn_data_numeric)
+cors <- cor(churn_data_numeric)
+corrplot(cors, method = 'number')
+
+cs_churn <- table(churn_data$age, churn_data$churn)
+cs_churn
+
+cor_scores_age <- cor(churn_data_numeric$age, churn_data_numeric$churn)
+cor_scores_age
 ```
 

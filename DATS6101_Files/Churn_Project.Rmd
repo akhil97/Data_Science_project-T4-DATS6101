@@ -467,8 +467,6 @@ ggplot(churn_data, aes(fill=churn, y=churn, x=credit_card)) +
   geom_bar(position='stack', stat='identity') + theme_minimal() + 
   labs(x='Credit Card', y='Number of Customers', title='Customer Churn in Customers with and without Credit Cards')  +
   scale_fill_manual('Position', values=c('red', 'lightblue'))
-
-
 ```
 
 Credit Card vs Churn
@@ -513,6 +511,18 @@ chitest$parameter
 chitest$p.value
 ### 7290530e7885e0b0a98352236618e34354265333
 ```
+
+We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$statistic`, while the p-value is less than the significance level of 0.05 from `chitests$p.value` = `r chitests$p.value`. As a result, we reject the null hypothesis and find that the churn rate is reliant on the customer's regions.
+
+```{r Country_churns}
+ggplot(data=churn_data,aes(x=country,fill=churn))+
+  geom_bar(col="black")+
+  scale_fill_manual('Position', values=c('red', 'lightblue')) +
+  labs(title = "Country vs Churn",x="Country",y="Chrun")+
+  theme_minimal()
+``` 
+
+We can notice that most of the customers from germany and france are about to churned when compared to customers from spain.
 
 ### Does churn depends on different banking service provide by the banks?
 

@@ -446,8 +446,8 @@ str(churn_data_numeric)
 cors <- cor(churn_data_numeric)
 corrplot(cors, method = 'number')
 
-cor_scores_balance <- cor(churn_data_numeric$balance, churn_data_numeric$churn)
-cor_scores_balance
+cor_balance <- cor(churn_data_numeric$balance, churn_data_numeric$churn)
+cor_balance
 ```
 
 **Two sample T_test for balance vs churn**
@@ -623,9 +623,9 @@ ggplot(data=churn_data,aes(x=active_member,fill=churn))+
 
 Here, we can interpret that most of the Inactive customers are about to churned.
 
-
 ### Does churn depend on age of the customers?
-```{r Correlation between balance and customer churn, include=TRUE, echo=TRUE}
+
+```{r Correlation between age and customer churn, include=TRUE, echo=TRUE}
 library(corrplot)
 churn_data_to_numeric <- churn_data
 
@@ -640,8 +640,8 @@ str(churn_data_numeric)
 cors <- cor(churn_data_numeric)
 corrplot(cors, method = 'number')
 
-cor_scores_age <- cor(churn_data_numeric$age, churn_data_numeric$churn)
-cor_scores_age
+cor_age <- cor(churn_data_numeric$age, churn_data_numeric$churn)
+cor_age
 ```
 
 ```{r}

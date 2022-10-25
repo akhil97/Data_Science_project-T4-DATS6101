@@ -2002,6 +2002,10 @@ cor_scores</code></pre>
 <p><strong>Two sample T_test for balance vs churn</strong></p>
 <pre class="r"><code>balance_test&lt;-t.test(balance~churn,data=churn_data)
 balance_test</code></pre>
+</div>
+<div id="does-a-user-having-a-credit-card-with-the-bank-affect-their-predisposition-to-churn" class="section level3">
+<h3>Does a user having a credit card with the bank affect their
+predisposition to churn?</h3>
 <pre class="r"><code>churn_data[, 10:11][churn_data[, 10:11] == 1] &lt;- &#39;Churn&#39;
 churn_data[, 10:11][churn_data[, 10:11] == 0] &lt;- &#39;No Churn&#39;
 
@@ -2084,10 +2088,11 @@ about to churned when compared to customers from spain.</p>
 <h3>Does churn depends on different banking service provide by the
 banks?</h3>
 <pre class="r"><code>#Contingency table
-contab = table(churn_data$churn, churn_data$products_number)
+contab_productnumber = table(churn_data$churn, churn_data$products_number)
+xkabledply(contab_productnumber, title=&quot;Contingency table for Banking Services vs Churn (0 or 1)&quot;)
 
 #Chisquare Test of independency
-chitests = chisq.test(contab)
+chitests = chisq.test(contab_productnumber)
 chitests
 
 chitests$statistic

@@ -452,12 +452,16 @@ corrplot(cors, method = 'number')
 cor_scores <- cor(churn_data_numeric$balance, churn_data_numeric$churn)
 cor_scores
 ```
+
 **Two sample T_test for balance vs churn**
+
 ```{r Two sample T_test for  accoutn balance vs churn}
 balance_test<-t.test(balance~churn,data=churn_data)
 balance_test
 
 ```
+
+### Does a user having a credit card with the bank affect their predisposition to churn? 
 
 ```{r Chisq test of independence between credit card and customer churn rate}
 churn_data[, 10:11][churn_data[, 10:11] == 1] <- 'Churn'
@@ -540,10 +544,11 @@ We can notice that most of the customers from germany and france are about to ch
 
 ```{r Chisq test of independence between Bank Services and customer churn rate}
 #Contingency table
-contab = table(churn_data$churn, churn_data$products_number)
+contab_productnumber = table(churn_data$churn, churn_data$products_number)
+xkabledply(contab_productnumber, title="Contingency table for Banking Services vs Churn (0 or 1)")
 
 #Chisquare Test of independency
-chitests = chisq.test(contab)
+chitests = chisq.test(contab_productnumber)
 chitests
 
 chitests$statistic

@@ -78,6 +78,7 @@ include categorical columns that we just converted.
 **Checking if there are any NA values in the data frame**
 ```{r Check for NA in the dataframe}
 sum(is.na(churn_data) == 'TRUE')
+
 ```
 
 
@@ -243,7 +244,7 @@ ggplot(df, aes(x = "", y = perc, fill = credit_card)) +
              position = position_stack(vjust = 0.5),
              show.legend = FALSE) +
   coord_polar(theta = "y")+
-  scale_fill_brewer(palette="Greens")
+  scale_fill_brewer(palette="Greens")+
   labs(title="Percentage of customer use credit card",x="", y="") 
 ```  
 **Predominantly 71% of the Bank customer use credit_card and only 29% do not make use of it.**
@@ -440,12 +441,17 @@ str(churn_data_to_numeric)
 churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
 str(churn_data_numeric)
 cors <- cor(churn_data_numeric)
-corrplot(cors, method = 'square')
+corrplot(cors, method = 'number')
 
 cor_scores <- cor(churn_data_numeric$balance, churn_data_numeric$churn)
 cor_scores
 ```
+**Two sample T_test for balance vs churn**
+```{r Two sample T_test for  accoutn balance vs churn}
+balance_test<-t.test(balance~churn,data=churn_data)
+balance_test
 
+```
 
 
 ```{r credit card-churn}

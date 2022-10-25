@@ -70,6 +70,7 @@ churn_data_category$tenure =factor(churn_data$tenure )
 churn_data_category$products_number=factor(churn_data$products_number)
 str(churn_data_category)
 ```
+
 We decided to convert these variables into categorical (factor):  
 `credit_card`, `active_member`, `churn` and `gender`. Notice that 
 the data frame `churn_data` still has all variables numerical, while the data frame `churn_data_category` 
@@ -80,8 +81,6 @@ include categorical columns that we just converted.
 sum(is.na(churn_data) == 'TRUE')
 
 ```
-
-
 
 **Converting Boolean values into Character format**
 ```{r}
@@ -104,8 +103,8 @@ churn_data$churn[churn_data$churn== 0]<-"Retained"
 credit_score_clean <- outlierKD2(churn_data, credit_score, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(credit_score_clean)
 ```
-The proportion outliers for credit_card variable if 0.2% and it was removed successfully using outlierKD function.
 
+The proportion outliers for credit_card variable if 0.2% and it was removed successfully using outlierKD function.
 
 ```{r customer_age}
 age_clean <- outlierKD2(churn_data, age, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
@@ -117,19 +116,16 @@ tenure_clean <- outlierKD2(churn_data, tenure, rm = TRUE, boxplt = TRUE, qqplt =
 xkablesummary(tenure_clean)
 ```
 
-
 ```{r balance}
 balance_clean <- outlierKD2(churn_data, balance, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(balance_clean)
 ```
-
 
 ```{r estimated_salary}
 salary_clean <- outlierKD2(churn_data, estimated_salary, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(salary_clean)
 ```
 By using outlierKD function we can observe that outliers where found only in `age` and `credit_card` variables i.e,3.7% and 0.2%
-
 
 ### Customer Analysis 
 
@@ -148,7 +144,6 @@ print(sd(churn_data$credit_score))
 ```
 
 **The average `credit score` of the customer is `r mean(churn_data$credit_score)`,most of the customer having credit score fall between 600 to 700 and standard deviation is `r sd(churn_data$credit_score)`.**
-
 
 ```{r Country}
 ggplot(data=churn_data,aes(x=country,fill=country))+
@@ -171,6 +166,7 @@ ggplot(churn_data, aes(x = age,fill=cut(age,100))) +
 print(mean(churn_data$age))
 print(sd(churn_data$age))
 ```
+
 **The majority of the bank customer's fall below the age of 30 with average age of `r mean(churn_data$age)` and with standard deviation of `r sd(churn_data$age)`.**
 
 ```{r tenure}
@@ -274,7 +270,6 @@ ggplot(df, aes(x = "", y = perc, fill = products_number)) +
 
 **Most of the customer user product 1 which is 50% and product 4 is the least used with 0.6%.**
 
-
 ```{r Customer_churn}
 df <- churn_data %>% 
   group_by(churn) %>% 
@@ -357,9 +352,11 @@ sd_balance = sd(churn_data$balance)
 str(sd_balance)
 
 ```
+
 Mean  and SD for the entire population of credit_score in churn_data data frame mean=`r format(mean.balance, digits=5)` and sd=`r format(sd_balance, digits=5)`.
 
 Now let us create a smaller sample of the account balance out of the entire population, and call it churn_balance_sample.
+
 ```{r churn_balance_sample,results='apois'}
 set.seed(321) 
 churn_balance_sample = churn_data[ sample(nrow(churn_data),4000), ]
@@ -508,6 +505,7 @@ cs_churn
 cor_scores <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
 cor_scores
 ```
+
 **The credit score is weakly correlated with customer churn with a score of -0.0271**
 
 ### Does the churn rate depend upon which country the customer belongs to?

@@ -508,22 +508,6 @@ cor_scores
 
 **The credit score is weakly correlated with customer churn with a score of -0.0271**
 
-```{r}
-loadPkg("BSDA") 
-
-ttestcreditscore95 = t.test(churn_balance_sample$credit_score) # default conf.level = 0.95
-ttestcreditscore95
-ttestcreditscore99 = t.test(churn_balance_sample$credit_score, conf.level=0.99 )
-ttestcreditscore99
-ttestcreditscore50 = t.test(churn_balance_sample$credit_score,  conf.level=0.50 )
-ttestcreditscore50
-
-ttestcreditscore95$conf.int
-ttestcreditscore99$conf.int
-ttestcreditscore50$conf.int
-```
-```
-
 
 ### Does the churn rate depend upon which country the customer belongs to?
 

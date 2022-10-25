@@ -493,10 +493,10 @@ str(churn_data_to_numeric)
 churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
 str(churn_data_numeric)
 cors <- cor(churn_data_numeric)
-corrplot(cors, method = 'square')
+corrplot(cors, method = 'number')
 
-cor_scores <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
-cor_scores
+cor_scores_balance <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
+cor_scores_balance
 ```
 **The credit score is weakly correlated with customer churn with a score of -0.0271**
 
@@ -583,3 +583,24 @@ ggplot(data=churn_data,aes(x=active_member,fill=churn))+
 ```  
 
 Here, we can interpret that most of the Inactive customers are about to churned.
+
+
+### Does churn depend on age of the customers?
+```{r Correlation between age and customer churn, include=TRUE, echo=TRUE}
+library(corrplot)
+churn_data_to_numeric <- churn_data
+
+churn_data$churn[churn_data$churn== "Churned"]<-1
+churn_data$churn[churn_data$churn== "Retained"]<-0
+
+
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+str(churn_data_to_numeric)
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+str(churn_data_numeric)
+cors <- cor(churn_data_numeric)
+corrplot(cors, method = 'number')
+
+cor_scores_age <- cor(churn_data_numeric$age, churn_data_numeric$churn)
+cor_scores_age
+```

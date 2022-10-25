@@ -669,7 +669,7 @@ ggplot(churn_data, aes(x=age, fill=churn)) +
 churn_age = table(churn_data$churn, churn_data$age)
 churn_age
 
-#Chisquare Test of independency
+#Chisquare Test of independence
 chichurn_age = chisq.test(churn_age)
 chichurn_age
 

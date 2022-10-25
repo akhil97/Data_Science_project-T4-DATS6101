@@ -425,7 +425,7 @@ We have $\chi^2$  value of the test from `chitests$statistic` = `r chitests$stat
 ggplot(data=churn_data,aes(x=gender,fill=churn))+
   geom_bar(col="black")+
   scale_fill_brewer(palette="Blues") +
-  labs(title = "Gender vs Churn",x="Gender",y="Chrun")+
+  labs(title = "Gender vs Churn",x="Gender",y="Churn")+
   theme_minimal()
 
 ```   
@@ -469,10 +469,13 @@ cc_churn
 chitestccchurn <- chisq.test(cc_churn)
 chitestccchurn
 
-ggplot(churn_data, aes(fill=churn, y=churn, x=credit_card)) + 
-  geom_bar(position='stack', stat='identity') + theme_minimal() + 
-  labs(x='Credit Card', y='Number of Customers', title='Customer Churn in Customers with and without Credit Cards')  +
-  scale_fill_manual('Position', values=c('red', 'lightblue'))
+
+
+ggplot(data=churn_data,aes(x=credit_card,fill=churn))+
+  geom_bar()+
+  scale_fill_manual('Position', values=c('red', 'lightblue')) +
+  labs(title = "Customer Churn in Customers With and Without Credit Cards",x="Credit Card",y="Churn")+
+  theme_minimal()
 ```
 
 Credit Card vs Churn
@@ -527,7 +530,7 @@ We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$s
 ggplot(data=churn_data,aes(x=country,fill=churn))+
   geom_bar()+
   scale_fill_manual('Position', values=c('red', 'lightgreen')) +
-  labs(title = "Customer Churn in Different Countries",x="Country",y="Chrun")+
+  labs(title = "Customer Churn in Different Countries",x="Country",y="Churn")+
   theme_minimal()
 ``` 
 

@@ -659,24 +659,23 @@ ttestage99$conf.int
 ttestage50$conf.int
 ```
 
-```{r}
-
-ggplot(churn_data, aes(x=age, fill=churn)) +
-  geom_histogram( color='#e9ecef', alpha=0.5, position='identity') + scale_fill_manual('Position', values=c('red', 'pink1')) +
-  labs(title = "Age Distribution across Churned and No Churn Account Holders",x="Age of Account Holders",y="Frequency")
-
+```{r Chisq test of independence between Age and customer churn rate}
 #Contingency table
-churn_age = table(churn_data$churn, churn_data$age)
-churn_age
+contab_age = table(churn_data$churn, churn_data$age)
+xkabledply(contab_age, title="Contingency table for Age vs Churn (0 or 1)")
 
 #Chisquare Test of independency
-chichurn_age = chisq.test(churn_age)
+chichurn_age = chisq.test(contab_age)
 chichurn_age
 
 chichurn_age$statistic
 chichurn_age$parameter
 chichurn_age$p.value
 
+ggplot(churn_data, aes(x=age, fill=churn)) +
+  geom_histogram( color='#e9ecef', alpha=0.5, position='identity') + scale_fill_manual('Position', values=c('red', 'pink1')) +
+  labs(title = "Age Distribution across Churned and No Churn Account Holders",x="Age of Account Holders",y="Frequency")
+
 ```
-```
+
 

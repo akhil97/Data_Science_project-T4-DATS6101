@@ -582,9 +582,9 @@ We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$s
 
 ```{r Active_members_churns}
 ggplot(data=churn_data,aes(x=active_member,fill=churn))+
-  geom_bar(col="black")+
-  scale_fill_manual('Position', values=c('red', 'green')) +
-  labs(title = "Active Members vs Churn",x="Active Members",y="Chrun")+
+  geom_bar()+
+  scale_fill_manual('Position', values=c('red', 'pink1')) +
+  labs(title = "Active Members vs Churn",x="Active Status of Account Holders",y="Churn")+
   theme_minimal()
 ```  
 

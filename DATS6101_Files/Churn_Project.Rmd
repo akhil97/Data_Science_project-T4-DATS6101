@@ -453,7 +453,7 @@ cor_scores
 ```
 
 
-```{r credit card-churn}
+```{r Chisq test of independence between credit card and customer churn rate}
 churn_data[, 10:11][churn_data[, 10:11] == 1] <- 'Churn'
 churn_data[, 10:11][churn_data[, 10:11] == 0] <- 'No Churn'
 
@@ -474,6 +474,8 @@ ggplot(churn_data, aes(fill=churn, y=churn, x=credit_card)) +
 Credit Card vs Churn
 P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occurring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
 
+### Does a higher/lower credit score of the customer affect churn?
+
 ```{r Correlation between credit score and customer churn, include=TRUE, echo=TRUE}
 library(corrplot)
 churn_data_to_numeric <- churn_data
@@ -493,6 +495,8 @@ cor_scores <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
 cor_scores
 ```
 **The credit score is weakly correlated with customer churn with a score of -0.0271**
+
+### Does the churn rate depend upon which country the customer belongs to?
 
 ```{r Chisq test of independence between country and customer churn rate}
 #Contingency table

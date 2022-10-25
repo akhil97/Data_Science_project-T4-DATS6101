@@ -2018,6 +2018,9 @@ significance level (0.05 for df=1). Thus, we reject the null hypothesis,
 as there is a 0.5 or 50% chance of these results occurring by chance. We
 can conclude that there is no relationship between whether a user has a
 credit card, and churn.</p>
+</div>
+<div id="does-a-higherlower-credit-score-of-the-customer-affect-churn" class="section level3">
+<h3>Does a higher/lower credit score of the customer affect churn?</h3>
 <pre class="r"><code>library(corrplot)
 churn_data_to_numeric &lt;- churn_data
 
@@ -2036,6 +2039,10 @@ corrplot(cors, method = &#39;square&#39;)</code></pre>
 cor_scores</code></pre>
 <p><strong>The credit score is weakly correlated with customer churn
 with a score of -0.0271</strong></p>
+</div>
+<div id="does-the-churn-rate-depend-upon-which-country-the-customer-belongs-to" class="section level3">
+<h3>Does the churn rate depend upon which country the customer belongs
+to?</h3>
 <pre class="r"><code>#Contingency table
 
 contable = table(churn_data$country, churn_data$churn)

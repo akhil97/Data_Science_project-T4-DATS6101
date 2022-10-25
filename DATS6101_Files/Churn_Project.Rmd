@@ -529,7 +529,7 @@ We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$s
 ```{r Country_churns}
 ggplot(data=churn_data,aes(x=country,fill=churn))+
   geom_bar()+
-  scale_fill_manual('Position', values=c('red', 'lightgreen')) +
+  scale_fill_manual('Position', values=c('red', 'lavenderblush2')) +
   labs(title = "Customer Churn in Different Countries",x="Country",y="Churn")+
   theme_minimal()
 ``` 
@@ -555,8 +555,8 @@ We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$s
 
 ```{r Bank_Services_churns}
 ggplot(data=churn_data,aes(x=products_number,fill=churn))+
-  geom_bar(col="black")+
-  scale_fill_manual('Position', values=c('red', 'green')) +
+  geom_bar()+
+  scale_fill_manual('Position', values=c('red', 'lavender')) +
   labs(title = "Bank Services vs Churn",x="Bank Services",y="Chrun")+
   theme_minimal()
 ```  

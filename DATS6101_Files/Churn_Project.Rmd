@@ -567,10 +567,11 @@ We can notice that most of the customers with lower and higher products i.e) 1, 
 
 ```{r Chisq test of independence between Active members and customer churn rate}
 #Contingency table
-contab = table(churn_data$churn, churn_data$active_member)
+contab_activemember = table(churn_data$churn, churn_data$active_member)
+xkabledply(contab_activemember, title="Contingency table for Account Status(Active, In Active) vs Churn (0 or 1)")
 
 #Chisquare Test of independency
-chitests = chisq.test(contab)
+chitests = chisq.test(contab_activemember)
 chitests
 
 chitests$statistic

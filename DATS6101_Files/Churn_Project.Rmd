@@ -489,6 +489,9 @@ str(churn_data_numeric)
 cors <- cor(churn_data_numeric)
 corrplot(cors, method = 'square')
 
+cs_churn <- table(churn_data$churn, churn_data$credit_score)
+cs_churn
+
 cor_scores <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
 cor_scores
 ```
@@ -516,9 +519,9 @@ We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$s
 
 ```{r Country_churns}
 ggplot(data=churn_data,aes(x=country,fill=churn))+
-  geom_bar(col="black")+
-  scale_fill_manual('Position', values=c('red', 'lightblue')) +
-  labs(title = "Country vs Churn",x="Country",y="Chrun")+
+  geom_bar()+
+  scale_fill_manual('Position', values=c('red', 'lightgreen')) +
+  labs(title = "Customer Churn in Different Countries",x="Country",y="Chrun")+
   theme_minimal()
 ``` 
 

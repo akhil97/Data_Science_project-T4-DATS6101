@@ -424,7 +424,7 @@ We have $\chi^2$  value of the test from `chitests$statistic` = `r chitests$stat
 ```{r Gender_churns}
 ggplot(data=churn_data,aes(x=gender,fill=churn))+
   geom_bar(col="black")+
-  scale_fill_brewer(palette="Blues") +
+   scale_fill_manual('Position', values=c('red', 'lightblue'))+
   labs(title = "Gender vs Churn",x="Gender",y="Chrun")+
   theme_minimal()
 

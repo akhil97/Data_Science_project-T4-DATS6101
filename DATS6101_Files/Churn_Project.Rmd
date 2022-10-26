@@ -125,7 +125,7 @@ xkablesummary(balance_clean)
 salary_clean <- outlierKD2(churn_data, estimated_salary, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 xkablesummary(salary_clean)
 ```
-By using outlierKD function we can observe that outliers where found only in `age` and `credit_card` variables i.e,3.7% and 0.2%
+By using outlierKD function we can observe that outliers where found only in `age` and `credit_score` variables i.e,3.7% and 0.2%
 
 ### Customer Analysis 
 
@@ -567,7 +567,7 @@ ggplot(data=churn_data,aes(x=country,fill=churn))+
 
 We can notice that most of the customers from germany and france are about to churned when compared to customers from spain.
 
-### Does churn depends on different banking service provide by the banks?
+### Does churn depends on different banking product and services provide by the banks?
 
 ```{r Chisq test of independence between Bank Services and customer churn rate}
 #Contingency table
@@ -589,7 +589,7 @@ We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$s
 ggplot(data=churn_data,aes(x=products_number,fill=churn))+
   geom_bar()+
   scale_fill_manual('Position', values=c('red', 'lavender')) +
-  labs(title = "Bank Services vs Churn",x="Bank Services",y="Chrun")+
+  labs(title = "Banking Product and Services vs Churn",x="Banking Product and Services",y="Chrun")+
   theme_minimal()
 ```  
 

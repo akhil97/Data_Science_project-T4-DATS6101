@@ -406,6 +406,7 @@ ttestbalance50$conf.int
 ```{r Chisq test of independence between Gender and customer churn rate}
 #Contingency table
 contab = table(churn_data$churn, churn_data$gender)
+xkabledply(contab, title="Contingency table for Gender(Male, Female) vs Churn (0 or 1)")
 
 #Chisquare Test of independency
 chitests = chisq.test(contab)

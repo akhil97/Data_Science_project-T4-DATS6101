@@ -1958,6 +1958,7 @@ ttestbalance50$conf.int</code></pre>
 depends on Gender?</strong></p>
 <pre class="r"><code>#Contingency table
 contab = table(churn_data$churn, churn_data$gender)
+xkabledply(contab, title=&quot;Contingency table for Gender(Male, Female) vs Churn (0 or 1)&quot;)
 
 #Chisquare Test of independency
 chitests = chisq.test(contab)

@@ -1,5 +1,5 @@
 ---
-title: "ABC Bank Customer Churn"
+title: "AMultinational Bank Customer Churn"
 author: "T4-Analytical Avengers"
 date: "`r Sys.Date()`"
 output:
@@ -430,6 +430,11 @@ ttestbalance50$conf.int
 
 **We are doing chi-square test to determine if the churn rate depends on Gender?**
 
+Chi Square Test for independence
+H0: Customer’s gender and churn are independent
+H1: Customer’s gender and churn are not independent
+
+
 ```{r Chisq test of independence between Gender and customer churn rate}
 #Contingency table
 contab = table(churn_data$churn, churn_data$gender)
@@ -458,6 +463,8 @@ ggplot(data=churn_data,aes(x=gender,fill=churn))+
 We observed that majority of the churned customers were female despite the total population of the bank being predominantly male.
 
 ### Does a higher/lower account balance of the customer affect churn? 
+
+Correlation test between account balance and churn
 
 ```{r Correlation between balance and customer churn, include=TRUE, echo=TRUE}
 library(corrplot)
@@ -503,6 +510,10 @@ ttestbalances50$conf.int
 
 ### Does a user having a credit card with the bank affect their predisposition to churn? 
 
+Chi Square Test for independence
+H0: Having a credit card and churn are independent
+H1: Having a credit card and churn are not independent
+
 ```{r Chisq test of independence between credit card and customer churn rate}
 churn_data[, 10:11][churn_data[, 10:11] == 1] <- 'Churn'
 churn_data[, 10:11][churn_data[, 10:11] == 0] <- 'No Churn'
@@ -526,6 +537,8 @@ Credit Card vs Churn
 P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occurring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
 
 ### Does a higher/lower credit score of the customer affect churn?
+
+Correlation test between credit score and churn
 
 ```{r Correlation between credit score and customer churn, include=TRUE, echo=TRUE}
 library(corrplot)
@@ -567,6 +580,11 @@ ttestcreditscore50$conf.int
 
 ### Does the churn rate depend upon which country the customer belongs to?
 
+Chi Square Test for independence
+H0: Country and churn are independent
+H1: Country and churn are not independent
+
+
 ```{r Chisq test of independence between country and customer churn rate}
 #Contingency table
 
@@ -597,6 +615,11 @@ We can notice that most of the customers from germany and france are about to ch
 
 ### Does churn depends on different banking product and services provide by the banks?
 
+Chi Square Test for independence
+H0: Banking products, services and churn are independent
+H1: Banking products, services and churn are not independent
+
+
 ```{r Chisq test of independence between Banking product and services and customer churn rate}
 #Contingency table
 contab_productnumber = table(churn_data$churn, churn_data$products_number)
@@ -623,6 +646,10 @@ ggplot(data=churn_data,aes(x=products_number,fill=churn))+
 We can notice that most of the customers with lower and higher products i.e) 1, 3 and 4 are about to churned when compared to customers with two products.
 
 ### Does churn depend on status of active account users?
+
+Chi Square Test for independence
+H0: Customer’s active status and churn are independent
+H1: Customer’s active status  and churn are not independent
 
 ```{r Chisq test of independence between Active members and customer churn rate}
 #Contingency table
@@ -651,6 +678,8 @@ ggplot(data=churn_data,aes(x=active_member,fill=churn))+
 Here, we can interpret that most of the Inactive customers are about to churned.
 
 ### Does churn depend on age of the customers?
+
+Correlation test between age and churn
 
 ```{r Correlation between age and customer churn, include=TRUE, echo=TRUE}
 library(corrplot)
@@ -705,5 +734,5 @@ chichurn_age$parameter
 chichurn_age$p.value
 
 ```
-```
+
 

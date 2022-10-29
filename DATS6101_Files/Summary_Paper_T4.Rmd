@@ -1,0 +1,31 @@
+---
+title: "Multinatinal Bank Customer Churn"
+output: 
+  html_document:
+    code_folding: hide
+    number_sections: true
+    toc: yes
+    toc_depth: 6
+    toc_float: yes
+    collapsed: false
+    smooth_scroll: false
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Chapter 1: Introduction
+
+Customer churn, also known as customer turnover, occurs when a customer chooses to leave or unsubscribe from a service for any reason. In the context of this project, we are looking at customer churn in banking. Being able to predict customer churn is important because we want to retain as many customers as we can. Of course you want to keep customers, but it also is cheaper to retain your customers, than having to spend money to acquire new customers to replace the ones that left. Lower customer acquisition costs equal more profits. By identifying customers at risk of churn, we are able to identify which efforts in order to maximize their likelihood of staying. 
+
+In our research, we aim, through EDA, to identify the variables which have the highest correlation with churn, across three countries serviced by a multinational bank. The variables identified can then be used to inform banks of what customer activity trends and attributes should be monitored so the bank can make efforts to retain the customers before the account has been closed.
+
+This report is organized as follows:
+
+# Chapter 2: Description of the data
+
+## 

@@ -2,8 +2,10 @@
 title: "Multinatinal Bank Customer Churn"
 output: 
   html_document:
+    theme: "spacelab"
+    highlight: kate
     code_folding: hide
-    number_sections: true
+    number_sections: false
     toc: yes
     toc_depth: 6
     toc_float: yes
@@ -12,6 +14,7 @@ output:
   pdf_document:
     toc: yes
     toc_depth: '3'
+
 ---
 
 ```{r setup, include=FALSE}
@@ -34,5 +37,10 @@ After finding a data set that piqued our personal interests, met the project req
 
 
 # Chapter 2: Description of the data
+
+
+A limitation of the data set is that it is imbalanced, as the customer country is not evenly distributed. There are three countries, however half of all customers are based in France, and the remaining two countries are each home to a quarter of all customers.
+When creating our model, we will need to take this into account and plan to handle this imbalanced data. A second limitation is that some of the variables are poorly defined. One such variable is ‘active_member’, which does not operationally define what it means to be an active member (ie. has not logged in in X months, has had no deposits in time period X). Another variable which does not provide enough information about its definition is Products Number. While it does give the number of products, we do not know which products, and in which combination they are used by the customers. While we can draw conclusions based on the number of products, we cannot make further inferences about the type of product or combinations of products.
+
 
 ## 

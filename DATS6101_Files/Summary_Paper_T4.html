@@ -1394,6 +1394,119 @@ ul.task-list{list-style: none;}
 
 
 
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+background-color: #ffffff;
+color: #a0a0a0;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0; padding-left: 4px; }
+div.sourceCode
+{ color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } 
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } 
+code span.an { color: #ca60ca; } 
+code span.at { color: #0057ae; } 
+code span.bn { color: #b08000; } 
+code span.bu { color: #644a9b; font-weight: bold; } 
+code span.cf { color: #1f1c1b; font-weight: bold; } 
+code span.ch { color: #924c9d; } 
+code span.cn { color: #aa5500; } 
+code span.co { color: #898887; } 
+code span.cv { color: #0095ff; } 
+code span.do { color: #607880; } 
+code span.dt { color: #0057ae; } 
+code span.dv { color: #b08000; } 
+code span.er { color: #bf0303; text-decoration: underline; } 
+code span.ex { color: #0095ff; font-weight: bold; } 
+code span.fl { color: #b08000; } 
+code span.fu { color: #644a9b; } 
+code span.im { color: #ff5500; } 
+code span.in { color: #b08000; } 
+code span.kw { color: #1f1c1b; font-weight: bold; } 
+code span.op { color: #1f1c1b; } 
+code span.ot { color: #006e28; } 
+code span.pp { color: #006e28; } 
+code span.re { color: #0057ae; background-color: #e0e9f8; } 
+code span.sc { color: #3daee9; } 
+code span.ss { color: #ff5500; } 
+code span.st { color: #bf0303; } 
+code span.va { color: #0057ae; } 
+code span.vs { color: #bf0303; } 
+code span.wa { color: #bf0303; } 
+.sourceCode .row {
+width: 100%;
+}
+.sourceCode {
+overflow-x: auto;
+}
+.code-folding-btn {
+margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -1595,10 +1708,8 @@ by a multinational bank. The variables identified can then be used to
 inform banks of what customer activity trends and attributes should be
 monitored so the bank can make efforts to retain the customers before
 the account has been closed.</p>
-<p>This report is organized as follows:</p>
-</div>
-<div id="choosing-the-topic" class="section level1">
-<h1>Choosing the Topic</h1>
+<div id="choosing-the-topic" class="section level2">
+<h2>Choosing the Topic</h2>
 <p>We chose to analyze a multinational bank’s churn for several reasons.
 As an international team, we were interested in topics that spanned
 multiple countries, with a particular focus on either business or
@@ -1626,8 +1737,93 @@ project requirements, and had a larger range of variables than the other
 top choices, we were satisfied with our choice and able to proceed to
 the next stage.</p>
 </div>
+</div>
 <div id="chapter-2-description-of-the-data" class="section level1">
-<h1>Chapter 2: Description of the data</h1>
+<h1>Chapter 2: Description of the Data</h1>
+<div id="about-the-data-set" class="section level3">
+<h3>About the Data Set</h3>
+<p>This study is based on a data set that contains 10,000 observations
+of bank customers with 12 variables. (See below for a readout of the
+dataset’s structure and variable names.) Variable descriptions are as
+follows and we choose the data set from <a href="https://www.kaggle.com/code/tamunoyedarego/abc-multinational-bank-customer-analysis">Kaggle</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>churn_data<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">&quot;Bank_Customer_Churn_Prediction.csv&quot;</span>,<span class="at">header=</span><span class="cn">TRUE</span>)) <span class="co">#reading the file into data frame</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(churn_data) <span class="co">#printing the data frame structure</span></span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    10000 obs. of  12 variables:
+##  $ customer_id     : int  15634602 15647311 15619304 15701354 15737888 15574012 15592531 15656148 15792365 15592389 ...
+##  $ credit_score    : int  619 608 502 699 850 645 822 376 501 684 ...
+##  $ country         : chr  &quot;France&quot; &quot;Spain&quot; &quot;France&quot; &quot;France&quot; ...
+##  $ gender          : chr  &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; ...
+##  $ age             : int  42 41 42 39 43 44 50 29 44 27 ...
+##  $ tenure          : int  2 1 8 1 2 8 7 4 4 2 ...
+##  $ balance         : num  0 83808 159661 0 125511 ...
+##  $ products_number : int  1 1 3 2 1 2 2 4 2 1 ...
+##  $ credit_card     : int  1 0 1 0 1 1 1 1 0 1 ...
+##  $ active_member   : int  1 1 0 0 1 0 1 0 1 1 ...
+##  $ estimated_salary: num  101349 112543 113932 93827 79084 ...
+##  $ churn           : int  1 0 1 0 0 1 0 1 0 0 ...</code></pre>
+<ol style="list-style-type: decimal">
+<li>Customer ID - The Unique ID of each individual customer</li>
+<li>Credit Score - A number depicting the customer’s
+creditworthiness</li>
+<li>Country - The country the customer banks from</li>
+<li>Gender - The gender the customer identifies with</li>
+<li>Age - The customers age</li>
+<li>Tenure - Indicates how length in years the customer has been with
+the bank</li>
+<li>Balance - The amount currently available in the customer’s
+account</li>
+<li>Products Number - The number of products purchased by the customer
+through the bank</li>
+<li>Credit Card - Indicates the customer has a credit card</li>
+<li>Active Member - Indicates if the customer is an active or
+inactive</li>
+<li>Estimated Salary - Bank Estimation of the income of the
+customer</li>
+<li>Churn - Indicator of if the customer has left the bank or not</li>
+</ol>
+</div>
+<div id="limitations-of-the-data-set" class="section level3">
+<h3>Limitations of the Data Set</h3>
+<p>A limitation of the data set is that it is imbalanced, as the
+customer country is not evenly distributed. There are three countries,
+however half of all customers are based in France, and the remaining two
+countries are each home to a quarter of all customers. When creating our
+model, we will need to take this into account and plan to handle this
+imbalanced data. A second limitation is that some of the variables in
+the data set are poorly defined. One such variable is ‘active_member’,
+which does not operationally define what it means to be an active member
+(ie. has not logged in in X months, has had no deposits in time period
+X). Another variable which does not provide enough information about its
+definition is products_number. While it does give the number of products
+an account holder has purchased, we do not know which products, and in
+which combination they are used by the customers. While we can draw
+conclusions based on the number of products, we cannot make further
+inferences about the customer’s behavior based on the type of product or
+effects relating to combinations of products.</p>
+</div>
+</div>
+<div id="s.m.a.r.t.-questions" class="section level1">
+<h1>S.M.A.R.T. Questions</h1>
+<p>The “big question” we are exploring is &gt;What factors affect the
+Customer Churn Rate in Multinational banks?</p>
+<p>This question is broken down based on the variables in the data set,
+as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Does churn depend on Gender?</li>
+<li>Does the account holder’s age have an influence on churn?</li>
+<li>Does churn depend on status of active account users?</li>
+<li>Does churn depend on different banking product and services provided
+by the banks?</li>
+<li>Does a higher/lower credit score of the customer affect churn?</li>
+<li>Does a higher/lower estimated salary of the customer affect
+churn?</li>
+<li>Does a higher/lower account balance of the customer affect
+churn?</li>
+<li>Does a user having a credit card with the bank affect their
+predisposition to churn?</li>
+<li>Does the churn rate depend upon which country the customer belongs
+to?</li>
+</ol>
 <div id="section" class="section level2">
 <h2></h2>
 </div>

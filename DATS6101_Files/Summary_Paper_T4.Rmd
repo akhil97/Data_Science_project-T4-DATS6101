@@ -27,20 +27,54 @@ Customer churn, also known as customer turnover, occurs when a customer chooses 
 
 In our research, we aim, through EDA, to identify the variables which have the highest correlation with churn, across three countries serviced by a multinational bank. The variables identified can then be used to inform banks of what customer activity trends and attributes should be monitored so the bank can make efforts to retain the customers before the account has been closed.
 
-This report is organized as follows:
 
-# Choosing the Topic
+## Choosing the Topic
 
 We chose to analyze a multinational bank’s churn for several reasons. As an international team, we were interested in topics that spanned multiple countries, with a particular focus on either business or environment, our personal interests. When we were pitching topics, nearly every suggestion was geared towards sales or customer experience, or global environmental issues. After ensuring that the data sets that interested us had enough observations to follow the project’s guidelines, we then identified the topics with the highest number of useful variables. There were several data sets, which, while interesting, did not yield enough useful variables. Rather, they included variables like unique product, user, or review identifiers, which were not relevant to the type of analysis we were performing. From our short-list, the Bank Customer Churn Data Set had the highest number of useful variables, 11 out of the 12, as opposed to 4-6 useful variables for our runner-up options. We made the decision to go with our chosen data set because we figured that a larger number of variables (and data) is a closer reflection of the multitude of factors that affect a customer’s decision to churn. Additionally, we do not know at first glance which of the variables will end up being statistically significant, however, by having a higher number of variables, we are considering the potential effects of a wider range of variables, which may be useful to our model after we perform EDA.
 
 After finding a data set that piqued our personal interests, met the project requirements, and had a larger range of variables than the other top choices, we were satisfied with our choice and able to proceed to the next stage.
 
 
-# Chapter 2: Description of the data
+# Chapter 2: Description of the Data
+### About the Data Set
 
+This study is based on a data set that contains 10,000 observations of bank customers with 12 variables. (See below for a readout of the dataset’s structure and variable names.) Variable descriptions are as follows and we choose the data set from [Kaggle](https://www.kaggle.com/code/tamunoyedarego/abc-multinational-bank-customer-analysis).
 
-A limitation of the data set is that it is imbalanced, as the customer country is not evenly distributed. There are three countries, however half of all customers are based in France, and the remaining two countries are each home to a quarter of all customers.
-When creating our model, we will need to take this into account and plan to handle this imbalanced data. A second limitation is that some of the variables are poorly defined. One such variable is ‘active_member’, which does not operationally define what it means to be an active member (ie. has not logged in in X months, has had no deposits in time period X). Another variable which does not provide enough information about its definition is Products Number. While it does give the number of products, we do not know which products, and in which combination they are used by the customers. While we can draw conclusions based on the number of products, we cannot make further inferences about the type of product or combinations of products.
+```{r Churn_data_file, include=T,echo=TRUE,results="rpois"}
+churn_data<-data.frame(read.csv("Bank_Customer_Churn_Prediction.csv",header=TRUE)) #reading the file into data frame
+str(churn_data) #printing the data frame structure
+```
+1. Customer ID - The Unique ID of each individual customer
+2. Credit Score - A number depicting the customer's creditworthiness
+3. Country - The country the customer banks from
+4. Gender - The gender the customer identifies with
+5. Age - The customers age
+6. Tenure - Indicates how length in years the customer has been with the bank
+7. Balance - The amount currently available in the customer's account
+8. Products Number - The number of products purchased by the customer through the bank
+9. Credit Card - Indicates the customer has a credit card
+10. Active Member - Indicates if the customer is an active or inactive
+11. Estimated Salary - Bank Estimation of the income of the customer
+12. Churn - Indicator of if the customer has left the bank or not
 
+### Limitations of the Data Set
+A limitation of the data set is that it is imbalanced, as the customer country is not evenly distributed. There are three countries, however half of all customers are based in France, and the remaining two countries are each home to a quarter of all customers. When creating our model, we will need to take this into account and plan to handle this imbalanced data.
+A second limitation is that some of the variables in the data set are poorly defined. One such variable is ‘active_member’, which does not operationally define what it means to be an active member (ie. has not logged in in X months, has had no deposits in time period X). Another variable which does not provide enough information about its definition is products_number. While it does give the number of products an account holder has purchased, we do not know which products, and in which combination they are used by the customers. While we can draw conclusions based on the number of products, we cannot make further inferences about the customer's behavior based on the type of product or effects relating to combinations of products.
+
+# S.M.A.R.T. Questions
+The "big question" we are exploring is
+>What factors affect the Customer Churn Rate in Multinational banks?
+
+This question is broken down based on the variables in the data set, as follows:
+
+1. Does churn depend on Gender?
+2. Does the account holder’s age have an influence on churn?
+3. Does churn depend on status of active account users?
+4. Does churn depend on different banking product and services provided by the banks?
+5. Does a higher/lower credit score of the customer affect churn?
+6. Does a higher/lower estimated salary of the customer affect churn?
+7. Does a higher/lower account balance of the customer affect churn?
+8. Does a user having a credit card with the bank affect their predisposition to churn?
+9. Does the churn rate depend upon which country the customer belongs to?
 
 ## 

@@ -1708,8 +1708,8 @@ by a multinational bank. The variables identified can then be used to
 inform banks of what customer activity trends and attributes should be
 monitored so the bank can make efforts to retain the customers before
 the account has been closed.</p>
-<div id="choosing-the-topic" class="section level2">
-<h2>Choosing the Topic</h2>
+<div id="choosing-the-topic" class="section level3">
+<h3>Choosing the Topic</h3>
 <p>We chose to analyze a multinational bank’s churn for several reasons.
 As an international team, we were interested in topics that spanned
 multiple countries, with a particular focus on either business or
@@ -1802,10 +1802,47 @@ inferences about the customer’s behavior based on the type of product or
 effects relating to combinations of products.</p>
 </div>
 </div>
+<div id="chapter-3-independent-variables-eda" class="section level1">
+<h1>Chapter 3: Independent Variables EDA</h1>
+<p>In preparation for exploratory data analysis, we took several steps
+to clean the data. We immediately dropped the customer_id variable, as
+we do not need the account holder’s unique identifier for our purpose.
+After dropping customer_id our dataset had 11 variables:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>churn_data <span class="ot">&lt;-</span> churn_data[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>)] <span class="co"># removing column 1(customer _id) from data set</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(churn_data)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    10000 obs. of  11 variables:
+##  $ credit_score    : int  619 608 502 699 850 645 822 376 501 684 ...
+##  $ country         : chr  &quot;France&quot; &quot;Spain&quot; &quot;France&quot; &quot;France&quot; ...
+##  $ gender          : chr  &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; ...
+##  $ age             : int  42 41 42 39 43 44 50 29 44 27 ...
+##  $ tenure          : int  2 1 8 1 2 8 7 4 4 2 ...
+##  $ balance         : num  0 83808 159661 0 125511 ...
+##  $ products_number : int  1 1 3 2 1 2 2 4 2 1 ...
+##  $ credit_card     : int  1 0 1 0 1 1 1 1 0 1 ...
+##  $ active_member   : int  1 1 0 0 1 0 1 0 1 1 ...
+##  $ estimated_salary: num  101349 112543 113932 93827 79084 ...
+##  $ churn           : int  1 0 1 0 0 1 0 1 0 0 ...</code></pre>
+<p>Next, we checked for duplicate records in the data set,we found no
+duplicates in the data set.</p>
+<p>We then checked for null variables, and 0 were found.</p>
+<p>We then converted the following variables into categorical variables:
+credit_card, active_member, churn, gender, tenure, product number,
+age</p>
+<p>We also converted boolean values (0,1) into character format for
+Credit_card (credit_card,no-credit card), active_members (Active,In
+Active) and churn (Churned, Retained) variables in the dataset, in order
+to understand each variable in the data set clearly during plotting and
+analysis.</p>
+<p>Finally, we checked our continuous variables for outliers using the
+outlierKD function.</p>
+</div>
 <div id="s.m.a.r.t.-questions" class="section level1">
 <h1>S.M.A.R.T. Questions</h1>
-<p>The “big question” we are exploring is &gt;What factors affect the
-Customer Churn Rate in Multinational banks?</p>
+<p>The “big question” we are exploring is</p>
+<blockquote>
+<p>What factors affect the Customer Churn Rate in Multinational
+banks?</p>
+</blockquote>
 <p>This question is broken down based on the variables in the data set,
 as follows:</p>
 <ol style="list-style-type: decimal">
@@ -1824,6 +1861,8 @@ predisposition to churn?</li>
 <li>Does the churn rate depend upon which country the customer belongs
 to?</li>
 </ol>
+<p>After performing the EDA, we did not make any changes to our SMART
+questions.</p>
 <div id="section" class="section level2">
 <h2></h2>
 </div>

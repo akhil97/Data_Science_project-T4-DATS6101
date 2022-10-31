@@ -54,6 +54,12 @@ nrow(unique(churn_data)) #checking for unique rows
 
 There are `r nrow(unique(churn_data))` rows of unique records in the data.Hence we the data frame has no duplicates records.We can proceed with next step of analysis.
 
+**Checking if there are any NA values in the data frame**
+```{r Check for NA in the dataframe}
+sum(is.na(churn_data) == 'TRUE') # checking for NA values in the dataframe
+
+```
+We found that our dataset was clean without any NA values.
 
 **Checking for summary of the churn data frame.**
 
@@ -71,9 +77,9 @@ Country,gender,active member,credit card,product n umber and churn are categoric
 ```{r Remove cutomer_id from the dataframe, include=TRUE, echo=TRUE}
 churn_data <- churn_data[-c(1)] # removing column 1(customer _id) from data set
 ncol(churn_data) # counting number of variables in the data frame
-summary(churn_data) # checking for summary of the data frame after removing the customer_if field
+str(churn_data) # checking for summary of the data frame after removing the customer_if field
 ```
-We are making analysis for each customer,Hence customer_id was irrelevant field in the data set so we decided to remove the customer_id column from the data frame.
+We are not making analysis for each customer,Hence customer_id was irrelevant field in the data set so we decided to remove the customer_id column from the data frame.
 After removing customer_id attribute from the data frame we now have `r ncol(churn_data)`  columns.
 
 ## Independent variable EDA
@@ -88,20 +94,14 @@ churn_data_category$churn=factor(churn_data$churn)
 churn_data_category$gender=factor(churn_data$gender)
 churn_data_category$tenure =factor(churn_data$tenure )
 churn_data_category$products_number=factor(churn_data$products_number)
+churn_data_category$age=factor(churn_data$age)
 str(churn_data_category)
 ```
 
 We decided to convert these variables into categorical (factor):  
-`credit_card`, `active_member`, `churn` and `gender`. Notice that 
+`credit_card`, `active_member`, `churn` and `gender`,`product_number`,`tenure`,`age`. Notice that 
 the data frame `churn_data` still has all variables numerical, while the data frame `churn_data_category` 
 include categorical columns that we just converted. 
-
-**Checking if there are any NA values in the data frame**
-```{r Check for NA in the dataframe}
-sum(is.na(churn_data) == 'TRUE') # checking for NA values in the dataframe
-
-```
-We found that our dataset was clean without any NA values.
 
 
 **Converting Boolean values into Character format**
@@ -115,6 +115,7 @@ churn_data$credit_card[churn_data$credit_card== 0]<-"No-Credit Card"
 churn_data$churn[churn_data$churn== 1]<-"Churned"
 churn_data$churn[churn_data$churn== 0]<-"Retained"
 
+head(churn_data)
 ```
 We decided to assign string values to the  corresponding Boolean values for the few variables in the dataset,So that it would be much better to understand each variable clearly.
 

@@ -2227,6 +2227,76 @@ provided?</h3>
 <p>Chi Square test for independence H0 :Banking products,services and
 churn are independent. H1 : Banking products,services and churn are not
 independent.</p>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+Contingency table for Banking Services vs Churn (0 or 1)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+1
+</th>
+<th style="text-align:right;">
+2
+</th>
+<th style="text-align:right;">
+3
+</th>
+<th style="text-align:right;">
+4
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Churned
+</td>
+<td style="text-align:right;">
+1409
+</td>
+<td style="text-align:right;">
+348
+</td>
+<td style="text-align:right;">
+220
+</td>
+<td style="text-align:right;">
+60
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Retained
+</td>
+<td style="text-align:right;">
+3675
+</td>
+<td style="text-align:right;">
+4242
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  contab_productnumber
+## X-squared = 1504, df = 3, p-value &lt;2e-16</code></pre>
+<p>We have the <span class="math inline">\(\chi^2\)</span> value of the
+test from <code>chitests$statistic</code> = 1503.629, while the p-value
+is less than the significance level of 0.05 from
+<code>chitests$p.value</code> = 0. As a result, we reject the null
+hypothesis and find that the churn rate is reliant on the customer’s
+active status.</p>
 </div>
 <div id="smart-question-does-churn-depend-on-credit-score" class="section level3" number="4.0.6">
 <h3><span class="header-section-number">4.0.6</span> SMART question:

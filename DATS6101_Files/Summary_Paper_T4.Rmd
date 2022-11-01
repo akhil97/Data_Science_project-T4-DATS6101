@@ -401,6 +401,17 @@ chitestccchurn <- chisq.test(cc_churn)
 chitestccchurn
 ```
 
+```{r Credit_Card_churns}
+ggplot(data=churn_data,aes(x=credit_card,fill=churn))+
+  geom_bar()+
+  scale_fill_manual('Position', values=c('red', 'lightblue')) +
+  labs(title = "Customer Churn in Customers With and Without Credit Cards",x="Credit Card",y="Churn")+
+  theme_minimal()
+```
+
+Credit Card vs Churn
+P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis, as there is a 0.5 or 50% chance of these results occurring by chance. We can conclude that there is no relationship between whether a user has a credit card, and churn.
+
 ### SMART question: Does churn rate depend on which country the user banks in?
 
 Chi Square test for independence

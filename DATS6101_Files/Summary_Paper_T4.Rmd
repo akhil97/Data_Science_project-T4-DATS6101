@@ -347,6 +347,14 @@ chitests
 
 We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$statistic`, while the p-value is less than the significance level of 0.05 from `chitests$p.value` = `r chitests$p.value`. As a result, we reject the null hypothesis and find that the churn rate is reliant on the customer's active status.
 
+```{r Bank_Services_churns}
+ggplot(data=churn_data,aes(x=products_number,fill=churn))+
+  geom_bar()+
+  scale_fill_manual('Position', values=c('red', 'lavender')) +
+  labs(title = "Banking Product and Services vs Churn",x="Banking Product and Services",y="Chrun")+
+  theme_minimal()
+```  
+
 ### SMART question: Does churn depend on credit score?
 
 Correlation test between credit score and churn

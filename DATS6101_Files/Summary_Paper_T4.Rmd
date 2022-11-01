@@ -377,6 +377,8 @@ ggplot(data=churn_data,aes(x=products_number,fill=churn))+
   theme_minimal()
 ```  
 
+We can notice that most of the customers with lower and higher products i.e) 1, 3 and 4 are about to churned when compared to customers with two products.
+
 ### SMART question: Does churn depend on credit score?
 
 Correlation test between credit score and churn

@@ -562,24 +562,13 @@ cor_scores
 
 **The credit score is weakly correlated with customer churn with a score of -0.0271**
 
-```{r}
-loadPkg("BSDA") 
-
-ttestcreditscore95 = t.test(churn_balance_sample$credit_score) # default conf.level = 0.95
-ttestcreditscore95
-ttestcreditscore99 = t.test(churn_balance_sample$credit_score, conf.level=0.99 )
-ttestcreditscore99
-ttestcreditscore50 = t.test(churn_balance_sample$credit_score,  conf.level=0.50 )
-ttestcreditscore50
-
-ttestcreditscore95$conf.int
-ttestcreditscore99$conf.int
-ttestcreditscore50$conf.int
-```
-
-
 
 ### Does the churn rate depend upon which country the customer belongs to?
+
+Chi Square Test for independence
+H0: Country and churn are independent
+H1: Country and churn are not independent
+
 
 Chi Square Test for independence
 H0: Country and churn are independent
@@ -678,11 +667,9 @@ ggplot(data=churn_data,aes(x=active_member,fill=churn))+
 
 Here, we can interpret that most of the Inactive customers are about to churned.
 
+
 ### Does churn depend on age of the customers?
-
-Correlation test between age and churn
-
-```{r Correlation between age and customer churn, include=TRUE, echo=TRUE}
+```{r Correlation between balance and customer churn, include=TRUE, echo=TRUE}
 library(corrplot)
 churn_data_to_numeric <- churn_data
 

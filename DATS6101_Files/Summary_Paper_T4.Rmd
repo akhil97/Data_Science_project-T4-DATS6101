@@ -46,7 +46,6 @@ This study is based on a data set that contains 10,000 observations of bank cust
 
 
 ```{r Churn_data_file, include=T,echo=FALSE,results='apois'}
-
 churn_data<-data.frame(read.csv("Bank_Customer_Churn_Prediction.csv",header=TRUE)) 
 str(churn_data) 
 ```
@@ -97,7 +96,6 @@ Finally, we checked our continuous variables for outliers using the outlierKD fu
 ```{r customer_credit_score,include=TRUE, echo=FALSE,result='asis'}
 credit_score_clean <- outlierKD2(churn_data, credit_score, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
 age_clean <- outlierKD2(churn_data, age, rm = TRUE, boxplt = TRUE, qqplt = TRUE)
-
 ```
 
 By using the outlierKD function we can observe that outliers were found only in `age` and `credit_score` variables (age: 3.7% and credit_score: 0.2%), so we decided to remove these two variables using the outlierKD function.
@@ -111,7 +109,6 @@ In this section we are going to analyze each variable in the Bank churn dataset 
 The average credit score of the customer is 650.529,most of the customers having credit score fall between 600 to 700 and standard deviation is 96.953.The below histogram shows the range of credit scores.
 
 ```{r Credit_score}
-
 library(ggplot2)
 ggplot(data=churn_data, aes(x=credit_score)) + 
   geom_histogram(col="black",bins=30,
@@ -119,7 +116,6 @@ ggplot(data=churn_data, aes(x=credit_score)) +
                   alpha =.7) + # opacity
   labs(title="`ggplot`") +
   labs(title="Customer's Credit Scores",x="Customer Credit Score", y="Customer Count") 
-
 ```
 
 
@@ -133,7 +129,6 @@ ggplot(data=churn_data,aes(x=country,fill=country))+
   scale_fill_brewer(palette="Reds") +
   labs(title = "Bank Customer vs Country",x="Country",y="Customer Count")+
   theme_minimal()
-
 ```
 
 ### What is the average age of the customer?
@@ -147,7 +142,6 @@ ggplot(churn_data, aes(x = age,fill=cut(age,100))) +
   theme_minimal()+
   labs(x=" Customer Age",y=" Customer Count")+
   ggtitle("Customer ages")
-
 ```
 
 ### How many years does the customer have a relationship with the bank?
@@ -156,14 +150,12 @@ We can see from the histogram plotted below that most of the customers have been
 
 
 ```{r tenure}
-
 library(ggplot2)
 ggplot(data=churn_data, aes(x=tenure)) + 
   geom_histogram(col="black",bins=11,
                  fill="Yellow", 
                   alpha =.7) + 
   labs(title="Years spent as customer",x="Number of years", y="Customer Count") 
-
 ```
 
 ### What is the percentage of Male and Female customers who hold an account in the bank?
@@ -193,7 +185,6 @@ ggplot(df, aes(x = "", y = perc, fill =gender )) +
 Huge percentage of customers are being inactive,it is reported that 48.5% of customers are being inactive.
 
 ```{r Active_Memebers}
-
 df <- churn_data %>% 
   group_by(active_member) %>% # Variable to be transformed
   count() %>% 
@@ -201,8 +192,6 @@ df <- churn_data %>%
   mutate(perc = `n` / sum(`n`)) %>% 
   arrange(perc) %>%
   mutate(labels = scales::percent(perc))
-
-
 
 ggplot(df, aes(x = "", y = perc, fill = active_member)) +
   geom_col(color="black") +
@@ -322,7 +311,7 @@ Correlation between account balance and churn.
 
 ### SMART question: Does the account holder's age groupo affect churn?
 
-Correlation test between age and curn
+Correlation test between age and churn
 
 ### SMART question: Does churn depend on status of active accounts?
 

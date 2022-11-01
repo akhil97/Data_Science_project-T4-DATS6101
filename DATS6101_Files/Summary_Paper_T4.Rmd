@@ -341,6 +341,16 @@ chitests
 
 We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$statistic`, while the p-value is less than the significance level of 0.05 from `chitests$p.value` = `r chitests$p.value`. As a result, we reject the null hypothesis and find that the churn rate is reliant on the customer's banking services.
 
+```{r Active_members_churns}
+ggplot(data=churn_data,aes(x=active_member,fill=churn))+
+  geom_bar()+
+  scale_fill_manual('Position', values=c('red', 'pink1')) +
+  labs(title = "Active Members vs Churn",x="Active Status of Account Holders",y="Churn")+
+  theme_minimal()
+```  
+
+Here, we can interpret that most of the Inactive customers are about to churned.
+
 ### SMART question: Does churn depend on different banking product and services provided?
 
 Chi Square test for independence

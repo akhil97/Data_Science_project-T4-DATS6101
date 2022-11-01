@@ -329,7 +329,7 @@ chitests = chisq.test(contab_activemember)
 chitests
 ```
 
-We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$statistic`, while the p-value is less than the significance level of 0.05 from `chitests$p.value` = `r chitests$p.value`. As a result, we reject the null hypothesis and find that the churn rate is reliant on the customer's banking services.
+We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$statistic`, while the p-value is less than the significance level of 0.05 from `chitests$p.value` = `r chitests$p.value`. As a result, we reject the null hypothesis and find that the churn rate is reliant on the customer's active status.
 
 ```{r Active_members_churns}
 ggplot(data=churn_data,aes(x=active_member,fill=churn))+
@@ -357,7 +357,7 @@ chitests = chisq.test(contab_productnumber)
 chitests
 ```
 
-We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$statistic`, while the p-value is less than the significance level of 0.05 from `chitests$p.value` = `r chitests$p.value`. As a result, we reject the null hypothesis and find that the churn rate is reliant on the customer's active status.
+We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$statistic`, while the p-value is less than the significance level of 0.05 from `chitests$p.value` = `r chitests$p.value`. As a result, we reject the null hypothesis and find that the churn rate is reliant on the customer's banking product and services.
 
 ```{r Bank_Services_churns}
 ggplot(data=churn_data,aes(x=products_number,fill=churn))+

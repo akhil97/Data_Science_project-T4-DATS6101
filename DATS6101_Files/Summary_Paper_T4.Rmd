@@ -305,8 +305,6 @@ ggplot(data=churn_data,aes(x=gender,fill=churn))+
 
 ### SMART question:Does the churn rate depend on the account balance of the customer?
 
-Correlation between account balance and churn.
-
 
 
 ### SMART question: Does the account holder's age groupo affect churn?

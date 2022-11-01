@@ -428,6 +428,15 @@ chitest <- chisq.test(contable)
 chitest
 ```
 
+We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$statistic`, while the p-value is less than the significance level of 0.05 from `chitests$p.value` = `r chitests$p.value`. As a result, we reject the null hypothesis and find that the churn rate is reliant on the customer's regions.
+
+```{r Country_churns}
+ggplot(data=churn_data,aes(x=country,fill=churn))+
+  geom_bar()+
+  scale_fill_manual('Position', values=c('red', 'lavenderblush2')) +
+  labs(title = "Customer Churn in Different Countries",x="Country",y="Churn")+
+  theme_minimal()
+``` 
 
 # Chapter 5: Tests and Results
 In our EDA, we utilized Chi-squared of independence, One Sample T-test, Two Sample T-test, Z-Test, and correlation matrix (corrplot).

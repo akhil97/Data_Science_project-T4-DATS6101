@@ -329,6 +329,18 @@ Chi Square test for independence
 H0 :Customers' active status and churn are independent.
 H1 : Customer’s active status and churn are not independent.
 
+```{r Chisq test of independence between Active members and customer churn rate}
+#Contingency table
+contab_activemember = table(churn_data$churn, churn_data$active_member)
+xkabledply(contab_activemember, title="Contingency table for Account Status(Active, In Active) vs Churn (0 or 1)")
+
+#Chisquare Test of independency
+chitests = chisq.test(contab_activemember)
+chitests
+```
+
+We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$statistic`, while the p-value is less than the significance level of 0.05 from `chitests$p.value` = `r chitests$p.value`. As a result, we reject the null hypothesis and find that the churn rate is reliant on the customer's banking services.
+
 ### SMART question: Does churn depend on different banking product and services provided?
 
 Chi Square test for independence

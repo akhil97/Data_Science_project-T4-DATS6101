@@ -2219,6 +2219,59 @@ Does churn depend on status of active accounts?</h3>
 <p>Chi Square test for independence H0 :Customers’ active status and
 churn are independent. H1 : Customer’s active status and churn are not
 independent.</p>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+Contingency table for Account Status(Active, In Active) vs Churn (0 or
+1)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Active
+</th>
+<th style="text-align:right;">
+In Active
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Churned
+</td>
+<td style="text-align:right;">
+735
+</td>
+<td style="text-align:right;">
+1302
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Retained
+</td>
+<td style="text-align:right;">
+4416
+</td>
+<td style="text-align:right;">
+3547
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+## 
+## data:  contab_activemember
+## X-squared = 243, df = 1, p-value &lt;2e-16</code></pre>
+<p>We have the <span class="math inline">\(\chi^2\)</span> value of the
+test from <code>chitests$statistic</code> = 242.985, while the p-value
+is less than the significance level of 0.05 from
+<code>chitests$p.value</code> = 8.786^{-55}. As a result, we reject the
+null hypothesis and find that the churn rate is reliant on the
+customer’s banking services.</p>
 </div>
 <div id="smart-question-does-churn-depend-on-different-banking-product-and-services-provided" class="section level3" number="4.0.5">
 <h3><span class="header-section-number">4.0.5</span> SMART question:

@@ -339,7 +339,7 @@ ggplot(data=churn_data,aes(x=active_member,fill=churn))+
   theme_minimal()
 ```  
 
-Here, we can interpret that most of the Inactive customers are about to churned.
+We are comparing the number of Active and Inactive customers who are going to churn using the boxplot. A large number of consumers are inactive; it has been stated that 48.5% of clients are inactive. Out of 51.51% Active customers only 14.26% customers are churned. whereas, on the other hand 26.85% Inactive customers are churned of 48.49%. It is clear that there is a sufficiently high enough correlation to suggest that active status and customer attrition are not independent variables.As a result, we may conclude that the majority of Inactive clients are about to churn.
 
 ### SMART question: Does churn depend on different banking product and services provided?
 

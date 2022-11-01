@@ -2426,8 +2426,65 @@ credit card, and churn.</p>
 <div id="smart-question-does-churn-rate-depend-on-which-country-the-user-banks-in" class="section level3" number="4.0.8">
 <h3><span class="header-section-number">4.0.8</span> SMART question:
 Does churn rate depend on which country the user banks in?</h3>
-<p>Chi Square test for independence H0 :Country card and churn are
+<p>Chi Square test for independence H0 : Country card and churn are
 independent. H1 : Country and churn are not independent.</p>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+Contingency table for Country (Customer belongs to) vs Churn (0 or 1)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Churned
+</th>
+<th style="text-align:right;">
+Retained
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+France
+</td>
+<td style="text-align:right;">
+810
+</td>
+<td style="text-align:right;">
+4204
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Germany
+</td>
+<td style="text-align:right;">
+814
+</td>
+<td style="text-align:right;">
+1695
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spain
+</td>
+<td style="text-align:right;">
+413
+</td>
+<td style="text-align:right;">
+2064
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  contable
+## X-squared = 301, df = 2, p-value &lt;2e-16</code></pre>
 </div>
 </div>
 <div id="chapter-5-tests-and-results" class="section level1" number="5">

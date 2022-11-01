@@ -415,19 +415,18 @@ P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus,
 ### SMART question: Does churn rate depend on which country the user banks in?
 
 Chi Square test for independence
-H0 :Country card and churn are independent.
+H0 : Country card and churn are independent.
 H1 : Country and churn are not independent.
 
+```{r Chisq test of independence between country and customer churn rate}
+#Contingency table
+contable = table(churn_data$country, churn_data$churn)
+xkabledply(contable, title="Contingency table for Country (Customer belongs to) vs Churn (0 or 1)")
 
-
-
-
-
-
-
-
-
-
+#Chisquare Test of independency
+chitest <- chisq.test(contable)
+chitest
+```
 
 
 # Chapter 5: Tests and Results

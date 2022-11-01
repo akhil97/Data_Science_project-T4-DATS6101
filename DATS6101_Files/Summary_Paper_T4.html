@@ -2370,6 +2370,52 @@ churn?</h3>
 <p>Chi Square test for independence H0 :Customer having credit card and
 churn are independent. H1 : Customer having credit card and churn are
 not independent.</p>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+Contingency table
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Credit Card
+</th>
+<th style="text-align:right;">
+No-Credit Card
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Churned
+</td>
+<td style="text-align:right;">
+1424
+</td>
+<td style="text-align:right;">
+613
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Retained
+</td>
+<td style="text-align:right;">
+5631
+</td>
+<td style="text-align:right;">
+2332
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+## 
+## data:  cc_churn
+## X-squared = 0.5, df = 1, p-value = 0.5</code></pre>
 </div>
 <div id="smart-question-does-churn-rate-depend-on-which-country-the-user-banks-in" class="section level3" number="4.0.8">
 <h3><span class="header-section-number">4.0.8</span> SMART question:

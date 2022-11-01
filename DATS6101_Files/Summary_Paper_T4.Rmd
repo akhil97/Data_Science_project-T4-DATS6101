@@ -390,7 +390,16 @@ Chi Square test for independence
 H0 :Customer having credit card and churn are independent.
 H1 : Customer having credit card  and churn are not independent.
 
+```{r Chisq test of independence between credit card and customer churn rate}
+churn_data[, 10:11][churn_data[, 10:11] == 1] <- 'Churn'
+churn_data[, 10:11][churn_data[, 10:11] == 0] <- 'No Churn'
 
+cc_churn <- table(churn_data$churn, churn_data$credit_card)
+xkabledply(cc_churn, title="Contingency table")
+
+chitestccchurn <- chisq.test(cc_churn)
+chitestccchurn
+```
 
 ### SMART question: Does churn rate depend on which country the user banks in?
 

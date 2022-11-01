@@ -128,7 +128,7 @@ credit_score_clean <- outlierKD2(churn_data, credit_score, rm = TRUE, boxplt = T
 xkablesummary(credit_score_clean)
 ```
 
-The proportion outliers for credit_card variable if 0.2% and it was removed successfully using outlierKD function.
+The proportion outliers for credit_score variable if 0.2% and it was removed successfully using outlierKD function.
 
 ```{r customer_age}
 age_clean <- outlierKD2(churn_data, age, rm = TRUE, boxplt = TRUE, qqplt = TRUE)

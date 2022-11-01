@@ -291,17 +291,19 @@ So,now the big question was what factors affected the 20% churn rate in the mult
 ### SMART question: Does the churn rate depend on Gender of the account holders?
 
 Chi Square test for independence
-H0 :Customers' gender and churn are independent.
+H0 : Customers' gender and churn are independent.
 H1 : Customer’s gender and churn are not independent.
+
 ```{r Chisq test of independence between Gender and customer churn rate}
 #Contingency table
 contab = table(churn_data$churn, churn_data$gender)
-xkabledply(contab)
+xkabledply(contab, title="Contingency table for Gender(Male, Female) vs Churn (0 or 1)")
 
 #Chisquare Test of independency
 chitests = chisq.test(contab)
 chitests
 ```
+
 We have $\chi^2$  value of the test from `chitests$statistic` = `r chitests$statistic`,while extracting the p-value from `chitests$p.value` = `r chitests$p.value` which is less than significance level of 0.05 ,Hence we reject the null hypothesis and we conclude that the churn rate dependent on gender of the customer.
 
 ```{r Gender_churns}
@@ -310,7 +312,6 @@ ggplot(data=churn_data,aes(x=gender,fill=churn))+
    scale_fill_manual('Position', values=c('red', 'lightblue'))+
   labs(title = "Gender vs Churn",x="Gender",y="Chrun")+
   theme_minimal()
-
 ``` 
 
 ### SMART question:Does the churn rate depend on the account balance of the customer?
@@ -326,7 +327,7 @@ Correlation test between age and curn
 ### SMART question: Does churn depend on status of active accounts?
 
 Chi Square test for independence
-H0 :Customers' active status and churn are independent.
+H0 : Customers' active status and churn are independent.
 H1 : Customer’s active status and churn are not independent.
 
 ```{r Chisq test of independence between Active members and customer churn rate}
@@ -354,7 +355,7 @@ Here, we can interpret that most of the Inactive customers are about to churned.
 ### SMART question: Does churn depend on different banking product and services provided?
 
 Chi Square test for independence
-H0 :Banking products,services and churn are independent.
+H0 : Banking products,services and churn are independent.
 H1 : Banking products,services and churn are not independent.
 
 ```{r Chisq test of independence between Banking product and services and customer churn rate}

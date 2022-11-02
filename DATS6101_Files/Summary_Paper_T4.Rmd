@@ -529,6 +529,19 @@ cor_age <- cor(churn_data_numeric$age, churn_data_numeric$churn)
 cor_age
 ```
 
+```{r Age_churns}
+#Contingency table
+churn_age = table(churn_data$churn, churn_data$age)
+
+#Chisquare Test of independence
+chichurn_age = chisq.test(churn_age)
+chichurn_age
+
+ggplot(churn_data, aes(x=age, fill=churn)) +
+  geom_histogram( color='#e9ecef', alpha=0.5, position='identity') + scale_fill_manual('Position', values=c('red', 'pink1')) +
+  labs(title = "Age Distribution across Churned and No Churn Account Holders",x="Age of Account Holders",y="Frequency")
+```
+
 # Chapter 5: Conclusions
 
 **Gender** Based on our analysis, we are able to conclude that Gender does have an effect on churn rate. Females, despite being a smaller percent of the population (45.4%) than their male counterparts (54.6%), had 8.5% higher churn rate than the males. Women came in at 25.07% churn rate, with men coming in at 16.5% of customers churned.

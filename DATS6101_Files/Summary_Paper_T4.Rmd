@@ -138,7 +138,7 @@ ggplot(data=churn_data, aes(x=credit_score)) +
 
 ### which are the different countries in which a customer holds a bank account?
 
-The customers are grouped by the countries in which they have their accounts.As we see from the plot France has more than 50% of customer accounts which is the highest among all other countries with Germany and Spain sharing equal percentages.Below bar plots represents number of customers in three different countries. 
+The customers are grouped by the countries in which they have their accounts. As we see from the plot, France has more than 50% of customer accounts which is the highest among all other countries with Germany and Spain sharing equal percentages.Below, bar plot represents the number of customers in three different countries. 
 
 ```{r Country}
 ggplot(data=churn_data,aes(x=country,fill=country))+
@@ -150,7 +150,7 @@ ggplot(data=churn_data,aes(x=country,fill=country))+
 
 ### What is the average age of the customer?
 
-The majority of the bank customer's fall below the age of 50 with average age of 39 and with standard deviation of 10.5.
+The majority of the bank customers fall below the age of 50 with average age of 39 and with standard deviation of 10.5.
 
 ```{r Age}
 ggplot(churn_data, aes(x = age,fill=cut(age,100))) + 
@@ -293,7 +293,7 @@ ggplot(df, aes(x = "", y = perc, fill = churn)) +
 
 So,now the big question was what factors affected the 20% churn rate in the multinational bank across different countries.We will do  statistical analysis to find the cause for the churn rate by framing a few possible SMART questions.
 
-# Chapter 4:Independent variables EDA:Bar Plots,Histograms,Chi Square test,Correlation plot.
+# Chapter 4:Independent variables EDA: Bar Plots,Histograms,Chi Square test,Correlation plot.
 
 ### SMART question:Does the churn rate depend on Gender of the account holders?
 
@@ -449,10 +449,11 @@ The bar plots represents number of customers in three different countries. The c
 
 In terms of churn rate, the percentage of customers churned in the France about 16.15% on this as opposed to the Spain at 16.67%. On the other hand Germany has the highest churned (around 32.44%) was over doubled that of France and Spain. Hence most of the customers from Germany are about to churned when compared to customers from France and Spain.
 
-# Chapter 5:Tests and Results
-In our EDA, we utilized Chi-squared of independence, One Sample T-test, Two Sample T-test, Z-Test, and correlation matrix (corrplot).
+# Chapter 5: Conclusions
 
-# Chapter 6:Conclusions
+**Gender** Based on our analysis, we are able to conclude that Gender does have an effect on churn rate. Females, despite being a smaller percent of the population (45.4%) than their male counterparts (54.6%), had 8.5% higher churn rate than the males. Women came in at 25.07% churn rate, with men coming in at 16.5% of customers churned.
 
-# Chapter 7:Bibliography
+**Active Status** Out of Active customers (51.51% of sample population) only 14.26% customers are churned. Whereas, 26.85% Inactive customers are churned (48.49% of sample population). The chi-squared test we performed confirms there is a statistically significant correlation to suggest that active status and customer attrition are not independent variables. As mentioned in Chapter 2 Limitations, a vague definition of "Active" was provided, and we are not able to pinpoint what exactly deems a customer 'inactive". Resultantly, any conclusions drawn from tests on this variable are
+
+# Chapter 6: Bibliography
 

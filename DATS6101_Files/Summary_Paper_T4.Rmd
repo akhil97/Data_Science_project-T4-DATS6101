@@ -441,8 +441,6 @@ In terms of churn rate, the percentage of customers churned in the France about 
 
 Correlation test between account balance and churn
 
-### SMART question:Does the churn rate depend on the account balance of the customer?
-
 ```{r Correlation between balance and customer churn, include=FALSE, echo=FALSE}
 library(corrplot)
 churn_data_to_numeric <- churn_data
@@ -513,6 +511,23 @@ The credit score is weakly correlated with customer churn with a score of -0.027
 ### SMART question:Does the account holder's age group affect churn?
 
 Correlation test between age and churn
+
+```{r Correlation between age and customer churn, include=TRUE, echo=FALSE}
+library(corrplot)
+churn_data_to_numeric <- churn_data
+
+churn_data$churn[churn_data$churn== "Churned"]<-1
+churn_data$churn[churn_data$churn== "Retained"]<-0
+
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+
+cors_age_group <- cor(churn_data_numeric)
+corrplot(cors_age_group, method = 'number')
+
+cor_age <- cor(churn_data_numeric$age, churn_data_numeric$churn)
+cor_age
+```
 
 # Chapter 5: Conclusions
 

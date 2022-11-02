@@ -586,4 +586,6 @@ In conclusion, we find that gender, active status, number of banking products, a
 
 
 # Chapter 6: Bibliography
+Bank Customer Churn Dataset from https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset
+
 

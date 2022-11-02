@@ -1827,34 +1827,36 @@ Introduction</h1>
 customer chooses to leave or unsubscribe from a service for any reason.
 In the context of this project, we are looking at customer churn in
 banking. Being able to predict customer churn is important because we
-want to retain as many customers as we can. Of course you want to keep
-customers, but it also is cheaper to retain your customers, than having
-to spend money to acquire new customers to replace the ones that left.
-Lower customer acquisition costs equal more profits. By identifying
-customers at risk of churn, we are able to identify which efforts in
-order to maximize their likelihood of staying.</p>
+want to retain as many customers as we can.</p>
+<p>Of course you want to keep customers, but it also is cheaper to
+retain your customers, than having to spend money to acquire new
+customers to replace the ones that left. Lower customer acquisition
+costs equal more profits. By identifying customers at risk of churn, we
+are able to identify which efforts in order to maximize their likelihood
+of staying.</p>
 <p>We chose to analyze a multinational bank’s churn for several reasons.
 As an international team, we were interested in topics that spanned
 multiple countries, with a particular focus on either business or
 environment, our personal interests. When we were pitching topics,
 nearly every suggestion was geared towards sales or customer experience,
-or global environmental issues. After ensuring that the data sets that
-interested us had enough observations to follow the project’s 3,000 row
-minimum, we then identified the topics with the highest number of useful
-variables. There were several data sets, which, while interesting, did
-not yield enough useful variables. Rather, they included variables like
-unique product, user, or review identifiers, which were not relevant to
-the type of analysis we were performing. From our short-list, the Bank
-Customer Churn Data Set had the highest number of useful variables, 11
-out of the 12, as opposed to 4-6 useful variables for our runner-up
-options. We made the decision to go with our chosen data set because we
-figured that a larger number of variables (and data in general) is a
-closer reflection of the multitude of factors that affect a customer’s
-decision to churn. Additionally, we do not know at first glance which of
-the variables will end up being statistically significant, however, by
-having a higher number of variables, we are considering the potential
-effects of a wider range of variables, which may be useful to our model
-after we perform EDA.</p>
+or global environmental issues.</p>
+<p>After ensuring that the data sets that interested us had enough
+observations to follow the project’s 3,000 row minimum, we then
+identified the topics with the highest number of useful variables. There
+were several data sets, which, while interesting, did not yield enough
+useful variables. Rather, they included variables like unique product,
+user, or review identifiers, which were not relevant to the type of
+analysis we were performing.</p>
+<p>From our short-list, the Bank Customer Churn Data Set had the highest
+number of useful variables, 11 out of the 12, as opposed to 4-6 useful
+variables for our runner-up options. We made the decision to go with our
+chosen data set because we figured that a larger number of variables
+(and data in general) is a closer reflection of the multitude of factors
+that affect a customer’s decision to churn. Additionally, we do not know
+at first glance which of the variables will end up being statistically
+significant, however, by having a higher number of variables, we are
+considering the potential effects of a wider range of variables, which
+may be useful to our model after we perform EDA.</p>
 <p>After finding a data set that piqued our personal interests, met the
 project requirements, and had a larger range of variables than the other
 top choices, we were satisfied with our choice and able to proceed to
@@ -1915,14 +1917,15 @@ customer country is not evenly distributed. There are three countries,
 however half of all customers are based in France, and the remaining two
 countries are each home to a quarter of all customers. When creating our
 model, we will need to take this into account and plan to handle this
-imbalanced data. A second limitation is that some of the variables in
-the data set are poorly defined. One such variable is ‘active_member’,
-which does not operationally define what it means to be an active member
-(ie. has not logged in in X months, has had no deposits in time period
-X). Another variable which does not provide enough information about its
-definition is products_number. While it does give the number of products
-an account holder has purchased, we do not know which products, and in
-which combination they are used by the customers. While we can draw
+imbalanced data.</p>
+<p>A second limitation is that some of the variables in the data set are
+poorly defined. One such variable is ‘active_member’, which does not
+operationally define what it means to be an active member (ie. has not
+logged in in X months, has had no deposits in time period X). Another
+variable which does not provide enough information about its definition
+is products_number. While it does give the number of products an account
+holder has purchased, we do not know which products, and in which
+combination they are used by the customers. While we can draw
 conclusions based on the number of products, we cannot make further
 inferences about the customer’s behavior based on the type of product or
 effects relating to combinations of products.</p>
@@ -2286,9 +2289,9 @@ inactive; it has been stated that 48.5% of clients are inactive. Out of
 51.51% Active customers only 14.26% customers are churned. whereas, on
 the other hand 26.85% Inactive customers are churned of 48.49%. It is
 clear that there is a sufficiently high enough correlation to suggest
-that active status and customer attrition are not independent
-variables.As a result, we may conclude that the majority of Inactive
-clients are about to churn.</p>
+that active status and customer attrition are not independent variables.
+As a result, we may conclude that the majority of Inactive clients are
+about to churn.</p>
 </div>
 <div id="smart-question-does-churn-depend-on-different-banking-product-and-services-provided" class="section level3" number="4.0.5">
 <h3><span class="header-section-number">4.0.5</span> SMART question:

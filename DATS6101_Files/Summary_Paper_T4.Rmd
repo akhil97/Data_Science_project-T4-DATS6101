@@ -108,11 +108,11 @@ By using the outlierKD function we can observe that outliers were found only in 
 
 ## Customer Analysis :Slicing the data for an Overview
 
-In this section we are going to analyze each variable in the Bank churn dataset by using plots along with finding calculated mean,SD and percentages for each variable.
+In this section we are going to analyze each variable in the Bank churn dataset by using plots along with finding calculated mean, SD and percentages for each variable.
 
 ### What is the average credit score of the customers?
 
-The average credit score of the customer is 650.529,most of the customers having credit score fall between 600 to 700 and standard deviation is 96.953.The below histogram shows the range of credit scores.
+The average credit score of the customer is 650.529,most of the customers having credit score fall between 600 to 700 and standard deviation is 96.953. The below histogram shows the range of credit scores.
 
 ```{r Credit_score}
 library(ggplot2)
@@ -209,6 +209,7 @@ ggplot(df, aes(x = "", y = perc, fill = active_member)) +
 ``` 
 
 ### What are the different types of services/Products purchased by customers provided by the bank for better usage of baking services?
+
 Most of the customers use product 1 which is 50% and product 4 is the least used with 0.6%.
 
 ```{r Products}
@@ -232,6 +233,7 @@ ggplot(df, aes(x = "", y = perc, fill = products_number)) +
 ``` 
 
 ### What percentage of customers make use of credit cards?
+
 Predominantly 71% of the Bank customers use credit_card and only 29% do not make use of it.
 
 ```{r Credit_Card}
@@ -255,6 +257,7 @@ ggplot(df, aes(x = "", y = perc, fill = credit_card)) +
 ```  
 
 ### Currently what percentage of customers are churned from the bank?
+
 The bank managed to retain 80% of their customers with the remaining 20% where churned out.
 
 ```{r Customer_churn}
@@ -278,7 +281,6 @@ ggplot(df, aes(x = "", y = perc, fill = churn)) +
 ``` 
 
 So,now the big question was what factors affected the 20% churn rate in the multinational bank across different countries.We will do  statistical analysis to find the cause for the churn rate by framing a few possible SMART questions.
-
 
 # Chapter 4 : Independent variables EDA:Bar Plots,Histograms,Chi Square test,Correlation plot.
 

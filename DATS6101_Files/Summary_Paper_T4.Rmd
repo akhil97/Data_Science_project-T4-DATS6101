@@ -462,7 +462,7 @@ cor_balance <- cor(churn_data_numeric$balance, churn_data_numeric$churn)
 cor_balance
 ```
 
-```{r Correlation between balances and customer churn, include=TRUE, echo=TRUE}
+```{r Correlation between balances and customer churn, include=TRUE, echo=FALSE}
 library(corrplot)
 churn_data_to_numeric <- churn_data
 churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
@@ -489,6 +489,26 @@ balance_test
 ### SMART question:Does churn depend on credit score?
 
 Correlation test between credit score and churn
+
+```{r Correlation between credit score and customer churn, include=TRUE, echo=FALSE}
+library(corrplot)
+churn_data_to_numeric <- churn_data
+
+churn_data$churn[churn_data$churn== "Churned"]<-1
+churn_data$churn[churn_data$churn== "Retained"]<-0
+
+
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+
+cors_credit <- cor(churn_data_numeric)
+corrplot(cors_credit, method = 'number')
+
+cor_scores <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
+cor_scores
+```
+
+The credit score is weakly correlated with customer churn with a score of -0.0271
 
 ### SMART question:Does the account holder's age group affect churn?
 

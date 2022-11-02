@@ -429,6 +429,8 @@ ggplot(data=churn_data,aes(x=country,fill=churn))+
 
 The bar plots represents number of customers in three different countries. The customers are grouped by the countries in which they have their bank accounts. As we see from the plot France has more than 50% of customer accounts which is the highest among all other countries with Germany and Spain sharing equal percentages.
 
+In terms of churn rate, the percentage of customers churned in the France about 16.15% on this as opposed to the Spain at 16.67%. On the other hand Germany has the highest churned (around 32.44%) was over doubled that of France and Spain. Hence most of the customers from Germany are about to churned when compared to customers from France and Spain.
+
 # Chapter 5: Tests and Results
 In our EDA, we utilized Chi-squared of independence, One Sample T-test, Two Sample T-test, Z-Test, and correlation matrix (corrplot).
 

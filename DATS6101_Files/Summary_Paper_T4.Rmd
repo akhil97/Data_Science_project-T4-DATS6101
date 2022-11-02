@@ -323,14 +323,6 @@ ggplot(data=churn_data,aes(x=gender,fill=churn))+
 
 Here, we are comparing the number of male and female customers who are about to churn. Out of 54.6% male customers only 16.5% customers are churned. whereas, on the other hand 25.07% female customers are churned of 45.4%. From the plot it is observed that majority of the churned customers were female despite the total population of the bank being predominantly male. It is clear that there is a sufficiently high enough correlation to suggest that gender and customer attrition are dependent variables.
 
-### SMART question:Does the churn rate depend on the account balance of the customer?
-
-
-
-### SMART question:Does the account holder's age groupo affect churn?
-
-Correlation test between age and churn
-
 ### SMART question:Does churn depend on status of active accounts?
 
 Chi Square test for independence
@@ -386,10 +378,6 @@ ggplot(data=churn_data,aes(x=products_number,fill=churn))+
 ```  
 
 We can notice that most of the customers with lower and higher products i.e) 1, 3 and 4 are about to churned when compared to customers with two products.
-
-### SMART question:Does churn depend on credit score?
-
-Correlation test between credit score and churn
 
 ### SMART question:Does a uers having a credit card with the bank affect predisposition to churn?
 
@@ -448,6 +436,18 @@ ggplot(data=churn_data,aes(x=country,fill=churn))+
 The bar plots represents number of customers in three different countries. The customers are grouped by the countries in which they have their bank accounts. As we see from the plot France has more than 50% of customer accounts which is the highest among all other countries with Germany and Spain sharing equal percentages.
 
 In terms of churn rate, the percentage of customers churned in the France about 16.15% on this as opposed to the Spain at 16.67%. On the other hand Germany has the highest churned (around 32.44%) was over doubled that of France and Spain. Hence most of the customers from Germany are about to churned when compared to customers from France and Spain.
+
+### SMART question:Does the churn rate depend on the account balance of the customer?
+
+Correlation test between account balance and churn
+
+### SMART question:Does churn depend on credit score?
+
+Correlation test between credit score and churn
+
+### SMART question:Does the account holder's age group affect churn?
+
+Correlation test between age and churn
 
 # Chapter 5: Conclusions
 

@@ -303,7 +303,7 @@ ggplot(data=churn_data,aes(x=gender,fill=churn))+
   theme_minimal()
 ``` 
 
-Here, we are comparing the number of male and female customers who are about to churn. Out of 54.6% male customers only 16.5% customers are churned. whereas, on the other hand 25.07% female customers are churned of 45.4%. From the plot it is observed that majority of the churned customers were female despite the total population of the bank being predominantly male.
+Here, we are comparing the number of male and female customers who are about to churn. Out of 54.6% male customers only 16.5% customers are churned. whereas, on the other hand 25.07% female customers are churned of 45.4%. From the plot it is observed that majority of the churned customers were female despite the total population of the bank being predominantly male. It is clear that there is a sufficiently high enough correlation to suggest that gender and customer attrition are dependent variables.
 
 ### SMART question:Does the churn rate depend on the account balance of the customer?
 

@@ -453,7 +453,9 @@ In terms of churn rate, the percentage of customers churned in the France about 
 
 **Gender** Based on our analysis, we are able to conclude that Gender does have an effect on churn rate. Females, despite being a smaller percent of the population (45.4%) than their male counterparts (54.6%), had 8.5% higher churn rate than the males. Women came in at 25.07% churn rate, with men coming in at 16.5% of customers churned.
 
-**Active Status** Out of Active customers (51.51% of sample population) only 14.26% customers are churned. Whereas, 26.85% Inactive customers are churned (48.49% of sample population). The chi-squared test we performed confirms there is a statistically significant correlation to suggest that active status and customer attrition are not independent variables. As mentioned in Chapter 2 Limitations, a vague definition of "Active" was provided, and we are not able to pinpoint what exactly deems a customer 'inactive". Resultantly, any conclusions drawn from tests on this variable are
+**Active Status** Out of Active customers (51.51% of sample population) only 14.26% customers are churned. Whereas, 26.85% Inactive customers are churned (48.49% of sample population). The chi-squared test we performed confirms there is a statistically significant correlation to suggest that active status and customer attrition are not independent variables. As mentioned in Chapter 2 Limitations, a vague definition of "Active" was provided, and we are not able to pinpoint what exactly deems a customer 'inactive". Resultant, any conclusions drawn from tests on this variable are
+
+**Country** In France, around 16.15% of consumers churned on this, compared to 16.67% in Spain. Germany, on the other hand, has the greatest churn rate (about 32.44%), which is more than double that of France and Spain. As a result, as compared to clients from France and Spain, the majority of German customers are set to churn.
 
 # Chapter 6: Bibliography
 

@@ -317,7 +317,7 @@ We have $\chi^2$  value of the test from `chitests$statistic` = `r chitests$stat
 ggplot(data=churn_data,aes(x=gender,fill=churn))+
   geom_bar(col="black")+
    scale_fill_manual('Position', values=c('red', 'lightblue'))+
-  labs(title = "Gender vs Churn",x="Gender",y="Chrun")+
+  labs(title = "Gender vs Churn",x="Gender",y="Churn")+
   theme_minimal()
 ``` 
 
@@ -373,7 +373,7 @@ We have the $\chi^2$ value of the test from `chitests$statistic` = `r chitests$s
 ggplot(data=churn_data,aes(x=products_number,fill=churn))+
   geom_bar()+
   scale_fill_manual('Position', values=c('red', 'lavender')) +
-  labs(title = "Banking Product and Services vs Churn",x="Banking Product and Services",y="Chrun")+
+  labs(title = "Banking Product and Services vs Churn",x="Banking Product and Services",y="Churn")+
   theme_minimal()
 ```  
 
@@ -532,6 +532,7 @@ cor_age
 
 
 ```{r Age_churns}
+
 #Contingency table
 churn_age = table(churn_data$churn, churn_data$age)
 
@@ -561,7 +562,7 @@ chitest_tenure
 ggplot(data=churn_data,aes(x=tenure,fill=churn))+
   geom_bar()+
   scale_fill_manual('Position', values=c('red', 'lightgray')) +
-  labs(title = "Tenure with Bank vs Churn",x="Account Age (Years)",y="Chrun")+
+  labs(title = "Tenure with Bank vs Churn",x="Account Age (Years)",y="Churn")+
   theme_minimal()
 ```
 
@@ -577,6 +578,7 @@ In conclusion, we find that gender, active status, number of banking products, a
 
 
 # Chapter 6: Bibliography
+
 Topre, G. (2022, August 30). Bank Customer Churn Dataset. Kaggle. Retrieved October 4, 2022, from https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset 
 
 Kaemingk, D. (2018, August 29). Reducing customer churn for banks and financial institutions. Qualtrics. Retrieved November 2, 2022, from https://www.qualtrics.com/blog/customer-churn-banking/ 

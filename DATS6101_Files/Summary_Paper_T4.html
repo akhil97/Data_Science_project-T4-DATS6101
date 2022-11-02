@@ -2653,6 +2653,18 @@ the churn rate depend on the account balance of the customer?</h3>
 <p>Customer churn is weakly correlated with account balance with a score
 of 0.12 For further analysis we can check the correlation score by
 combining multiple variables.</p>
+<p><strong>Two sample T_test for balance vs churn</strong></p>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  balance by churn
+## t = -12, df = 3348, p-value &lt;2e-16
+## alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+## 95 percent confidence interval:
+##  -21250 -15476
+## sample estimates:
+## mean in group 0 mean in group 1 
+##           72745           91109</code></pre>
 </div>
 <div id="smart-questiondoes-churn-depend-on-credit-score" class="section level3" number="4.0.8">
 <h3><span class="header-section-number">4.0.8</span> SMART question:Does

@@ -479,6 +479,13 @@ cor_balance
 Customer churn is weakly correlated with account balance with a score of 0.12
 For further analysis we can check the correlation score by combining multiple variables.
 
+**Two sample T_test for balance vs churn**
+
+```{r Two sample T_test for  accoutn balance vs churn}
+balance_test<-t.test(balance~churn,data=churn_data)
+balance_test
+```
+
 ### SMART question:Does churn depend on credit score?
 
 Correlation test between credit score and churn

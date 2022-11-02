@@ -441,6 +441,44 @@ In terms of churn rate, the percentage of customers churned in the France about 
 
 Correlation test between account balance and churn
 
+### SMART question:Does the churn rate depend on the account balance of the customer?
+
+```{r Correlation between balance and customer churn, include=FALSE, echo=FALSE}
+library(corrplot)
+churn_data_to_numeric <- churn_data
+
+churn_data$churn[churn_data$churn== "Churned"]<-1
+churn_data$churn[churn_data$churn== "Retained"]<-0
+
+
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+
+cors_bal <- cor(churn_data_numeric)
+corrplot(cors_bal, method = 'square')
+
+cor_balance <- cor(churn_data_numeric$balance, churn_data_numeric$churn)
+cor_balance
+```
+
+```{r Correlation between balances and customer churn, include=TRUE, echo=TRUE}
+library(corrplot)
+churn_data_to_numeric <- churn_data
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+
+cors_bal <- cor(churn_data_numeric)
+corrplot(cors_bal, method = 'number')
+
+cor_balance<-cor.test(churn_data$balance,as.numeric(churn_data$churn), method="pearson")
+cor_balance
+```  
+
+Customer churn is weakly correlated with account balance with a score of 0.12
+For further analysis we can check the correlation score by combining multiple variables.
+
 ### SMART question:Does churn depend on credit score?
 
 Correlation test between credit score and churn

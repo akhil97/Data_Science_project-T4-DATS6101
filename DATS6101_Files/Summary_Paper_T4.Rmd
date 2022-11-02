@@ -5,7 +5,7 @@ output:
     theme: "readable"
     highlight: kate
     code_folding: hide
-    number_sections: true
+    number_sections: false
     toc: yes
     toc_depth: 6
     toc_float: yes
@@ -564,6 +564,8 @@ ggplot(data=churn_data,aes(x=tenure,fill=churn))+
   labs(title = "Tenure with Bank vs Churn",x="Account Age (Years)",y="Chrun")+
   theme_minimal()
 ```
+
+
 # Chapter 5: Conclusions
 
 Based on our analysis, we are able to conclude that variables gender, active status, age, credit score, balance, and country have an effect on churn rate. We also are able to conclude that tenure and credit card are independent of churn rate. The first variable we tackled was **gender**. Females, despite being a smaller percent of the population (45.4%) than their male counterparts (54.6%), had 8.5% higher churn rate than the males. Women came in at 25.07% churn rate, with men coming in at 16.5% of customers churned. The second variable we analyzed was active status. In our analysis we are able to conclude that **active status** does have an effect on churn rate. Out of Active customers only 14.26% customers are churned. Whereas 26.85% of Inactive customers are churned, nearly double. The chi-squared test we performed confirms there is a statistically significant correlation to suggest that active status and customer attrition are not independent variables. When analyzing products_number, we are able to reject the null hypothesis and find that churn rate is dependent on **number of banking products** a customer is signed up for. We found that customers churn was higher in users who used 1 (27.7%), 3 (82.7%) or 4 (100%) products that those who use 2 products (8.2%). We were able to find that **age** was weakly positively correlated with churn (0.29), with the mean age of churned account holders sitting slightly higher than for those who did not churn. We were also able to find that **balance** was weakly correlated with churn (0.12). We found a very weak positive correlation between credit score and churn, which was only .03. Next, we found that what **country** a customer's account is based in also impacts their propensity to churn. The percentage of customers churned in the France about 16.15% on this as opposed to the Spain at 16.67%. On the other hand Germany has the highest churned (around 32.44%) was over doubled that of France and Spain. Hence most of the customers from Germany are about to churned when compared to customers from France and Spain. We once again utilized the chi-squared test on categorical variables Country and Churn, and found that the p value was less than the significance level of 0.05, and thus we could reject the null hypothesis that these two variables are independent.

@@ -2,7 +2,7 @@
 title: "Multinatinal Bank Customer Churn"
 output: 
   html_document:
-    theme: "spacelab"
+    theme: "readable"
     highlight: kate
     code_folding: hide
     number_sections: true
@@ -14,6 +14,9 @@ output:
   pdf_document:
     toc: yes
     toc_depth: '3'
+  # prettydoc::html_pretty:
+  #   theme: cayman
+  #   highlight: github 
 
 ---
 
@@ -27,6 +30,13 @@ library(ggplot2)
 knitr::opts_chunk$set(warning = F, message = F,echo=FALSE)
 options(scientific=T, digits = 3) 
 ```
+
+```{css}
+.columns {display: flex;}
+h1 {color: red;}
+h2 {color: blue;}
+h3 {color: green;}
+```	
 
 # Chapter 1: Introduction
 

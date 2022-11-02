@@ -465,69 +465,6 @@ ggplot(data=churn_data,aes(x=gender,fill=churn))+
 
 We observed that majority of the churned customers were female despite the total population of the bank being predominantly male.
 
-### Does a higher/lower account balance of the customer affect churn? 
-
-Correlation test between account balance and churn
-
-```{r Correlation between balance and customer churn, include=FALSE, echo=FALSE}
-library(corrplot)
-churn_data_to_numeric <- churn_data
-
-churn_data$churn[churn_data$churn== "Churned"]<-1
-churn_data$churn[churn_data$churn== "Retained"]<-0
-
-
-churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
-
-churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
-
-cors_bal <- cor(churn_data_numeric)
-corrplot(cors_bal, method = 'square')
-
-cor_balance <- cor(churn_data_numeric$balance, churn_data_numeric$churn)
-cor_balance
-```
-
-```{r Correlation between balances and customer churn, include=TRUE, echo=TRUE}
-library(corrplot)
-churn_data_to_numeric <- churn_data
-churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
-
-churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
-
-cors_bal <- cor(churn_data_numeric)
-corrplot(cors_bal, method = 'number')
-cor_balance<-cor.test(churn_data$balance,as.numeric(churn_data$churn), method="pearson")
-cor_balance
-
-```  
-
-Customer churn is weakly correlated with account balance with a score of 0.12
-For further analysis we can check the correlation score by combining multiple variables 
-
-**Two sample T_test for balance vs churn**
-
-```{r Two sample T_test for  accoutn balance vs churn}
-balance_test<-t.test(balance~churn,data=churn_data)
-balance_test
-
-```
-
-```{r}
-loadPkg("BSDA") 
-
-ttestbalances95 = t.test(churn_balance_sample$credit_score) # default conf.level = 0.95
-ttestbalances95
-ttestbalances99 = t.test(churn_balance_sample$credit_score, conf.level=0.99 )
-ttestbalances99
-ttestbalances50 = t.test(churn_balance_sample$credit_score,  conf.level=0.50 )
-ttestbalances50
-
-ttestbalances95$conf.int
-ttestbalances99$conf.int
-ttestbalances50$conf.int
-```
-
 ### Does a user having a credit card with the bank affect their predisposition to churn? 
 
 Chi Square Test for independence
@@ -557,33 +494,6 @@ ggplot(data=churn_data,aes(x=credit_card,fill=churn))+
 
 Credit Card vs Churn
 P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus, we reject the null hypothesis H0, as there is a 0.5 or 50% chance of these results occurring by chance. 
-
-### Does a higher/lower credit score of the customer affect churn?
-
-Correlation test between credit score and churn
-
-```{r Correlation between credit score and customer churn, include=TRUE, echo=TRUE}
-library(corrplot)
-churn_data_to_numeric <- churn_data
-
-churn_data$churn[churn_data$churn== "Churned"]<-1
-churn_data$churn[churn_data$churn== "Retained"]<-0
-
-
-churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
-str(churn_data_to_numeric)
-churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
-str(churn_data_numeric)
-cors_credit <- cor(churn_data_numeric)
-corrplot(cors_credit, method = 'square')
-
-cor_scores <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
-cor_scores
-```
-
-
-**The credit score is weakly correlated with customer churn with a score of -0.0271**
-
 
 ### Does the churn rate depend upon which country the customer belongs to?
 
@@ -692,6 +602,94 @@ ggplot(data=churn_data,aes(x=active_member,fill=churn))+
 
 Here, we can interpret that most of the Inactive customers are about to churned.
 
+### Does a higher/lower account balance of the customer affect churn? 
+
+Correlation test between account balance and churn
+
+```{r Correlation between balance and customer churn, include=FALSE, echo=FALSE}
+library(corrplot)
+churn_data_to_numeric <- churn_data
+
+churn_data$churn[churn_data$churn== "Churned"]<-1
+churn_data$churn[churn_data$churn== "Retained"]<-0
+
+
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+
+cors_bal <- cor(churn_data_numeric)
+corrplot(cors_bal, method = 'square')
+
+cor_balance <- cor(churn_data_numeric$balance, churn_data_numeric$churn)
+cor_balance
+```
+
+```{r Correlation between balances and customer churn, include=TRUE, echo=TRUE}
+library(corrplot)
+churn_data_to_numeric <- churn_data
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+
+cors_bal <- cor(churn_data_numeric)
+corrplot(cors_bal, method = 'number')
+cor_balance<-cor.test(churn_data$balance,as.numeric(churn_data$churn), method="pearson")
+cor_balance
+
+```  
+
+Customer churn is weakly correlated with account balance with a score of 0.12
+For further analysis we can check the correlation score by combining multiple variables 
+
+**Two sample T_test for balance vs churn**
+
+```{r Two sample T_test for  accoutn balance vs churn}
+balance_test<-t.test(balance~churn,data=churn_data)
+balance_test
+
+```
+
+```{r}
+loadPkg("BSDA") 
+
+ttestbalances95 = t.test(churn_balance_sample$credit_score) # default conf.level = 0.95
+ttestbalances95
+ttestbalances99 = t.test(churn_balance_sample$credit_score, conf.level=0.99 )
+ttestbalances99
+ttestbalances50 = t.test(churn_balance_sample$credit_score,  conf.level=0.50 )
+ttestbalances50
+
+ttestbalances95$conf.int
+ttestbalances99$conf.int
+ttestbalances50$conf.int
+```
+
+### Does a higher/lower credit score of the customer affect churn?
+
+Correlation test between credit score and churn
+
+```{r Correlation between credit score and customer churn, include=TRUE, echo=TRUE}
+library(corrplot)
+churn_data_to_numeric <- churn_data
+
+churn_data$churn[churn_data$churn== "Churned"]<-1
+churn_data$churn[churn_data$churn== "Retained"]<-0
+
+
+churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
+str(churn_data_to_numeric)
+churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
+str(churn_data_numeric)
+cors_credit <- cor(churn_data_numeric)
+corrplot(cors_credit, method = 'number')
+
+cor_scores <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
+cor_scores
+```
+
+
+**The credit score is weakly correlated with customer churn with a score of -0.0271**
 
 ### Does churn depend on age of the customers?
 ```{r Correlation between age and customer churn, include=TRUE, echo=TRUE}

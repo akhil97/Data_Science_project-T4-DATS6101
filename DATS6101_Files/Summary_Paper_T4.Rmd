@@ -293,12 +293,16 @@ ggplot(df, aes(x = "", y = perc, fill = churn)) +
 
 So,now the big question was what factors affected the 20% churn rate in the multinational bank across different countries.We will do  statistical analysis to find the cause for the churn rate by framing a few possible SMART questions.
 
-# Chapter 4:Independent variables EDA: Bar Plots,Histograms,Chi Square test,Correlation plot.
+# Chapter 4:Independent variables EDA: Bar Plots, Histograms, Chi Square test, Correlation plot.
+
+We are performing two types of tests Chi Square test of independence and Correlation. So, Chi Square test is used to check independence of Churn rate with variables such as Gender, Customer Account Status, Banking products and services, Credit card, Country and Age of customers and we performed correlation test to check how variables like Account balance and Credit score are correlated with Churn rate.
 
 ### SMART question:Does the churn rate depend on Gender of the account holders?
 
 Chi Square test for independence
+
 H0 : Customers' gender and churn are independent.
+
 H1 : Customer’s gender and churn are not independent.
 
 ```{r Chisq test of independence between Gender and customer churn rate}
@@ -326,7 +330,9 @@ Here, we are comparing the number of male and female customers who are about to 
 ### SMART question:Does churn depend on status of active accounts?
 
 Chi Square test for independence
+
 H0 : Customers' active status and churn are independent.
+
 H1 : Customer’s active status and churn are not independent.
 
 ```{r Chisq test of independence between Active members and customer churn rate}
@@ -354,7 +360,9 @@ From the boxplot, we are comparing the number of Active and Inactive customers w
 ### SMART question:Does churn depend on different banking product and services provided?
 
 Chi Square test for independence
+
 H0 : Banking products,services and churn are independent.
+
 H1 : Banking products,services and churn are not independent.
 
 ```{r Chisq test of independence between Banking product and services and customer churn rate}
@@ -382,7 +390,9 @@ We can notice that most of the customers with lower and higher products i.e) 1, 
 ### SMART question:Does a uers having a credit card with the bank affect predisposition to churn?
 
 Chi Square test for independence
+
 H0 :Customer having credit card and churn are independent.
+
 H1 : Customer having credit card  and churn are not independent.
 
 ```{r Chisq test of independence between credit card and customer churn rate}
@@ -410,7 +420,9 @@ P-value of 0.5 is much higher that the significance level (0.05 for df=1). Thus,
 ### SMART question:Does churn rate depend on which country the user banks in?
 
 Chi Square test for independence
+
 H0 : Country card and churn are independent.
+
 H1 : Country and churn are not independent.
 
 ```{r Chisq test of independence between country and customer churn rate}
@@ -529,52 +541,17 @@ cor_age <- cor(churn_data_numeric$age, churn_data_numeric$churn)
 cor_age
 ```
 
-
-
-```{r Age_churns}
-
-#Contingency table
-churn_age = table(churn_data$churn, churn_data$age)
-
-#Chisquare Test of independence
-chichurn_age = chisq.test(churn_age)
-chichurn_age
-
-ggplot(churn_data, aes(x=age, fill=churn)) +
-  geom_histogram( color='#e9ecef', alpha=0.5, position='identity') + scale_fill_manual('Position', values=c('red', 'pink1')) +
-  labs(title = "Age Distribution across Churned and No Churn Account Holders",x="Age of Account Holders",y="Frequency")
-```
-
-### SMART question:Does the account age (tenure) affect churn?
-
-Correlation test between tenure and churn
-
-```{r Chisq test of independence between tenure and customer churn rate}
-#Contingency table
-contable_tenure = table(churn_data$tenure, churn_data$churn)
-xkabledply(contable_tenure, title="Contingency table for Tenure vs Churn (0 or 1)")
-
-#Chisquare Test of independency
-chitest_tenure <- chisq.test(contable_tenure)
-chitest_tenure
-```
-```{r Tenure_churn}
-ggplot(data=churn_data,aes(x=tenure,fill=churn))+
-  geom_bar()+
-  scale_fill_manual('Position', values=c('red', 'lightgray')) +
-  labs(title = "Tenure with Bank vs Churn",x="Account Age (Years)",y="Churn")+
-  theme_minimal()
-```
-
+Churn & Age are about to moderately correlated (Positive) - 0.29.
 
 # Chapter 5: Conclusions
 
-Based on our analysis, we are able to conclude that variables gender, active status, age, credit score, balance, and country have an effect on churn rate. We also are able to conclude that tenure and credit card are independent of churn rate. The first variable we tackled was **gender**. Females, despite being a smaller percent of the population (45.4%) than their male counterparts (54.6%), had 8.5% higher churn rate than the males. Women came in at 25.07% churn rate, with men coming in at 16.5% of customers churned. The second variable we analyzed was active status. In our analysis we are able to conclude that **active status** does have an effect on churn rate. Out of Active customers only 14.26% customers are churned. Whereas 26.85% of Inactive customers are churned, nearly double. The chi-squared test we performed confirms there is a statistically significant correlation to suggest that active status and customer attrition are not independent variables. When analyzing products_number, we are able to reject the null hypothesis and find that churn rate is dependent on **number of banking products** a customer is signed up for. We found that customers churn was higher in users who used 1 (27.7%), 3 (82.7%) or 4 (100%) products that those who use 2 products (8.2%). We were able to find that **age** was weakly positively correlated with churn (0.29), with the mean age of churned account holders sitting slightly higher than for those who did not churn. We were also able to find that **balance** was weakly correlated with churn (0.12). We found a very weak positive correlation between credit score and churn, which was only .03. Next, we found that what **country** a customer's account is based in also impacts their propensity to churn. The percentage of customers churned in the France about 16.15% on this as opposed to the Spain at 16.67%. On the other hand Germany has the highest churned (around 32.44%) was over doubled that of France and Spain. Hence most of the customers from Germany are about to churned when compared to customers from France and Spain. We once again utilized the chi-squared test on categorical variables Country and Churn, and found that the p value was less than the significance level of 0.05, and thus we could reject the null hypothesis that these two variables are independent.
+Based on our analysis, we are able to conclude that variables gender, active status, age, credit score, balance, and country have an effect on churn rate. We also are able to conclude that tenure and credit card are independent of churn rate. The first variable we tackled was **gender**. Females, despite being a smaller percent of the population (45.4%) than their male counterparts (54.6%), had 8.5% higher churn rate than the males. Women came in at 25.07% churn rate, with men coming in at 16.5% of customers churned. The second variable we analyzed was active status. In our analysis we are able to conclude that **active status** does have an effect on churn rate. Out of Active customers only 14.26% customers are churned. Whereas 26.85% of Inactive customers are churned, nearly double. The chi-squared test we performed confirms there is a statistically significant correlation to suggest that active status and customer attrition are not independent variables. When analyzing products_number, we are able to reject the null hypothesis and find that churn rate is dependent on **number of banking products** a customer is signed up for. We found that customers churn was higher in users who used 1 (27.7%), 3 (82.7%) or 4 (100%) products that those who use 2 products (8.2%). 
 
-When performing EDA on the other two variables, credit card and tenure, we are able to conclude that the two are not related to churn. In our analysis, we found that there is no relationship between whether a user has a **credit card**, and their propensity to churn. We performed a chi-squared test on categorical variables Credit Card and Churn, which yielded a p-value of 0.5. This p-value is notably higher than the significance level of 0.05, and thus we accept the null hypothesis that the two variables are independent. Following our analysis on the **tenure** variable, we can conclude that there is no relationship between years a customer has been with the bank, and churn. We performed a chi-squared test on categorical variables Tenure and Churn, which yielded a p-value of 0.2. This p-value is notably higher than the significance level of 0.05, and thus we accept the null hypothesis that the two variables are independent. 
+We were able to find that **age** was weakly positively correlated with churn (0.29), with the mean age of churned account holders sitting slightly higher than for those who did not churn. We were also able to find that **balance** was weakly correlated with churn (0.12). We found a very weak positive correlation between credit score and churn, which was only .03. Next, we found that what **country** a customer's account is based in also impacts their propensity to churn. The percentage of customers churned in the France about 16.15% on this as opposed to the Spain at 16.67%. On the other hand Germany has the highest churned (around 32.44%) was over doubled that of France and Spain. Hence most of the customers from Germany are about to churned when compared to customers from France and Spain. We once again utilized the chi-squared test on categorical variables Country and Churn, and found that the p value was less than the significance level of 0.05, and thus we could reject the null hypothesis that these two variables are independent. When performing EDA on the other variable, credit card we are able to conclude that the two are not related to churn. 
 
-In conclusion, we find that gender, active status, number of banking products, age, credit score, and countries all impact churn. We also find that both the account age (tenure) and whether a customer has a credit card (credit_card) have no relationship to churn.
+In our analysis, we found that there is no relationship between whether a user has a **credit card**, and their propensity to churn. We performed a chi-squared test on categorical variables Credit Card and Churn, which yielded a p-value of 0.5. This p-value is notably higher than the significance level of 0.05, and thus we accept the null hypothesis that the two variables are independent.
 
+In conclusion, we find that gender, active status, number of banking products, age, credit score, and countries all impact churn. We also find that whether a customer has a credit card (credit_card) have no relationship to churn.
 
 
 # Chapter 6: Bibliography

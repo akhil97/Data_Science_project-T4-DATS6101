@@ -5,7 +5,7 @@ output:
     theme: "readable"
     highlight: kate
     code_folding: hide
-    number_sections: true
+    number_sections: false
     toc: yes
     toc_depth: 6
     toc_float: yes
@@ -41,9 +41,9 @@ body{color: black;font-family:Arial;text-align: justify;}
 
 # Chapter 1: Introduction
 
-Customer churn, also known as customer turnover, occurs when a customer chooses to leave or unsubscribe from a service for any reason. In the context of this project, we are looking at customer churn in banking. Being able to predict customer churn is important because we want to retain as many customers as we can. 
+Customer churn, also known as customer turnover, occurs when a customer chooses to leave or unsubscribe from a service for any reason. In the context of this project, we are looking at customer churn in banking. Being able to predict customer churn is important because we want to retain as many customers as we can. (Kaemingk, 2018.)
 
-Of course you want to keep customers, but it also is cheaper to retain your customers, than having to spend money to acquire new customers to replace the ones that left. Lower customer acquisition costs equal more profits. By identifying customers at risk of churn, we are able to identify which efforts in order to maximize their likelihood of staying.  
+Of course you want to keep customers, but it also is cheaper to retain your customers, than having to spend money to acquire new customers to replace the ones that left. Lower customer acquisition costs equal more profits. By identifying customers at risk of churn, we are able to identify which efforts in order to maximize their likelihood of staying. (Guliyev et al., 2021.)
 
 We chose to analyze a multinational bank’s churn for several reasons. As an international team, we were interested in topics that spanned multiple countries, with a particular focus on either business or environment, our personal interests. When we were pitching topics, nearly every suggestion was geared towards sales or customer experience, or global environmental issues.
 
@@ -58,7 +58,7 @@ In our research, we aim, through EDA, to identify the variables which have the h
 
 # Chapter 2: Description of the Data
 
-This study is based on a data set that contains 10,000 observations of bank customers with 12 variables. (See below for a readout of the dataset’s structure and variable names.) Variable descriptions are as follows and we choose the data set from [Kaggle](https://www.kaggle.com/code/tamunoyedarego/abc-multinational-bank-customer-analysis).
+This study is based on a data set that contains 10,000 observations of bank customers with 12 variables. (See below for a readout of the dataset’s structure and variable names.) Variable descriptions are as follows and we choose the data set from [Kaggle](https://www.kaggle.com/code/tamunoyedarego/abc-multinational-bank-customer-analysis) (Topre, 2022.)
 
 
 ```{r Churn_data_file, include=T,echo=FALSE,results='apois'}
@@ -564,28 +564,21 @@ ggplot(data=churn_data,aes(x=tenure,fill=churn))+
   labs(title = "Tenure with Bank vs Churn",x="Account Age (Years)",y="Chrun")+
   theme_minimal()
 ```
+
+
 # Chapter 5: Conclusions
 
-**Gender** Based on our analysis, we are able to conclude that Gender does have an effect on churn rate. Females, despite being a smaller percent of the population (45.4%) than their male counterparts (54.6%), had 8.5% higher churn rate than the males. Women came in at 25.07% churn rate, with men coming in at 16.5% of customers churned.
+Based on our analysis, we are able to conclude that variables gender, active status, age, credit score, balance, and country have an effect on churn rate. We also are able to conclude that tenure and credit card are independent of churn rate. The first variable we tackled was **gender**. Females, despite being a smaller percent of the population (45.4%) than their male counterparts (54.6%), had 8.5% higher churn rate than the males. Women came in at 25.07% churn rate, with men coming in at 16.5% of customers churned. The second variable we analyzed was active status. In our analysis we are able to conclude that **active status** does have an effect on churn rate. Out of Active customers only 14.26% customers are churned. Whereas 26.85% of Inactive customers are churned, nearly double. The chi-squared test we performed confirms there is a statistically significant correlation to suggest that active status and customer attrition are not independent variables. When analyzing products_number, we are able to reject the null hypothesis and find that churn rate is dependent on **number of banking products** a customer is signed up for. We found that customers churn was higher in users who used 1 (27.7%), 3 (82.7%) or 4 (100%) products that those who use 2 products (8.2%). We were able to find that **age** was weakly positively correlated with churn (0.29), with the mean age of churned account holders sitting slightly higher than for those who did not churn. We were also able to find that **balance** was weakly correlated with churn (0.12). We found a very weak positive correlation between credit score and churn, which was only .03. Next, we found that what **country** a customer's account is based in also impacts their propensity to churn. The percentage of customers churned in the France about 16.15% on this as opposed to the Spain at 16.67%. On the other hand Germany has the highest churned (around 32.44%) was over doubled that of France and Spain. Hence most of the customers from Germany are about to churned when compared to customers from France and Spain. We once again utilized the chi-squared test on categorical variables Country and Churn, and found that the p value was less than the significance level of 0.05, and thus we could reject the null hypothesis that these two variables are independent.
 
-**Active Status** In our analysis we are able to conclude that Active status does have an effect on churn rate. Out of Active customers (51.51% of sample population) only 14.26% customers are churned. Whereas, 26.85% Inactive customers are churned (48.49% of sample population). The chi-squared test we performed confirms there is a statistically significant correlation to suggest that active status and customer attrition are not independent variables. As mentioned in Chapter 2 Limitations, a vague definition of "Active" was provided, and we are not able to pinpoint what exactly deems a customer 'inactive", and where that threshold lies. As a result, while we can draw observations from the data set, but we cannot make a meaningful observation with regards to behavior.
+When performing EDA on the other two variables, credit card and tenure, we are able to conclude that the two are not related to churn. In our analysis, we found that there is no relationship between whether a user has a **credit card**, and their propensity to churn. We performed a chi-squared test on categorical variables Credit Card and Churn, which yielded a p-value of 0.5. This p-value is notably higher than the significance level of 0.05, and thus we accept the null hypothesis that the two variables are independent. Following our analysis on the **tenure** variable, we can conclude that there is no relationship between years a customer has been with the bank, and churn. We performed a chi-squared test on categorical variables Tenure and Churn, which yielded a p-value of 0.2. This p-value is notably higher than the significance level of 0.05, and thus we accept the null hypothesis that the two variables are independent. 
 
-**Number of Banking Products** We are able to reject the null hypothesis and find that churn rate is dependent on number of banking products a customer is signed up for. We found that customers churn was higher in users who used 1 (27.7%), 3 (82.7%) or 4 (100%) products that those who use 2 products (8.2%). A limitation discussed in Chapter 2 is lack of description of what exact products/services or combination of products/services. Thus, while we are able to draw conclusions about how the number of products affected churn rate, we can not know what this finding entails and which products/services in particular correlate with higher churn.
+In conclusion, we find that gender, active status, number of banking products, age, credit score, and countries all impact churn. We also find that both the account age (tenure) and whether a customer has a credit card (credit_card) have no relationship to churn.
 
-**Age**
-
-**Credit Score** 
-
-**Credit Card** In our analysis, we found that there is no relationship between whether a user has a credit card, and their propensity to churn. We performed a chi-squared test on categorical variables Credit Card and Churn, which yielded a p-value of 0.5. This p-value is notably higher than the significance level of 0.05, and thus we accept the null hypothesis that the two variables are independent. 
-
-**Countries** We found that what country a customer's account is based in impacts their propensity to churn. We once again utilized the chi-squared test on categorical variables Country and Churn, and found that the p value was less than the significance level of 0.05, and thus we could reject the null hypothesis that these two variables are independent.
-
-**Tenure** Following our analysis, we can conclude that there is no relationship between years a customer has been with the bank, and churn. We performed a chi-squared test on categorical variables Tenure and Churn, which yielded a p-value of 0.2. This p-value is notably higher than the significance level of 0.05, and thus we accept the null hypothesis that the two variables are independent. 
-
-In conclusion, we find that gender, active status, number of banking products, age, credit score, and countries all impact churn. We also find that both the account age (tenure) and whether a customer has a credit card (credit_card) have no relationship to churn. 
 
 
 # Chapter 6: Bibliography
-Bank Customer Churn Dataset from https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset
+Topre, G. (2022, August 30). Bank Customer Churn Dataset. Kaggle. Retrieved October 4, 2022, from https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset 
 
+Kaemingk, D. (2018, August 29). Reducing customer churn for banks and financial institutions. Qualtrics. Retrieved November 2, 2022, from https://www.qualtrics.com/blog/customer-churn-banking/ 
 
+Guliyev, H., & Yerdelen Tatoğlu, F. (2021). Customer churn analysis in banking sector: Evidence from explainable machine learning models. Journal of Applied Microeconometrics, 1(2), 85–99. https://doi.org/10.53753/jame.1.2.03 

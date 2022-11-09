@@ -742,6 +742,8 @@ chichurn_age$p.value
 Churn & Age are about to moderately correlated (Positive) - 0.29.
 
 ```{r Correlation combining multiple variables}
-corr_score <- cor(churn_data$age + churn_data$tenure + churn_data$products_number, churn_data$churn)
-corr_score
+corr_score1 <- cor(churn_data$age + churn_data$tenure, churn_data$churn)
+corr_score1
+corr_score2 <- cor(churn_data$age + churn_data$products_number, churn_data$churn)
+corr_score2
 ```

@@ -741,13 +741,18 @@ chichurn_age$p.value
 
 Churn & Age are about to moderately correlated (Positive) - 0.29.
 
-```{r Correlation combining multiple variables}
-corr_score1 <- cor(churn_data$age + churn_data$tenure, churn_data$churn)
-corr_score1
-corr_score2 <- cor(churn_data$age + churn_data$products_number, churn_data$churn)
-corr_score2
-corr_score3 <- cor(churn_data$age + churn_data$balance, churn_data$churn)
-corr_score3
-corr_score4 <- cor(churn_data$age + churn_data$tenure + churn_data$products_number, churn_data$churn)
-corr_score4
+```{r Correlation combining multiple variables, results='markup', include=TRUE}
+corr <- cor(churn_data_numeric$age, churn_data_numeric$churn)
+corr
+corr1 <- cor(churn_data_numeric$age + churn_data_numeric$tenure, churn_data_numeric$churn)
+corr1
+corr2 <- cor(churn_data_numeric$age + churn_data_numeric$products_number, churn_data_numeric$churn)
+corr2
+corr3 <- cor(churn_data_numeric$age + churn_data_numeric$balance, churn_data_numeric$churn)
+corr3
+corr4 <- cor(churn_data_numeric$age + churn_data_numeric$tenure + churn_data_numeric$products_number, churn_data_numeric$churn)
+corr4
+corr5 <- cor(churn_data_numeric$age + churn_data_numeric$products_number + churn_data_numeric$balance, churn_data_numeric$churn)
+corr5
 ```
+The correlation score is the highest for the age variable. After combining different columns and finding the correlation score we see that it starts decreasing from 0.285  

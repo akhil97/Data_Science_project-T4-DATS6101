@@ -746,4 +746,6 @@ corr_score1 <- cor(churn_data$age + churn_data$tenure, churn_data$churn)
 corr_score1
 corr_score2 <- cor(churn_data$age + churn_data$products_number, churn_data$churn)
 corr_score2
+corr_score3 <- cor(churn_data$age + churn_data$balance, churn_data$churn)
+corr_score3
 ```

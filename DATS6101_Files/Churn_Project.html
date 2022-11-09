@@ -11,7 +11,7 @@
 
 <meta name="author" content="T4-Analytical Avengers" />
 
-<meta name="date" content="2022-11-02" />
+<meta name="date" content="2022-11-08" />
 
 <title>AMultinational Bank Customer Churn</title>
 
@@ -1600,7 +1600,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">AMultinational Bank Customer Churn</h1>
 <h4 class="author">T4-Analytical Avengers</h4>
-<h4 class="date">2022-11-02</h4>
+<h4 class="date">2022-11-08</h4>
 
 </div>
 
@@ -2242,6 +2242,27 @@ chichurn_age$parameter
 chichurn_age$p.value</code></pre>
 <p>Churn &amp; Age are about to moderately correlated (Positive) -
 0.29.</p>
+<pre class="r"><code>corr &lt;- cor(churn_data_numeric$age, churn_data_numeric$churn)
+corr</code></pre>
+<pre><code>## [1] 0.285</code></pre>
+<pre class="r"><code>corr1 &lt;- cor(churn_data_numeric$age + churn_data_numeric$tenure, churn_data_numeric$churn)
+corr1</code></pre>
+<pre><code>## [1] 0.272</code></pre>
+<pre class="r"><code>corr2 &lt;- cor(churn_data_numeric$age + churn_data_numeric$products_number, churn_data_numeric$churn)
+corr2</code></pre>
+<pre><code>## [1] 0.283</code></pre>
+<pre class="r"><code>corr3 &lt;- cor(churn_data_numeric$age + churn_data_numeric$balance, churn_data_numeric$churn)
+corr3</code></pre>
+<pre><code>## [1] 0.119</code></pre>
+<pre class="r"><code>corr4 &lt;- cor(churn_data_numeric$age + churn_data_numeric$tenure + churn_data_numeric$products_number, churn_data_numeric$churn)
+corr4</code></pre>
+<pre><code>## [1] 0.269</code></pre>
+<pre class="r"><code>corr5 &lt;- cor(churn_data_numeric$age + churn_data_numeric$products_number + churn_data_numeric$balance, churn_data_numeric$churn)
+corr5</code></pre>
+<pre><code>## [1] 0.119</code></pre>
+<p>The correlation score is the highest for the age variable. After
+combining different columns and finding the correlation score we see
+that it starts decreasing from 0.285</p>
 </div>
 </div>
 </div>

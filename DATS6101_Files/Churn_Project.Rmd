@@ -757,7 +757,7 @@ corr5
 ```
 The correlation score is the highest for the age variable. After combining different columns and finding the correlation score we see that it starts decreasing from 0.285  
 
-```{r}
+```{r, Balancing data using oversampling}
 library(ROSE)
 sum(churn_data$country == 'France')
 sum(churn_data$country == 'Germany')

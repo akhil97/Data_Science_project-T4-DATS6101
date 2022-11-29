@@ -11,7 +11,7 @@
 
 <meta name="author" content="T4-Analytical Avengers" />
 
-<meta name="date" content="2022-11-08" />
+<meta name="date" content="2022-11-29" />
 
 <title>AMultinational Bank Customer Churn</title>
 
@@ -1451,8 +1451,8 @@ pre code {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -1460,16 +1460,9 @@ pre code {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -1600,7 +1593,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">AMultinational Bank Customer Churn</h1>
 <h4 class="author">T4-Analytical Avengers</h4>
-<h4 class="date">2022-11-08</h4>
+<h4 class="date">2022-11-29</h4>
 
 </div>
 
@@ -2263,6 +2256,18 @@ corr5</code></pre>
 <p>The correlation score is the highest for the age variable. After
 combining different columns and finding the correlation score we see
 that it starts decreasing from 0.285</p>
+<pre class="r"><code>library(ROSE)
+sum(churn_data$country == &#39;France&#39;)
+sum(churn_data$country == &#39;Germany&#39;)
+sum(churn_data$country == &#39;Spain&#39;)
+
+set.seed(123)
+ind &lt;- sample(2, nrow(churn_data), replace = TRUE, prob = c(0.7, 0.3))
+train &lt;- churn_data[ind==1,]
+test &lt;- churn_data[ind==2,]
+  
+over &lt;- ovun.sample(churn~., data = train, method = &quot;over&quot;, N = 10000)$data
+table(over$country)</code></pre>
 </div>
 </div>
 </div>

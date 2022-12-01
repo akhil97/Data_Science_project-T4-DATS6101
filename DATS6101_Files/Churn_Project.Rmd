@@ -763,16 +763,45 @@ sum(churn_data$country == 'France')
 sum(churn_data$country == 'Germany')
 sum(churn_data$country == 'Spain')
 
-sum(churn_data$churn == 0)
-sum(churn_data$churn == 1)
-
-set.seed(123)
 ind <- sample(2, nrow(churn_data), replace = TRUE, prob = c(0.7, 0.3))
 train <- churn_data[ind==1,]
 test <- churn_data[ind==2,]
   
-over <- ovun.sample(churn~., data = train, method = "over", N = 10000)$data
+over <- ovun.sample(churn~., data = train, method = "over", N = 10000,seed=123)$data
 table(over$country)
 table(over$churn)
 
 ```
+
+
+
+
+```{r}
+library(ROSE)
+
+
+sum(churn_data$country == 'France')
+sum(churn_data$country == 'Germany')
+sum(churn_data$country == 'Spain')
+ind <- sample(2, nrow(churn_data), replace = TRUE, prob = c(0.7, 0.3))
+train <- churn_data[ind==1,]
+test <- churn_data[ind==2,]
+  
+
+data_balanced_over <- ovun.sample(churn ~ ., data = train, method = "over",N = 10000,seed=123)$data
+table(data_balanced_over$country)
+
+```
+
+
+### Model Building and trainig
+
+**Let us see the probability of customer are churned/not churned.
+
+```{r}
+
+prop.table( table(churn_data$churn) )
+```
+
+
+**we observe that his probability table tells you that around 20 percent of the customers are churned. If those customers are all the ones that are having good relationship with the bank, then the bank is going to face severe strike on itss business rate. Let’s use the different modelling methods to train our dataset to see if we can find out what’s causing customers to close the account with the particular bank.**

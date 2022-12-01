@@ -2245,17 +2245,22 @@ corr5</code></pre>
 combining different columns and finding the correlation score we see
 that it starts decreasing from 0.285</p>
 <pre class="r"><code>library(ROSE)
-sum(churn_data$country == &#39;France&#39;)
-sum(churn_data$country == &#39;Germany&#39;)
-sum(churn_data$country == &#39;Spain&#39;)
-
-set.seed(123)
+sum(churn_data$country == &#39;France&#39;)</code></pre>
+<pre><code>## [1] 5014</code></pre>
+<pre class="r"><code>sum(churn_data$country == &#39;Germany&#39;)</code></pre>
+<pre><code>## [1] 2509</code></pre>
+<pre class="r"><code>sum(churn_data$country == &#39;Spain&#39;)</code></pre>
+<pre><code>## [1] 2477</code></pre>
+<pre class="r"><code>set.seed(123)
 ind &lt;- sample(2, nrow(churn_data), replace = TRUE, prob = c(0.7, 0.3))
 train &lt;- churn_data[ind==1,]
 test &lt;- churn_data[ind==2,]
   
 over &lt;- ovun.sample(churn~., data = train, method = &quot;over&quot;, N = 10000)$data
 table(over$country)</code></pre>
+<pre><code>## 
+##  France Germany   Spain 
+##    4652    3001    2347</code></pre>
 </div>
 </div>
 </div>

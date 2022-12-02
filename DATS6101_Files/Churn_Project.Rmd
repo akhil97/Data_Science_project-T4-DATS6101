@@ -808,7 +808,7 @@ prop.table( table(churn_data$churn) )
 ```
 
 
-**we observe that his probability table tells you that around 20 percent of the customers are churned. If those customers are all the ones that are having good relationship with the bank, then the bank is going to face severe strike on itss business rate. Let’s use the different modelling methods to train our dataset to see if we can find out what’s causing customers to close the account with the particular bank.**
+**we observe that his probability table tells you that around 20 percent of the customers are churned. If those customers are all the ones that are having good relationship with the bank, then the bank is going to face severe strike on its business rate. Let’s use the different modelling methods to train our dataset to see if we can find out what’s causing customers to close the account with the particular bank.**
 
 ```{r, Scaling data}
 str(churn_data)
@@ -828,6 +828,7 @@ churn_data_scale <- data.frame(scale(churn_data_pc))
 xkabledply(cor(churn_data_scale))
 xkabledply(cov(churn_data_scale))
 
+<<<<<<< Updated upstream
 ```
 
 ```{r, Proportion of variance}
@@ -835,6 +836,10 @@ pr.out=prcomp(churn_data_pc, scale =TRUE)
 print("Case: z-score/scaled")
 summary(pr.out)
 pr.out$rotation
+```
+```{r}
+nrow(train)
+prop.table( table(train$churn) )
 ```
 
 ```{r, Biplot}

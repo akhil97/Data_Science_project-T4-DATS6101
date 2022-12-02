@@ -828,7 +828,6 @@ churn_data_scale <- data.frame(scale(churn_data_pc))
 xkabledply(cor(churn_data_scale))
 xkabledply(cov(churn_data_scale))
 
-<<<<<<< Updated upstream
 ```
 
 ```{r, Proportion of variance}
@@ -845,6 +844,7 @@ prop.table( table(train$churn) )
 ```{r, Biplot}
 biplot(pr.out, scale = 0)
 ```
+
 ```{r}
 pr.var <- (pr.out$sdev^2)
 pve <- pr.var/sum(pr.var)

@@ -817,3 +817,11 @@ xkabledply(cor(churn_data_scale))
 xkabledply(cov(churn_data_scale))
 
 ```
+
+```{r, Proportion of variance}
+pr.out =prcomp(churn_data_numeric, scale =TRUE)
+print("Case: z-score/scaled")
+summary(pr.out)
+pr.out$rotation
+```
+

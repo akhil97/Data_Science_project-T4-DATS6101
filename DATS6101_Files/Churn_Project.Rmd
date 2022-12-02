@@ -816,6 +816,7 @@ churn_data_scale <- data.frame(scale(churn_data_numeric))
 xkabledply(cor(churn_data_scale))
 xkabledply(cov(churn_data_scale))
 
+<<<<<<< Updated upstream
 ```
 
 ```{r, Proportion of variance}
@@ -825,3 +826,6 @@ summary(pr.out)
 pr.out$rotation
 ```
 
+=======
+```
+>>>>>>> Stashed changes

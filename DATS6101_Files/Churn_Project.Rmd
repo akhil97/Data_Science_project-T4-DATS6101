@@ -811,16 +811,27 @@ prop.table( table(churn_data$churn) )
 **we observe that his probability table tells you that around 20 percent of the customers are churned. If those customers are all the ones that are having good relationship with the bank, then the bank is going to face severe strike on itss business rate. Let’s use the different modelling methods to train our dataset to see if we can find out what’s causing customers to close the account with the particular bank.**
 
 ```{r, Scaling data}
-churn_data_numeric_pc <- churn_data_numeric[-c(9)]
-str(churn_data_numeric_pc)
-churn_data_scale <- data.frame(scale(churn_data_numeric_pc))
+str(churn_data)
+churn_data_pc<-churn_data
+churn_data_pc$country[churn_data$country == 'France'] <- 0
+churn_data_pc$country[churn_data$country == 'Germany'] <- 1
+churn_data_pc$country[churn_data$country == 'Spain'] <- 2
+
+churn_data_pc$gender[churn_data$gender == 'Male'] <- 0
+churn_data_pc$gender[churn_data$gender == 'Female'] <- 1
+
+churn_data_pc$country = as.numeric(churn_data_pc$country)
+churn_data_pc$gender = as.numeric(churn_data_pc$gender)
+churn_data_pc <- churn_data_pc[-c(11)]
+str(churn_data_pc)
+churn_data_scale <- data.frame(scale(churn_data_pc))
 xkabledply(cor(churn_data_scale))
 xkabledply(cov(churn_data_scale))
 
 ```
 
 ```{r, Proportion of variance}
-pr.out=prcomp(churn_data_numeric_pc, scale =TRUE)
+pr.out=prcomp(churn_data_pc, scale =TRUE)
 print("Case: z-score/scaled")
 summary(pr.out)
 pr.out$rotation
@@ -828,4 +839,9 @@ pr.out$rotation
 
 ```{r, Biplot}
 biplot(pr.out, scale = 0)
+```
+```{r}
+pr.var <- (pr.out$sdev^2)
+pve <- pr.var/sum(pr.var)
+plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative Proportion of Variance Explained",ylim=c(0,1),type="b")
 ```

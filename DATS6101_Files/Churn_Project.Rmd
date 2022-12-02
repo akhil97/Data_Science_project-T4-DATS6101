@@ -763,6 +763,10 @@ sum(churn_data$country == 'France')
 sum(churn_data$country == 'Germany')
 sum(churn_data$country == 'Spain')
 
+sum(churn_data$churn == 0)
+sum(churn_data$churn == 1)
+
+set.seed(123)
 ind <- sample(2, nrow(churn_data), replace = TRUE, prob = c(0.7, 0.3))
 train <- churn_data[ind==1,]
 test <- churn_data[ind==2,]

@@ -826,6 +826,4 @@ summary(pr.out)
 pr.out$rotation
 ```
 
-=======
-```
->>>>>>> Stashed changes
+

@@ -821,15 +821,34 @@ churn_data_pc$country[churn_data$country == 'Spain'] <- 2
 churn_data_pc$gender[churn_data$gender == 'Male'] <- 0
 churn_data_pc$gender[churn_data$gender == 'Female'] <- 1
 
+churn_data_pc$credit_card[churn_data$credit_card == 'No-Credit Card'] <- 0
+churn_data_pc$credit_card[churn_data$credit_card == 'Credit Card'] <- 1
+
+churn_data_pc$active_member[churn_data$active_member == 'In Active'] <- 0
+churn_data_pc$active_member[churn_data$active_member == 'Active'] <- 1
+
+churn_data_pc$active_member = as.numeric(churn_data_pc$active_member)
+churn_data_pc$credit_card = as.numeric(churn_data_pc$credit_card)
 churn_data_pc$country = as.numeric(churn_data_pc$country)
 churn_data_pc$gender = as.numeric(churn_data_pc$gender)
-churn_data_pc <- churn_data_pc[-c(11)]
+churn_data_pc$churn = as.numeric(churn_data_pc$churn)
+str(churn_data_pc)
+churn_data_pc_target = churn_data_pc #includes 'churn'
+churn_data_pc <- churn_data_pc_target[-c(11)]
+```
+```{r}
+str(churn_data_pc_target)
 str(churn_data_pc)
 churn_data_scale <- data.frame(scale(churn_data_pc))
 xkabledply(cor(churn_data_scale))
 xkabledply(cov(churn_data_scale))
 
 ```
+
+```{r}
+str(churn_data_pc)
+```
+
 
 ```{r, Proportion of variance}
 pr.out=prcomp(churn_data_pc, scale =TRUE)
@@ -853,13 +872,143 @@ plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative P
 ```
 
 
+## Determine whether age,country,gender predict the customer churn
+
+## Uisng Linear Regression
+```{r}
+churn_model.final <- lm(churn~age+gender+country,data=churn_data_pc_target)
+summary(churn_model.final)
+xkabledply(churn_model.final, title = " Model summary")
+coef(churn_model.final)
+confint(churn_model.final)
+
+```
+
+```{r model1,results='markup'}
+churn_age_fit <- lm(churn~ age, data = churn_data_pc_target)
+summary(churn_age_fit)
+xkabledply(churn_age_fit , title = paste("Model :", format(formula(churn_age_fit )) ) )
+xkablevif(churn_age_fit )
+plot(churn_age_fit )
+
+```
+
+
+
+```{r model2,results='markup'}
+churn_gender_fit <- lm(churn~ age+gender, data = churn_data_pc_target)
+summary(churn_gender_fit)
+xkabledply(churn_gender_fit , title = paste("Model :", format(formula(churn_gender_fit)) ) )
+xkablevif(churn_gender_fit )
+plot(churn_gender_fit)
+
+```
+
+```{r model1,results='markup'}
+churn_country_fit <- lm(churn~ age+gender+country, data = churn_data_pc_target)
+summary(churn_country_fit )
+xkabledply(churn_country_fit , title = paste("Model :", format(formula(churn_country_fit )) ) )
+xkablevif(churn_country_fit )
+plot(churn_country_fit )
+
+```
+```{r modelanova,results='markup'}
+anova(churn_age_fit ,churn_gender_fit,churn_country_fit) -> churnanovaRes
+churnanovaRes
+str(churnanovaRes)
+xkabledply(churnanovaRes, title = "ANOVA comparison between the models")
+```
+
+## Using Logistic regression
+```{r results='markup'}
+str(churn_data_pc_target)
+
+churn_data_pc_target$gender <- factor(churn_data_pc_target$gender)
+churn_data_pc_target$country <- factor(churn_data_pc_target$country)
+churnLogit <- glm(churn ~ age + gender + country, data = churn_data_pc_target, family = "binomial")
+summary(churnLogit)
+xkabledply(churnLogit, title = paste("Logistic Regression :", format(formula(churnLogit)) ))
+```
+
+```{r growthDecayFactors, results='markup', collapse=F}
+expcoeff = exp(coef(churnLogit))
+
+xkabledply( as.table(expcoeff), title = "Exponential of coefficients in Logit Reg" )
+```
+
+```{r ConfInt, results='markup', collapse=F}
+
+xkabledply( confint(churnLogit), title = "CIs using profiled log-likelihood" )
+
+xkabledply( confint.default(churnLogit), title = "CIs using standard errors" )
+```
+
+```{r confusionMatrix, results='markup'}
+loadPkg("regclass")
+
+xkabledply( confusion_matrix(churnLogit), title = "Confusion matrix from Logit Model" )
+unloadPkg("regclass")
+```
+
+```{r HosmerLemeshow,results='markup', collapse=F}
+loadPkg("ResourceSelection") 
+churnLogitHoslem = hoslem.test(churn_data_pc_target$churn, fitted(churnLogit)) 
+unloadPkg("ResourceSelection") 
+churnLogitHoslem
+```
+
+```{r McFadden, results='markup'}
+churnLogitNULL <- glm(churn ~ 1, data = churn_data_pc_target, family = "binomial")
+mcFadden = 1 - logLik(churnLogit)/logLik(churnLogitNULL)
+mcFadden
+```
+
+## Determine whether products,account status predict the customer churn
+
+## Using Logistic regression
+```{r results='markup'}
+churn_data_pc_target$products_number <- factor(churn_data_pc_target$products_number)
+
+churnLogit1 <- glm(churn ~ products_number+active_member, data = churn_data_pc_target, family = "binomial")
+summary(churnLogit1)
+
+xkabledply(churnLogit1, title = paste("Logistic Regression :", format(formula(churnLogit1)) ))
+```
+
+```{r growthDecayFactors, results='markup', collapse=F}
+expcoeff = exp(coef(churnLogit1))
+
+xkabledply( as.table(expcoeff), title = "Exponential of coefficients in Logit Reg" )
+```
+
+```{r ConfInt, results='markup', collapse=F}
+
+xkabledply( confint(churnLogit1), title = "CIs using profiled log-likelihood" )
+
+xkabledply( confint.default(churnLogit1), title = "CIs using standard errors" )
+```
+
+```{r confusionMatrix, results='markup'}
+loadPkg("regclass")
+
+xkabledply( confusion_matrix(churnLogit1), title = "Confusion matrix from Logit Model" )
+unloadPkg("regclass")
+```
+
+```{r HosmerLemeshow,results='markup', collapse=F}
+loadPkg("ResourceSelection") 
+churnLogitHoslem = hoslem.test(churn_data_pc_target$churn, fitted(churnLogit1)) 
+unloadPkg("ResourceSelection") 
+churnLogitHoslem
+```
+
 
 ## Feature selection uisng Exhaustive search  
 
 ```{r}
 loadPkg("leaps")
 
-reg.churn <- regsubsets(churn~.-customer_id, data = churn_data_pc, nvmax =9, nbest = 2, method = "exhaustive")  
+reg.churn <- regsubsets(churn~.-customer_id, data = churn_data_pc_target, nvmax =9, nbest = 2, method = "exhaustive")  
 plot(reg.churn , scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churn , scale = "r2", main = "R^2")
 plot(reg.churn , scale = "bic", main = "BIC")

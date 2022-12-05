@@ -755,8 +755,7 @@ corr4 <- cor(churn_data_numeric$age + churn_data_numeric$tenure + churn_data_num
 corr4
 corr5 <- cor(churn_data_numeric$age + churn_data_numeric$products_number + churn_data_numeric$balance, churn_data_numeric$churn)
 corr5
-corr6 <-cor(churn_data_numeric$products_number +churn_data_numeric$active_member, churn_data_numeric$churn)
-corr6
+
 ```
 The correlation score is the highest for the age variable. After combining different columns and finding the correlation score we see that it starts decreasing from 0.285  
 
@@ -885,7 +884,7 @@ plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative P
 ```{r}
 loadPkg("leaps")
 
-reg.churn <- regsubsets(churn~.-customer_id, data = churn_data_pc_target, nvmax =9, nbest = 1, method = "exhaustive")  
+reg.churn <- regsubsets(churn~., data = churn_data_pc_target, nvmax =9, nbest = 1, method = "exhaustive")  
 plot(reg.churn , scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churn , scale = "r2", main = "R^2")
 plot(reg.churn , scale = "bic", main = "BIC")
@@ -904,27 +903,27 @@ subsets(reg.churn, statistic="cp", legend = FALSE, min.size = 4, main = "Mallow 
 abline(a = 1, b = 1, lty = 3)  
 ```
 
-**Feature selection uisng forward search**
+**Feature selection using forward search**
 ```{r}
-reg.churnforward <- regsubsets(churn~.-customer_id, data = churn_data_pc_target, nvmax =9, nbest = 1, method = "forward")
+reg.churnforward <- regsubsets(churn~., data = churn_data_pc_target, nvmax =9, nbest = 1, method = "forward")
 plot(reg.churnforward , scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churnforward , scale = "bic", main = "BIC")
 plot(reg.churnforward , scale = "Cp", main = "Cp")
 summary(reg.churnforward)
 ```
 
-**Feature selection uisng backaward search**
+**Feature selection using backaward search**
 ```{r}
-reg.churnback <- regsubsets(churn~.-customer_id, data = churn_data_pc_target, method = "backward", nvmax = 9, nbest = 1)
+reg.churnback <- regsubsets(churn~., data = churn_data_pc_target, method = "backward", nvmax = 9, nbest = 1)
 plot(reg.churnback, scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churnback, scale = "bic", main = "BIC")
 plot(reg.churnback, scale = "Cp", main = "Cp")
 summary(reg.churnback)
 ```
 
-**Feature selection uisng Sequential Replacement**
+**Feature selection using Sequential Replacement**
 ```{r}
-reg.churnseqrep <- regsubsets(churn~.-customer_id, data =churn_data_pc_target, nvmax = 9, nbest = 1 , method = "seqrep")
+reg.churnseqrep <- regsubsets(churn~., data =churn_data_pc_target, nvmax = 9, nbest = 1 , method = "seqrep")
 plot(reg.churnseqrep, scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churnseqrep, scale = "bic", main = "BIC")
 plot(reg.churnseqrep, scale = "Cp", main = "Cp")

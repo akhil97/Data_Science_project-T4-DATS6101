@@ -938,16 +938,6 @@ churnLogitHoslem
 
 ## Determine whether products,account status predict the customer churn
 
-### Uisng Linear Regression
-```{r}
-churn_model1.final <- lm(churn~products_number+active_member,data=churn_data_pc)
-summary(churn_model1.final)
-xkabledply(churn_model1.final, title = " Model summary")
-coef(churn_model1.final)
-confint(churn_model1.final)
-
-```
-
 ## Using Logistic regression
 ```{r results='markup'}
 churn_data_pc$products_number <- factor(churn_data_pc$products_number)

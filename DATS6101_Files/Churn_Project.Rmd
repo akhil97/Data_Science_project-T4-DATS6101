@@ -810,7 +810,7 @@ prop.table( table(churn_data$churn) )
 ```
 
 
-**we observe that his probability table tells you that around 20 percent of the customers are churned. If those customers are all the ones that are having good relationship with the bank, then the bank is going to face severe strike on its business rate. Let’s use the different modelling methods to train our dataset to see if we can find out what’s causing customers to close the account with the particular bank.**
+we observe that his probability table tells you that around 20 percent of the customers are churned. If those customers are all the ones that are having good relationship with the bank, then the bank is going to face severe strike on its business rate. Let’s use the different modelling methods to train our dataset to see if we can find out what’s causing customers to close the account with the particular bank.
 
 ```{r, Scaling data}
 str(churn_data)
@@ -853,6 +853,63 @@ str(churn_data_pc)
 ### SMART Questions
 
 ### Does the combination of variables such as country, age group, gender influence the churn rate?
+```{r logitmodel,results='markup'}
+
+churnLogit <- glm(churn ~ age + gender + country, data = churn_data_pc_target, family = "binomial")
+summary(churnLogit)
+
+xkabledply(churnLogit, title = paste("Logistic Regression :", format(formula(churnLogit)) ))
+```
+
+```{r growthDecayFactors, results='markup', collapse=F}
+expcoeff = exp(coef(churnLogit))
+
+xkabledply( as.table(expcoeff), title = "Exponential of coefficients in Logit Reg" )
+```
+
+```{r ConfInt, results='markup', collapse=F}
+
+xkabledply( confint(churnLogit), title = "CIs using profiled log-likelihood" )
+
+xkabledply( confint.default(churnLogit), title = "CIs using standard errors" )
+```
+
+```{r confusionMatrix, results='markup'}
+loadPkg("regclass")
+
+xkabledply( confusion_matrix(churnLogit), title = "Confusion matrix from Logit Model" )
+unloadPkg("regclass")
+```
+
+```{r HosmerLemeshow, results='markup', collapse=F}
+loadPkg("ResourceSelection") 
+admitLogitHoslem = hoslem.test(churn_data_pc_target$churn, fitted(churnLogit)) 
+unloadPkg("ResourceSelection") 
+
+admitLogitHoslem
+```
+
+```{r roc_auc}
+loadPkg("pROC")
+prob=predict(churnLogit, type = "response" )
+churn_data_pc_target$prob=prob
+h <- roc(churn~prob, data=churn_data_pc_target)
+auc(h) # area-under-curve prefer 0.8 or higher.
+plot(h)
+# unloadPkg("pROC")
+```
+
+```{r}
+unloadPkg("pROC")
+```
+
+
+```{r McFadden}
+loadPkg("pscl") # use pR2( ) function to calculate McFadden statistics for model eval
+churnLogitpr2 = pR2(churnLogit)
+churnLogitpr2
+unloadPkg("pscl") 
+```
 
 
 ###	What are the principal components for predicting churn rate?

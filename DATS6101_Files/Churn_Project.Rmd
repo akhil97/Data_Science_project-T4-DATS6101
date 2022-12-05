@@ -791,7 +791,7 @@ we observe that his probability table tells you that around 20 percent of the cu
 
 ```{r, Scaling data}
 str(churn_data)
-churn_data_pc<-churn_data
+churn_data_pc<-data_balanced_over
 churn_data_pc$country[churn_data$country == 'France'] <- 0
 churn_data_pc$country[churn_data$country == 'Germany'] <- 1
 churn_data_pc$country[churn_data$country == 'Spain'] <- 2

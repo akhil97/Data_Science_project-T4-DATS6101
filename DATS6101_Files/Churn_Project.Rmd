@@ -837,12 +837,6 @@ summary(churnLogit)
 xkabledply(churnLogit, title = paste("Logistic Regression :", format(formula(churnLogit)) ))
 ```
 
-```{r growthDecayFactors, results='markup', collapse=F}
-expcoeff = exp(coef(churnLogit))
-
-xkabledply( as.table(expcoeff), title = "Exponential of coefficients in Logit Reg" )
-```
-
 ```{r ConfInt, results='markup', collapse=F}
 
 xkabledply( confint(churnLogit), title = "CIs using profiled log-likelihood" )

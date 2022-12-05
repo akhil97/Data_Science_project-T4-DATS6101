@@ -19,6 +19,7 @@ loadPkg("Hmisc")
 library(dplyr)
 loadPkg("MASS")
 library(ggplot2)
+library(pkgload)
 knitr::opts_chunk$set(warning = F, results = "hide", message = F)
 options(scientific=T, digits = 3) 
 ```
@@ -800,7 +801,7 @@ table(data_balanced_over$country)
 
 ### Model Building and trainig
 
-**Let us see the probability of customer are churned/not churned.
+**Let us see the probability of customer are churned/not churned.**
 
 ```{r}
 
@@ -974,3 +975,28 @@ churnLogitHoslem = hoslem.test(churn_data_pc$churn, fitted(churnLogit1))
 unloadPkg("ResourceSelection") 
 churnLogitHoslem
 ```
+
+
+## Feature selection uisng Exhaustive search  
+
+```{r}
+loadPkg("leaps")
+
+reg.churn <- regsubsets(churn~.-customer_id, data = churn_data_pc, nvmax =9, nbest = 2, method = "exhaustive")  
+plot(reg.churn , scale = "adjr2", main = "Adjusted R^2")
+plot(reg.churn , scale = "r2", main = "R^2")
+plot(reg.churn , scale = "bic", main = "BIC")
+plot(reg.churn , scale = "Cp", main = "Cp")
+summary(reg.churn )
+```
+
+## Feature selection uisng forward search  
+```{r}
+reg.churnforward <- regsubsets(churn~.-customer_id, data = churn_data_pc, nvmax =9, nbest = 2, method = "forward")
+plot(reg.churnforward , scale = "adjr2", main = "Adjusted R^2")
+plot(reg.churnforward , scale = "bic", main = "BIC")
+plot(reg.churnforward , scale = "Cp", main = "Cp")
+summary(reg.churnforward)
+```
+
+

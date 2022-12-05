@@ -873,7 +873,7 @@ pve <- pr.var/sum(pr.var)
 plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative Proportion of Variance Explained",ylim=c(0,1),type="b")
 ```
 
-
+## Which model can give the best results for adjusted R square and ROC value with lower AIC and BIC?
 
 ## Feature selection uisng Exhaustive search  
 
@@ -886,6 +886,17 @@ plot(reg.churn , scale = "r2", main = "R^2")
 plot(reg.churn , scale = "bic", main = "BIC")
 plot(reg.churn , scale = "Cp", main = "Cp")
 summary(reg.churn )
+```
+
+```{r}
+loadPkg("car")
+
+summaryRegForward = summary(reg.churn)
+# Adjusted R2
+car::subsets(reg.churn, statistic="adjr2", legend = FALSE, min.size = 2, main = "Adjusted R^2")
+
+subsets(reg.churn, statistic="cp", legend = FALSE, min.size = 4, main = "Mallow Cp")
+abline(a = 1, b = 1, lty = 3)  
 ```
 
 ## Feature selection uisng forward search  
@@ -914,14 +925,5 @@ plot(reg.churnseqrep, scale = "bic", main = "BIC")
 plot(reg.churnseqrep, scale = "Cp", main = "Cp")
 ```
 
-```{r}
-loadPkg("car")
 
-summaryRegForward = summary(reg.churn)
-# Adjusted R2
-car::subsets(reg.churn, statistic="adjr2", legend = FALSE, min.size = 2, main = "Adjusted R^2")
-
-subsets(reg.churn, statistic="cp", legend = FALSE, min.size = 4, main = "Mallow Cp")
-abline(a = 1, b = 1, lty = 3)  
-```
 

@@ -810,9 +810,12 @@ churn_data_pc$credit_card = as.numeric(churn_data_pc$credit_card)
 churn_data_pc$country = as.numeric(churn_data_pc$country)
 churn_data_pc$gender = as.numeric(churn_data_pc$gender)
 churn_data_pc$churn = as.numeric(churn_data_pc$churn)
-str(churn_data_pc)
+
 churn_data_pc_target = churn_data_pc #includes 'churn'
-churn_data_pc <- churn_data_pc_target[-c(11)]
+churn_data_logit <- churn_data_pc_target[-c(1)]
+churn_data_pc <- churn_data_logit[-c(11)]
+str(churn_data_pc)
+
 ```
 ```{r}
 str(churn_data_pc_target)
@@ -821,10 +824,6 @@ churn_data_scale <- data.frame(scale(churn_data_pc))
 xkabledply(cor(churn_data_scale))
 xkabledply(cov(churn_data_scale))
 
-```
-
-```{r}
-str(churn_data_pc)
 ```
 
 ### SMART Questions
@@ -963,5 +962,8 @@ plot(reg.churnseqrep, scale = "bic", main = "BIC")
 plot(reg.churnseqrep, scale = "Cp", main = "Cp")
 ```
 
+```{r, Logistic Regression}
+str(churn_data_logit)
+```
 
 

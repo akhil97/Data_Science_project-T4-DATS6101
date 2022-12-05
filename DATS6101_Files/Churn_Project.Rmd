@@ -757,7 +757,7 @@ corr5 <- cor(churn_data_numeric$age + churn_data_numeric$products_number + churn
 corr5
 
 ```
-The correlation score is the highest for the age variable. After combining different columns and finding the correlation score we see that it starts decreasing from 0.285  
+The correlation score is the highest for the age variable. After combining different columns and finding the correlation score we see that it starts decreasing from 0.285
 
 ```{r, Balancing data using oversampling, results='markup', include=TRUE}
 library(ROSE)

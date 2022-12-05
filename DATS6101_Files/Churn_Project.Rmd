@@ -759,30 +759,8 @@ corr5
 ```
 The correlation score is the highest for the age variable. After combining different columns and finding the correlation score we see that it starts decreasing from 0.285
 
+
 ```{r, Balancing data using oversampling, results='markup', include=TRUE}
-library(ROSE)
-sum(churn_data$country == 'France')
-sum(churn_data$country == 'Germany')
-sum(churn_data$country == 'Spain')
-
-sum(churn_data$churn == 0)
-sum(churn_data$churn == 1)
-
-set.seed(123)
-ind <- sample(2, nrow(churn_data), replace = TRUE, prob = c(0.7, 0.3))
-train <- churn_data[ind==1,]
-test <- churn_data[ind==2,]
-  
-over <- ovun.sample(churn~., data = train, method = "over", N = 10000,seed=123)$data
-table(over$country)
-table(over$churn)
-
-```
-
-
-
-
-```{r}
 library(ROSE)
 
 
@@ -796,7 +774,7 @@ test <- churn_data[ind==2,]
 
 data_balanced_over <- ovun.sample(churn ~ ., data = train, method = "over",N = 10000,seed=123)$data
 table(data_balanced_over$country)
-
+str(data_balanced_over)
 ```
 
 

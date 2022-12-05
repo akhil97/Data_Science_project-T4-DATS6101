@@ -952,13 +952,13 @@ unloadPkg("regclass")
 
 ```{r HosmerLemeshow,results='markup', collapse=F}
 loadPkg("ResourceSelection") 
-churnLogitHoslem = hoslem.test(churn_data_pc$churn, fitted(churnLogit)) 
+churnLogitHoslem = hoslem.test(churn_data_pc_target$churn, fitted(churnLogit)) 
 unloadPkg("ResourceSelection") 
 churnLogitHoslem
 ```
 
 ```{r McFadden, results='markup'}
-churnLogitNULL <- glm(churn ~ 1, data = churn_data_pc, family = "binomial")
+churnLogitNULL <- glm(churn ~ 1, data = churn_data_pc_target, family = "binomial")
 mcFadden = 1 - logLik(churnLogit)/logLik(churnLogitNULL)
 mcFadden
 ```
@@ -967,9 +967,9 @@ mcFadden
 
 ## Using Logistic regression
 ```{r results='markup'}
-churn_data_pc$products_number <- factor(churn_data_pc$products_number)
+churn_data_pc_target$products_number <- factor(churn_data_pc_target$products_number)
 
-churnLogit1 <- glm(churn ~ products_number+active_member, data = churn_data_pc, family = "binomial")
+churnLogit1 <- glm(churn ~ products_number+active_member, data = churn_data_pc_target, family = "binomial")
 summary(churnLogit1)
 
 xkabledply(churnLogit1, title = paste("Logistic Regression :", format(formula(churnLogit1)) ))
@@ -997,7 +997,7 @@ unloadPkg("regclass")
 
 ```{r HosmerLemeshow,results='markup', collapse=F}
 loadPkg("ResourceSelection") 
-churnLogitHoslem = hoslem.test(churn_data_pc$churn, fitted(churnLogit1)) 
+churnLogitHoslem = hoslem.test(churn_data_pc_target$churn, fitted(churnLogit1)) 
 unloadPkg("ResourceSelection") 
 churnLogitHoslem
 ```
@@ -1008,7 +1008,7 @@ churnLogitHoslem
 ```{r}
 loadPkg("leaps")
 
-reg.churn <- regsubsets(churn~.-customer_id, data = churn_data_pc, nvmax =9, nbest = 2, method = "exhaustive")  
+reg.churn <- regsubsets(churn~.-customer_id, data = churn_data_pc_target, nvmax =9, nbest = 2, method = "exhaustive")  
 plot(reg.churn , scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churn , scale = "r2", main = "R^2")
 plot(reg.churn , scale = "bic", main = "BIC")

@@ -999,4 +999,32 @@ plot(reg.churnforward , scale = "Cp", main = "Cp")
 summary(reg.churnforward)
 ```
 
+## Feature selection uisng Sequential Replacement
+```{r}
+reg.churnback <- regsubsets(churn~.-customer_id, data = churn_data_pc, method = "backward", nvmax = 9, nbest = 2)
+plot(reg.churnback, scale = "adjr2", main = "Adjusted R^2")
+plot(reg.churnback, scale = "bic", main = "BIC")
+plot(reg.churnback, scale = "Cp", main = "Cp")
+summary(reg.churnback)
+```
+
+## Feature selection uisng backward search  
+```{r}
+reg.churnseqrep <- regsubsets(churn~.-customer_id, data =churn_data_pc, nvmax = 9, nbest = 2 , method = "seqrep")
+plot(reg.churnseqrep, scale = "adjr2", main = "Adjusted R^2")
+plot(reg.churnseqrep, scale = "bic", main = "BIC")
+plot(reg.churnseqrep, scale = "Cp", main = "Cp")
+```
+
+```{r}
+# 
+# Mallow Cp
+loadPkg("car")
+summaryRegForward = summary(reg.churn,)
+# Adjusted R2
+car::subsets(reg.churn,, statistic="adjr2", legend = FALSE, min.size = 2, main = "Adjusted R^2")
+subsets(reg.churn, statistic="cp", legend = FALSE, min.size = 4, main = "Mallow Cp")
+abline(a = 1, b = 1, lty = 3)  
+
+```
 

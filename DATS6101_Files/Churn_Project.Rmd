@@ -850,3 +850,137 @@ pr.var <- (pr.out$sdev^2)
 pve <- pr.var/sum(pr.var)
 plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative Proportion of Variance Explained",ylim=c(0,1),type="b")
 ```
+
+
+## Determine whether age,country,gender predict the customer churn
+
+## Uisng Linear Regression
+```{r}
+churn_model.final <- lm(churn~age+gender+country,data=churn_data_pc)
+summary(churn_model.final)
+xkabledply(churn_model.final, title = " Model summary")
+coef(churn_model.final)
+confint(churn_model.final)
+
+```
+
+```{r model1,results='markup'}
+churn_age_fit <- lm(churn~ age, data = churn_data_pc)
+summary(churn_age_fit)
+xkabledply(churn_age_fit , title = paste("Model :", format(formula(churn_age_fit )) ) )
+xkablevif(churn_age_fit )
+plot(churn_age_fit )
+
+```
+
+
+
+```{r model2,results='markup'}
+churn_gender_fit <- lm(churn~ age+gender, data = churn_data_pc)
+summary(churn_gender_fit)
+xkabledply(churn_gender_fit , title = paste("Model :", format(formula(churn_gender_fit)) ) )
+xkablevif(churn_gender_fit )
+plot(churn_gender_fit)
+
+```
+
+```{r model1,results='markup'}
+churn_country_fit <- lm(churn~ age+gender+country, data = churn_data_pc)
+summary(churn_country_fit )
+xkabledply(churn_country_fit , title = paste("Model :", format(formula(churn_country_fit )) ) )
+xkablevif(churn_country_fit )
+plot(churn_country_fit )
+
+```
+```{r modelanova,results='markup'}
+anova(churn_age_fit ,churn_gender_fit,churn_country_fit) -> churnanovaRes
+churnanovaRes
+str(churnanovaRes)
+xkabledply(churnanovaRes, title = "ANOVA comparison between the models")
+```
+
+## Using Logistic regression
+```{r results='markup'}
+churn_data_pc$gender <- factor(churn_data_pc$gender)
+churn_data_pc$country <- factor(churn_data_pc$country)
+churnLogit <- glm(churn ~ age + gender + country, data = churn_data_pc, family = "binomial")
+summary(churnLogit)
+
+xkabledply(churnLogit, title = paste("Logistic Regression :", format(formula(churnLogit)) ))
+```
+
+```{r growthDecayFactors, results='markup', collapse=F}
+expcoeff = exp(coef(churnLogit))
+
+xkabledply( as.table(expcoeff), title = "Exponential of coefficients in Logit Reg" )
+```
+
+```{r ConfInt, results='markup', collapse=F}
+
+xkabledply( confint(churnLogit), title = "CIs using profiled log-likelihood" )
+
+xkabledply( confint.default(churnLogit), title = "CIs using standard errors" )
+```
+
+```{r confusionMatrix, results='markup'}
+loadPkg("regclass")
+
+xkabledply( confusion_matrix(churnLogit), title = "Confusion matrix from Logit Model" )
+unloadPkg("regclass")
+```
+
+```{r HosmerLemeshow,results='markup', collapse=F}
+loadPkg("ResourceSelection") 
+churnLogitHoslem = hoslem.test(churn_data_pc$churn, fitted(churnLogit)) 
+unloadPkg("ResourceSelection") 
+churnLogitHoslem
+```
+
+## Determine whether products,account status predict the customer churn
+
+### Uisng Linear Regression
+```{r}
+churn_model1.final <- lm(churn~products_number+active_member,data=churn_data_pc)
+summary(churn_model1.final)
+xkabledply(churn_model1.final, title = " Model summary")
+coef(churn_model1.final)
+confint(churn_model1.final)
+
+```
+
+## Using Logistic regression
+```{r results='markup'}
+churn_data_pc$products_number <- factor(churn_data_pc$products_number)
+
+churnLogit1 <- glm(churn ~ products_number+active_member, data = churn_data_pc, family = "binomial")
+summary(churnLogit1)
+
+xkabledply(churnLogit1, title = paste("Logistic Regression :", format(formula(churnLogit1)) ))
+```
+
+```{r growthDecayFactors, results='markup', collapse=F}
+expcoeff = exp(coef(churnLogit1))
+
+xkabledply( as.table(expcoeff), title = "Exponential of coefficients in Logit Reg" )
+```
+
+```{r ConfInt, results='markup', collapse=F}
+
+xkabledply( confint(churnLogit1), title = "CIs using profiled log-likelihood" )
+
+xkabledply( confint.default(churnLogit1), title = "CIs using standard errors" )
+```
+
+```{r confusionMatrix, results='markup'}
+loadPkg("regclass")
+
+xkabledply( confusion_matrix(churnLogit1), title = "Confusion matrix from Logit Model" )
+unloadPkg("regclass")
+```
+
+```{r HosmerLemeshow,results='markup', collapse=F}
+loadPkg("ResourceSelection") 
+churnLogitHoslem = hoslem.test(churn_data_pc$churn, fitted(churnLogit1)) 
+unloadPkg("ResourceSelection") 
+churnLogitHoslem
+```

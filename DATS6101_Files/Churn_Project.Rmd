@@ -831,6 +831,7 @@ churn_data_pc$active_member = as.numeric(churn_data_pc$active_member)
 churn_data_pc$credit_card = as.numeric(churn_data_pc$credit_card)
 churn_data_pc$country = as.numeric(churn_data_pc$country)
 churn_data_pc$gender = as.numeric(churn_data_pc$gender)
+churn_data_pc$churn = as.numeric(churn_data_pc$churn)
 str(churn_data_pc)
 churn_data_pc_target = churn_data_pc #includes 'churn'
 churn_data_pc <- churn_data_pc_target[-c(11)]
@@ -920,6 +921,8 @@ xkabledply(churnanovaRes, title = "ANOVA comparison between the models")
 
 ## Using Logistic regression
 ```{r results='markup'}
+str(churn_data_pc_target)
+
 churn_data_pc_target$gender <- factor(churn_data_pc_target$gender)
 churn_data_pc_target$country <- factor(churn_data_pc_target$country)
 churnLogit <- glm(churn ~ age + gender + country, data = churn_data_pc_target, family = "binomial")

@@ -851,7 +851,12 @@ xkabledply(cov(churn_data_scale))
 str(churn_data_pc)
 ```
 
+### SMART Questions
 
+### Does the combination of variables such as country, age group, gender influence the churn rate?
+
+
+###	What are the principal components for predicting churn rate?
 ```{r, Proportion of variance}
 pr.out=prcomp(churn_data_pc, scale =TRUE)
 print("Case: z-score/scaled")
@@ -873,14 +878,14 @@ pve <- pr.var/sum(pr.var)
 plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative Proportion of Variance Explained",ylim=c(0,1),type="b")
 ```
 
-## Which model can give the best results for adjusted R square and ROC value with lower AIC and BIC?
+### Which model can give the best results for adjusted R square and ROC value with lower AIC and BIC?
 
-## Feature selection uisng Exhaustive search  
+**Feature selection using Exhaustive search**
 
 ```{r}
 loadPkg("leaps")
 
-reg.churn <- regsubsets(churn~.-customer_id, data = churn_data_pc, nvmax =9, nbest = 1, method = "exhaustive")  
+reg.churn <- regsubsets(churn~.-customer_id, data = churn_data_pc_target, nvmax =9, nbest = 1, method = "exhaustive")  
 plot(reg.churn , scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churn , scale = "r2", main = "R^2")
 plot(reg.churn , scale = "bic", main = "BIC")
@@ -891,7 +896,7 @@ summary(reg.churn )
 ```{r}
 loadPkg("car")
 
-summaryRegForward = summary(reg.churn)
+
 # Adjusted R2
 car::subsets(reg.churn, statistic="adjr2", legend = FALSE, min.size = 2, main = "Adjusted R^2")
 
@@ -899,27 +904,27 @@ subsets(reg.churn, statistic="cp", legend = FALSE, min.size = 4, main = "Mallow 
 abline(a = 1, b = 1, lty = 3)  
 ```
 
-## Feature selection uisng forward search  
+**Feature selection uisng forward search**
 ```{r}
-reg.churnforward <- regsubsets(churn~.-customer_id, data = churn_data_pc, nvmax =9, nbest = 1, method = "forward")
+reg.churnforward <- regsubsets(churn~.-customer_id, data = churn_data_pc_target, nvmax =9, nbest = 1, method = "forward")
 plot(reg.churnforward , scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churnforward , scale = "bic", main = "BIC")
 plot(reg.churnforward , scale = "Cp", main = "Cp")
 summary(reg.churnforward)
 ```
 
-## Feature selection uisng Sequential Replacement
+**Feature selection uisng Sequential Replacement**
 ```{r}
-reg.churnback <- regsubsets(churn~.-customer_id, data = churn_data_pc, method = "backward", nvmax = 9, nbest = 1)
+reg.churnback <- regsubsets(churn~.-customer_id, data = churn_data_pc_target, method = "backward", nvmax = 9, nbest = 1)
 plot(reg.churnback, scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churnback, scale = "bic", main = "BIC")
 plot(reg.churnback, scale = "Cp", main = "Cp")
 summary(reg.churnback)
 ```
 
-## Feature selection uisng backward search  
+**Feature selection uisng backward search** 
 ```{r}
-reg.churnseqrep <- regsubsets(churn~.-customer_id, data =churn_data_pc, nvmax = 9, nbest = 1 , method = "seqrep")
+reg.churnseqrep <- regsubsets(churn~.-customer_id, data =churn_data_pc_target, nvmax = 9, nbest = 1 , method = "seqrep")
 plot(reg.churnseqrep, scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churnseqrep, scale = "bic", main = "BIC")
 plot(reg.churnseqrep, scale = "Cp", main = "Cp")

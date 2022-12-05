@@ -907,6 +907,16 @@ plot(reg.churnseqrep, scale = "Cp", main = "Cp")
 
 ```{r, Logistic Regression}
 str(churn_data_logit)
+churn_logit <- glm(churn ~., data = churn_data_logit, family = 'binomial')
+
+summary(churn_logit)
+```
+```{r ConfInt, results='markup', collapse=F}
+xkabledply( confint(churn_logit), title = "CIs using profiled log-likelihood" )
+xkabledply( confint.default(churn_logit), title = "CIs using standard errors" )
 ```
 
-
+```{r confusionMatrix, results='markup'}
+loadPkg("regclass")
+xkabledply( confusion_matrix(churn_logit), title = "Confusion matrix from Logit Model" )
+```

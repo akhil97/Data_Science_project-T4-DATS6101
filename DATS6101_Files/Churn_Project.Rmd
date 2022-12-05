@@ -805,7 +805,6 @@ table(data_balanced_over$country)
 **Let us see the probability of customer are churned/not churned.**
 
 ```{r}
-
 prop.table( table(churn_data$churn) )
 ```
 

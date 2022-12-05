@@ -821,15 +821,33 @@ churn_data_pc$country[churn_data$country == 'Spain'] <- 2
 churn_data_pc$gender[churn_data$gender == 'Male'] <- 0
 churn_data_pc$gender[churn_data$gender == 'Female'] <- 1
 
+churn_data_pc$credit_card[churn_data$credit_card == 'No-Credit Card'] <- 0
+churn_data_pc$credit_card[churn_data$credit_card == 'Credit Card'] <- 1
+
+churn_data_pc$active_member[churn_data$active_member == 'In Active'] <- 0
+churn_data_pc$active_member[churn_data$active_member == 'Active'] <- 1
+
+churn_data_pc$active_member = as.numeric(churn_data_pc$active_member)
+churn_data_pc$credit_card = as.numeric(churn_data_pc$credit_card)
 churn_data_pc$country = as.numeric(churn_data_pc$country)
 churn_data_pc$gender = as.numeric(churn_data_pc$gender)
-churn_data_pc <- churn_data_pc[-c(11)]
+str(churn_data_pc)
+churn_data_pc_target = churn_data_pc #includes 'churn'
+churn_data_pc <- churn_data_pc_target[-c(11)]
+```
+```{r}
+str(churn_data_pc_target)
 str(churn_data_pc)
 churn_data_scale <- data.frame(scale(churn_data_pc))
 xkabledply(cor(churn_data_scale))
 xkabledply(cov(churn_data_scale))
 
 ```
+
+```{r}
+str(churn_data_pc)
+```
+
 
 ```{r, Proportion of variance}
 pr.out=prcomp(churn_data_pc, scale =TRUE)
@@ -857,7 +875,7 @@ plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative P
 
 ## Uisng Linear Regression
 ```{r}
-churn_model.final <- lm(churn~age+gender+country,data=churn_data_pc)
+churn_model.final <- lm(churn~age+gender+country,data=churn_data_pc_target)
 summary(churn_model.final)
 xkabledply(churn_model.final, title = " Model summary")
 coef(churn_model.final)
@@ -866,7 +884,7 @@ confint(churn_model.final)
 ```
 
 ```{r model1,results='markup'}
-churn_age_fit <- lm(churn~ age, data = churn_data_pc)
+churn_age_fit <- lm(churn~ age, data = churn_data_pc_target)
 summary(churn_age_fit)
 xkabledply(churn_age_fit , title = paste("Model :", format(formula(churn_age_fit )) ) )
 xkablevif(churn_age_fit )
@@ -877,7 +895,7 @@ plot(churn_age_fit )
 
 
 ```{r model2,results='markup'}
-churn_gender_fit <- lm(churn~ age+gender, data = churn_data_pc)
+churn_gender_fit <- lm(churn~ age+gender, data = churn_data_pc_target)
 summary(churn_gender_fit)
 xkabledply(churn_gender_fit , title = paste("Model :", format(formula(churn_gender_fit)) ) )
 xkablevif(churn_gender_fit )
@@ -886,7 +904,7 @@ plot(churn_gender_fit)
 ```
 
 ```{r model1,results='markup'}
-churn_country_fit <- lm(churn~ age+gender+country, data = churn_data_pc)
+churn_country_fit <- lm(churn~ age+gender+country, data = churn_data_pc_target)
 summary(churn_country_fit )
 xkabledply(churn_country_fit , title = paste("Model :", format(formula(churn_country_fit )) ) )
 xkablevif(churn_country_fit )
@@ -902,11 +920,10 @@ xkabledply(churnanovaRes, title = "ANOVA comparison between the models")
 
 ## Using Logistic regression
 ```{r results='markup'}
-churn_data_pc$gender <- factor(churn_data_pc$gender)
-churn_data_pc$country <- factor(churn_data_pc$country)
-churnLogit <- glm(churn ~ age + gender + country, data = churn_data_pc, family = "binomial")
+churn_data_pc_target$gender <- factor(churn_data_pc_target$gender)
+churn_data_pc_target$country <- factor(churn_data_pc_target$country)
+churnLogit <- glm(churn ~ age + gender + country, data = churn_data_pc_target, family = "binomial")
 summary(churnLogit)
-
 xkabledply(churnLogit, title = paste("Logistic Regression :", format(formula(churnLogit)) ))
 ```
 
@@ -935,6 +952,12 @@ loadPkg("ResourceSelection")
 churnLogitHoslem = hoslem.test(churn_data_pc$churn, fitted(churnLogit)) 
 unloadPkg("ResourceSelection") 
 churnLogitHoslem
+```
+
+```{r McFadden, results='markup'}
+churnLogitNULL <- glm(churn ~ 1, data = churn_data_pc, family = "binomial")
+mcFadden = 1 - logLik(churnLogit)/logLik(churnLogitNULL)
+mcFadden
 ```
 
 ## Determine whether products,account status predict the customer churn

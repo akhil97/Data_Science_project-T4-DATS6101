@@ -913,7 +913,7 @@ plot(reg.churnforward , scale = "Cp", main = "Cp")
 summary(reg.churnforward)
 ```
 
-**Feature selection uisng Sequential Replacement**
+**Feature selection uisng backaward search**
 ```{r}
 reg.churnback <- regsubsets(churn~.-customer_id, data = churn_data_pc_target, method = "backward", nvmax = 9, nbest = 1)
 plot(reg.churnback, scale = "adjr2", main = "Adjusted R^2")
@@ -922,7 +922,7 @@ plot(reg.churnback, scale = "Cp", main = "Cp")
 summary(reg.churnback)
 ```
 
-**Feature selection uisng backward search** 
+**Feature selection uisng Sequential Replacement**
 ```{r}
 reg.churnseqrep <- regsubsets(churn~.-customer_id, data =churn_data_pc_target, nvmax = 9, nbest = 1 , method = "seqrep")
 plot(reg.churnseqrep, scale = "adjr2", main = "Adjusted R^2")

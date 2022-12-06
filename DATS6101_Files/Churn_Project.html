@@ -3393,6 +3393,74 @@ balance
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>loadPkg(&quot;regclass&quot;)
+
+xkabledply( confusion_matrix(churnLogit_SM3), title = &quot;Confusion matrix from Logit Model&quot; )</code></pre>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+Confusion matrix from Logit Model
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Predicted 0
+</th>
+<th style="text-align:right;">
+Predicted 1
+</th>
+<th style="text-align:right;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Actual 0
+</td>
+<td style="text-align:right;">
+4460
+</td>
+<td style="text-align:right;">
+1181
+</td>
+<td style="text-align:right;">
+5641
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Actual 1
+</td>
+<td style="text-align:right;">
+3280
+</td>
+<td style="text-align:right;">
+1079
+</td>
+<td style="text-align:right;">
+4359
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+7740
+</td>
+<td style="text-align:right;">
+2260
+</td>
+<td style="text-align:right;">
+10000
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>unloadPkg(&quot;regclass&quot;)</code></pre>
 </div>
 <div id="what-are-the-principal-components-for-predicting-churn-rate" class="section level3">
 <h3>What are the principal components for predicting churn rate?</h3>

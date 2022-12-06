@@ -926,6 +926,13 @@ plot(h_SM2)
 unloadPkg("pROC")
 ```
 
+```{r McFadden_SM2}
+loadPkg("pscl") # use pR2( ) function to calculate McFadden statistics for model eval
+churnLogitpr2_SM2 = pR2(churnLogit_SM2)
+churnLogitpr2_SM2
+unloadPkg("pscl") 
+```
+
 ###	What are the principal components for predicting churn rate?
 
 ```{r, Proportion of variance}

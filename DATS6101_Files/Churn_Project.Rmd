@@ -817,6 +817,7 @@ churn_data_pc <- churn_data_logit[-c(11)]
 str(churn_data_pc)
 
 ```
+
 ```{r}
 str(churn_data_pc_target)
 str(churn_data_pc)
@@ -874,12 +875,21 @@ plot(h)
 unloadPkg("pROC")
 ```
 
-
 ```{r McFadden}
 loadPkg("pscl") # use pR2( ) function to calculate McFadden statistics for model eval
 churnLogitpr2 = pR2(churnLogit)
 churnLogitpr2
 unloadPkg("pscl") 
+```
+
+### Customers using fewer products along with the status of the account affect the churn rate?
+
+```{r logitmodel_SM2,results='markup'}
+
+churnLogit_SM2 <- glm(churn ~ products_number + active_member, data = churn_data_pc_target, family = "binomial")
+summary(churnLogit_SM2)
+
+xkabledply(churnLogit_SM2, title = paste("Logistic Regression :", format(formula(churnLogit_SM2)) ))
 ```
 
 

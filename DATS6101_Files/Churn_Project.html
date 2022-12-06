@@ -2910,6 +2910,113 @@ churnLogitpr2 = pR2(churnLogit)
 churnLogitpr2
 unloadPkg(&quot;pscl&quot;) </code></pre>
 </div>
+<div id="customers-using-fewer-products-along-with-the-status-of-the-account-affect-the-churn-rate" class="section level3">
+<h3>Customers using fewer products along with the status of the account
+affect the churn rate?</h3>
+<pre class="r"><code>churnLogit_SM2 &lt;- glm(churn ~ products_number + active_member, data = churn_data_pc_target, family = &quot;binomial&quot;)
+summary(churnLogit_SM2)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = churn ~ products_number + active_member, family = &quot;binomial&quot;, 
+##     data = churn_data_pc_target)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+##  -1.11   -1.08   -1.03    1.27    1.44  
+## 
+## Coefficients:
+##                 Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)      -0.1036     0.0551   -1.88     0.06 .  
+## products_number  -0.1212     0.0308   -3.94  8.3e-05 ***
+## active_member     0.0575     0.0404    1.42     0.15    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 13698  on 9999  degrees of freedom
+## Residual deviance: 13680  on 9997  degrees of freedom
+## AIC: 13686
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<pre class="r"><code>xkabledply(churnLogit_SM2, title = paste(&quot;Logistic Regression :&quot;, format(formula(churnLogit_SM2)) ))</code></pre>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+Logistic Regression : churn ~ products_number + active_member
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Std. Error
+</th>
+<th style="text-align:right;">
+z value
+</th>
+<th style="text-align:right;">
+Pr(&gt;|z|)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-0.1036
+</td>
+<td style="text-align:right;">
+0.0551
+</td>
+<td style="text-align:right;">
+-1.88
+</td>
+<td style="text-align:right;">
+0.0602
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+products_number
+</td>
+<td style="text-align:right;">
+-0.1212
+</td>
+<td style="text-align:right;">
+0.0308
+</td>
+<td style="text-align:right;">
+-3.94
+</td>
+<td style="text-align:right;">
+0.0001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+active_member
+</td>
+<td style="text-align:right;">
+0.0575
+</td>
+<td style="text-align:right;">
+0.0404
+</td>
+<td style="text-align:right;">
+1.42
+</td>
+<td style="text-align:right;">
+0.1546
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="what-are-the-principal-components-for-predicting-churn-rate" class="section level3">
 <h3>What are the principal components for predicting churn rate?</h3>
 <pre class="r"><code>pr.out=prcomp(churn_data_pc, scale =TRUE)

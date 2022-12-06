@@ -892,6 +892,13 @@ summary(churnLogit_SM2)
 xkabledply(churnLogit_SM2, title = paste("Logistic Regression :", format(formula(churnLogit_SM2)) ))
 ```
 
+```{r ConfInt_SM2, results='markup', collapse=F}
+
+xkabledply( confint(churnLogit_SM2), title = "CIs using profiled log-likelihood" )
+
+xkabledply( confint.default(churnLogit_SM2), title = "CIs using standard errors" )
+```
+
 
 ###	What are the principal components for predicting churn rate?
 

@@ -3016,6 +3016,112 @@ active_member
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>xkabledply( confint(churnLogit_SM2), title = &quot;CIs using profiled log-likelihood&quot; )</code></pre>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+CIs using profiled log-likelihood
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+2.5 %
+</th>
+<th style="text-align:right;">
+97.5 %
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-0.2117
+</td>
+<td style="text-align:right;">
+0.0045
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+products_number
+</td>
+<td style="text-align:right;">
+-0.1817
+</td>
+<td style="text-align:right;">
+-0.0610
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+active_member
+</td>
+<td style="text-align:right;">
+-0.0217
+</td>
+<td style="text-align:right;">
+0.1367
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>xkabledply( confint.default(churnLogit_SM2), title = &quot;CIs using standard errors&quot; )</code></pre>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+CIs using standard errors
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+2.5 %
+</th>
+<th style="text-align:right;">
+97.5 %
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-0.2117
+</td>
+<td style="text-align:right;">
+0.0044
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+products_number
+</td>
+<td style="text-align:right;">
+-0.1816
+</td>
+<td style="text-align:right;">
+-0.0609
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+active_member
+</td>
+<td style="text-align:right;">
+-0.0217
+</td>
+<td style="text-align:right;">
+0.1367
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="what-are-the-principal-components-for-predicting-churn-rate" class="section level3">
 <h3>What are the principal components for predicting churn rate?</h3>

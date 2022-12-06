@@ -680,6 +680,7 @@ corrplot(cors_credit, method = 'number')
 
 cor_scores <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
 cor_scores
+
 ```
 
 
@@ -769,10 +770,13 @@ sum(churn_data$country == 'Spain')
 ind <- sample(2, nrow(churn_data), replace = TRUE, prob = c(0.7, 0.3))
 train <- churn_data[ind==1,]
 test <- churn_data[ind==2,]
-  
-
+```
+```{r}
 data_balanced_over <- ovun.sample(churn ~ ., data = train, method = "over",N = 10000,seed=123)$data
 table(data_balanced_over$country)
+```
+```{r}
+table(data_balanced_over$churn)
 str(data_balanced_over)
 ```
 
@@ -873,6 +877,7 @@ prop.table( table(train$churn) )
 biplot(pr.out, scale = 0)
 ```
 
+
 ```{r}
 pr.var <- (pr.out$sdev^2)
 pve <- pr.var/sum(pr.var)
@@ -899,6 +904,8 @@ Using exhaustive search we found that the variables country,gender,age,balance,a
 The  best model predicted using BIC is gender,age,balance,active_member which is a 4 variable model with BIC value -1400.
 
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member which is a 7 variable model. with Cp value 6.8
+
+
 
 ```{r}
 loadPkg("car")
@@ -955,9 +962,19 @@ plot(reg.churnseqrep, scale = "bic", main = "BIC")
 plot(reg.churnseqrep, scale = "Cp", main = "Cp")
 ```
 
-The best model using backward search is country,gender,age,balance,active_member which is a 5 variable model with adjusted R^2 value of 0.14.
+The best model using Adj R^2 is country,gender,age,balance,active_member which is a 5 variable model with adjusted R^2 value of 0.14.
 
 The  best model predicted using BIC is gender,age,balance,active_member which is a 4 variable model with value -1400 Cp.
 
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member,estimated_salary which is a 8 variable model with Cp value 7.6
+
+```{r}
+churnglm1 <- glm(churn ~ country+ gender + age + balance + active_member, data = churn_data_logit)
+summary(churnglm1)
+```
+
+
+
+
+
 

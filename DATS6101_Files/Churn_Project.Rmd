@@ -885,7 +885,6 @@ unloadPkg("pscl")
 ### Customers using fewer products along with the status of the account affect the churn rate?
 
 ```{r logitmodel_SM2,results='markup'}
-
 churnLogit_SM2 <- glm(churn ~ products_number + active_member, data = churn_data_pc_target, family = "binomial")
 summary(churnLogit_SM2)
 
@@ -893,7 +892,6 @@ xkabledply(churnLogit_SM2, title = paste("Logistic Regression :", format(formula
 ```
 
 ```{r ConfInt_SM2, results='markup', collapse=F}
-
 xkabledply( confint(churnLogit_SM2), title = "CIs using profiled log-likelihood" )
 
 xkabledply( confint.default(churnLogit_SM2), title = "CIs using standard errors" )
@@ -936,11 +934,16 @@ unloadPkg("pscl")
 ### Customers with a higher salary and account balance are more likely to churn?
 
 ```{r logitmodel_SM3,results='markup'}
-
 churnLogit_SM3 <- glm(churn ~ estimated_salary + balance, data = churn_data_pc_target, family = "binomial")
 summary(churnLogit_SM3)
 
 xkabledply(churnLogit_SM3, title = paste("Logistic Regression :", format(formula(churnLogit_SM3)) ))
+```
+
+```{r ConfInt_SM3, results='markup', collapse=F}
+xkabledply( confint(churnLogit_SM3), title = "CIs using profiled log-likelihood" )
+
+xkabledply( confint.default(churnLogit_SM3), title = "CIs using standard errors" )
 ```
 
 ###	What are the principal components for predicting churn rate?

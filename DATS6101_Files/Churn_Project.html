@@ -3287,6 +3287,112 @@ balance
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>xkabledply( confint(churnLogit_SM3), title = &quot;CIs using profiled log-likelihood&quot; )</code></pre>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+CIs using profiled log-likelihood
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+2.5 %
+</th>
+<th style="text-align:right;">
+97.5 %
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-0.866
+</td>
+<td style="text-align:right;">
+-0.669
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+estimated_salary
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+balance
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>xkabledply( confint.default(churnLogit_SM3), title = &quot;CIs using standard errors&quot; )</code></pre>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+CIs using standard errors
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+2.5 %
+</th>
+<th style="text-align:right;">
+97.5 %
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-0.866
+</td>
+<td style="text-align:right;">
+-0.669
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+estimated_salary
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+balance
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="what-are-the-principal-components-for-predicting-churn-rate" class="section level3">
 <h3>What are the principal components for predicting churn rate?</h3>

@@ -3461,6 +3461,16 @@ Total
 </tbody>
 </table>
 <pre class="r"><code>unloadPkg(&quot;regclass&quot;)</code></pre>
+<pre class="r"><code>loadPkg(&quot;ResourceSelection&quot;) 
+admitLogitHoslem_SM3 = hoslem.test(churn_data_pc_target$churn, fitted(churnLogit_SM3)) 
+unloadPkg(&quot;ResourceSelection&quot;) 
+
+admitLogitHoslem_SM3</code></pre>
+<pre><code>## 
+##  Hosmer and Lemeshow goodness of fit (GOF) test
+## 
+## data:  churn_data_pc_target$churn, fitted(churnLogit_SM3)
+## X-squared = 78, df = 8, p-value = 1e-13</code></pre>
 </div>
 <div id="what-are-the-principal-components-for-predicting-churn-rate" class="section level3">
 <h3>What are the principal components for predicting churn rate?</h3>

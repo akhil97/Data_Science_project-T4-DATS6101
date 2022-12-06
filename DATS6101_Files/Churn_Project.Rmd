@@ -953,6 +953,14 @@ xkabledply( confusion_matrix(churnLogit_SM3), title = "Confusion matrix from Log
 unloadPkg("regclass")
 ```
 
+```{r HosmerLemeshow_SM3, results='markup', collapse=F}
+loadPkg("ResourceSelection") 
+admitLogitHoslem_SM3 = hoslem.test(churn_data_pc_target$churn, fitted(churnLogit_SM3)) 
+unloadPkg("ResourceSelection") 
+
+admitLogitHoslem_SM3
+```
+
 ###	What are the principal components for predicting churn rate?
 
 ```{r, Proportion of variance}

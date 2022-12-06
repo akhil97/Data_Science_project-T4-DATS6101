@@ -763,7 +763,6 @@ The correlation score is the highest for the age variable. After combining diffe
 ```{r, Balancing data using oversampling, results='markup', include=TRUE}
 library(ROSE)
 
-
 sum(churn_data$country == 'France')
 sum(churn_data$country == 'Germany')
 sum(churn_data$country == 'Spain')
@@ -980,6 +979,7 @@ churnLogitpr2_SM3 = pR2(churnLogit_SM3)
 churnLogitpr2_SM3
 unloadPkg("pscl") 
 ```
+
 ###	What are the principal components for predicting churn rate?
 
 ```{r, Proportion of variance}
@@ -1035,8 +1035,7 @@ subsets(reg.churn, statistic="cp", legend = FALSE, min.size = 4, main = "Mallow 
 abline(a = 1, b = 1, lty = 3)  
 ```
 
-The best model predicted using adjusted R^2 plot is credit_score,country,gender,age,tenure,balance,products_number,active_member,
-estimated_salary which is a 9 variable model with R^2 value 0.135.
+The best model predicted using adjusted R^2 plot is credit_score, country, gender, age, tenure, balance, products_number, active_member, estimated_salary which is a 9 variable model with R^2 value 0.135.
 
 The best model predicted using Mallow Cp plot is crdt_s-cn-g-ag-t-b-p-a_e which is a 9 variable model and crdt_s-cn-g-ag-b-a_ 7 var model.
 
@@ -1049,8 +1048,11 @@ plot(reg.churnforward , scale = "bic", main = "BIC")
 plot(reg.churnforward , scale = "Cp", main = "Cp")
 summary(reg.churnforward)
 ```
-The best model using forward search is country,gender,age,balance,active_member which is a 5 variable model with adjusted R^2 value of 0.14 .
+
+The best model using forward search is country,gender,age,balance,active_member which is a 5 variable model with adjusted R^2 value of 0.14.
+
 The  best model predicted using BIC is gender,age,balance,active_member which is a 4 variable model with value -1400 Cp.
+
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member which is a 7 variable model with Cp value 6.8
 
 **Feature selection using backward search**
@@ -1062,8 +1064,11 @@ plot(reg.churnback, scale = "bic", main = "BIC")
 plot(reg.churnback, scale = "Cp", main = "Cp")
 summary(reg.churnback)
 ```
-The best model using backward search is country,gender,age,balance,active_member which is a 5 variable model with adjusted R^2 value of 0.14 .
+
+The best model using backward search is country,gender,age,balance,active_member which is a 5 variable model with adjusted R^2 value of 0.14.
+
 The  best model predicted using BIC is gender,age,balance,active_member which is a 4 variable model with value -1400 Cp.
+
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member which is a 7 variable model with Cp value 6.8
 
 **Feature selection using Sequential Replacement**
@@ -1074,8 +1079,11 @@ plot(reg.churnseqrep, scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churnseqrep, scale = "bic", main = "BIC")
 plot(reg.churnseqrep, scale = "Cp", main = "Cp")
 ```
-The best model using backward search is country,gender,age,balance,active_member which is a 5 variable model with adjusted R^2 value of 0.14 .
+
+The best model using backward search is country,gender,age,balance,active_member which is a 5 variable model with adjusted R^2 value of 0.14.
+
 The  best model predicted using BIC is gender,age,balance,active_member which is a 4 variable model with value -1400 Cp.
+
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member,estimated_salary which is a 8 variable model with Cp value 7.6
 
 ```{r, Logistic Regression}

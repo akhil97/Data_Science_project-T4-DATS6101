@@ -811,14 +811,18 @@ churn_data_pc$active_member[churn_data$active_member == 'Active'] <- 1
 churn_data_pc$active_member = as.numeric(churn_data_pc$active_member)
 churn_data_pc$credit_card = as.numeric(churn_data_pc$credit_card)
 churn_data_pc$country = as.numeric(churn_data_pc$country)
+churn_data_pc$credit_score = as.numeric(churn_data_pc$credit_score)
 churn_data_pc$gender = as.numeric(churn_data_pc$gender)
 churn_data_pc$churn = as.numeric(churn_data_pc$churn)
 
 churn_data_pc_target = churn_data_pc #includes 'churn'
+```
+```{r}
 churn_data_logit <- churn_data_pc_target[-c(1)]
+```
+```{r}                                        
 churn_data_pc <- churn_data_logit[-c(11)]
 str(churn_data_pc)
-
 ```
 
 ```{r}
@@ -969,7 +973,7 @@ The  best model predicted using BIC is gender,age,balance,active_member which is
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member,estimated_salary which is a 8 variable model with Cp value 7.6
 
 ```{r}
-churnglm1 <- glm(churn ~ country+ gender + age + balance , data = churn_data_logit)
+churnglm1 <- glm(churn ~  gender + age + balance +active_member, data = churn_data_logit)
 summary(churnglm1)
 ```
 ```{r}
@@ -977,8 +981,26 @@ churnglm2 <- glm(churn ~ country+ gender + age + balance + active_member, data =
 summary(churnglm2)
 ```
 
+```{r}
+churnglm3 <- glm(churn ~ Credit_score+country+gender+age+balance+active_member, data = churn_data_logit)
+summary(churnglm3)
+```
 
+```{r}
+churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member
+, data = churn_data_logit)
+summary(churnglm4)
+```
 
+```{r}
+churnglm5 <- glm(churn ~ Credit_score+country+gender+age+tenure+balance+active_member+estimated_salary, data = churn_data_logit)
+summary(churnglm5)
+```
+
+```{r}
+churnglm6 <- glm(churn ~ Credit_score+country+gender+age+tenure+balance+products_number +active_member+estimated_salary, data = churn_data_logit)
+summary(churnglm6)
+```
 
 
 

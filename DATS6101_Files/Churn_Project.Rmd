@@ -826,6 +826,35 @@ xkabledply(cov(churn_data_scale))
 
 ```
 
+
+### Logistic Regression model
+
+```{r, Logistic Regression}
+str(churn_data_logit)
+churn_logit <- glm(churn ~., data = churn_data_logit, family = 'binomial')
+
+summary(churn_logit)
+```
+
+```{r ConfInt_FS, results='markup', collapse=F}
+xkabledply( confint(churn_logit), title = "CIs using profiled log-likelihood" )
+xkabledply( confint.default(churn_logit), title = "CIs using standard errors" )
+```
+
+```{r confusionMatrix_FS, results='markup'}
+loadPkg("regclass")
+xkabledply( confusion_matrix(churn_logit), title = "Confusion matrix from Logit Model" )
+```
+
+```{r roc_auc_FS, results='markup'}
+loadPkg("pROC") 
+prob=predict(churn_logit, type = "response" )
+churn_data_logit$prob=prob
+h <- roc(churn~prob, data = churn_data_logit)
+auc(h) 
+plot(h)
+```
+
 ###	What are the principal components for predicting churn rate?
 
 ```{r, Proportion of variance}
@@ -932,28 +961,3 @@ The  best model predicted using BIC is gender,age,balance,active_member which is
 
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member,estimated_salary which is a 8 variable model with Cp value 7.6
 
-
-```{r, Logistic Regression}
-str(churn_data_logit)
-churn_logit <- glm(churn ~., data = churn_data_logit, family = 'binomial')
-
-summary(churn_logit)
-```
-```{r ConfInt_FS, results='markup', collapse=F}
-xkabledply( confint(churn_logit), title = "CIs using profiled log-likelihood" )
-xkabledply( confint.default(churn_logit), title = "CIs using standard errors" )
-```
-
-```{r confusionMatrix_FS, results='markup'}
-loadPkg("regclass")
-xkabledply( confusion_matrix(churn_logit), title = "Confusion matrix from Logit Model" )
-```
-
-```{r roc_auc_FS, results='markup'}
-loadPkg("pROC") 
-prob=predict(churn_logit, type = "response" )
-churn_data_logit$prob=prob
-h <- roc(churn~prob, data = churn_data_logit)
-auc(h) 
-plot(h)
-```

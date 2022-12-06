@@ -899,6 +899,12 @@ xkabledply( confint(churnLogit_SM2), title = "CIs using profiled log-likelihood"
 xkabledply( confint.default(churnLogit_SM2), title = "CIs using standard errors" )
 ```
 
+```{r confusionMatrix_SM2, results='markup'}
+loadPkg("regclass")
+
+xkabledply( confusion_matrix(churnLogit_SM2), title = "Confusion matrix from Logit Model" )
+unloadPkg("regclass")
+```
 
 ###	What are the principal components for predicting churn rate?
 

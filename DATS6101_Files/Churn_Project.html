@@ -3122,6 +3122,43 @@ active_member
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>loadPkg(&quot;regclass&quot;)
+
+xkabledply( confusion_matrix(churnLogit_SM2), title = &quot;Confusion matrix from Logit Model&quot; )</code></pre>
+<pre><code>## Predicted levels same as naive model (majority level)</code></pre>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+Confusion matrix from Logit Model
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Predicted 0
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Actual 0
+</td>
+<td style="text-align:right;">
+5641
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Actual 1
+</td>
+<td style="text-align:right;">
+4359
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>unloadPkg(&quot;regclass&quot;)</code></pre>
 </div>
 <div id="what-are-the-principal-components-for-predicting-churn-rate" class="section level3">
 <h3>What are the principal components for predicting churn rate?</h3>

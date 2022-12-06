@@ -980,17 +980,17 @@ churn_logit <- glm(churn ~., data = churn_data_logit, family = 'binomial')
 
 summary(churn_logit)
 ```
-```{r ConfInt, results='markup', collapse=F}
+```{r ConfInt_FS, results='markup', collapse=F}
 xkabledply( confint(churn_logit), title = "CIs using profiled log-likelihood" )
 xkabledply( confint.default(churn_logit), title = "CIs using standard errors" )
 ```
 
-```{r confusionMatrix, results='markup'}
+```{r confusionMatrix_FS, results='markup'}
 loadPkg("regclass")
 xkabledply( confusion_matrix(churn_logit), title = "Confusion matrix from Logit Model" )
 ```
 
-```{r roc_auc, results='markup'}
+```{r roc_auc_FS, results='markup'}
 loadPkg("pROC") 
 prob=predict(churn_logit, type = "response" )
 churn_data_logit$prob=prob

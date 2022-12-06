@@ -969,8 +969,12 @@ The  best model predicted using BIC is gender,age,balance,active_member which is
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member,estimated_salary which is a 8 variable model with Cp value 7.6
 
 ```{r}
-churnglm1 <- glm(churn ~ country+ gender + age + balance + active_member, data = churn_data_logit)
+churnglm1 <- glm(churn ~ country+ gender + age + balance , data = churn_data_logit)
 summary(churnglm1)
+```
+```{r}
+churnglm2 <- glm(churn ~ country+ gender + age + balance + active_member, data = churn_data_logit)
+summary(churnglm2)
 ```
 
 

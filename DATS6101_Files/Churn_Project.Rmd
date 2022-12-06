@@ -829,6 +829,7 @@ xkabledply(cov(churn_data_scale))
 ### SMART Questions
 
 ### Does the combination of variables such as country, age group, gender influence the churn rate?
+
 ```{r logitmodel,results='markup'}
 
 churnLogit <- glm(churn ~ age + gender + country, data = churn_data_pc_target, family = "binomial")
@@ -883,12 +884,14 @@ unloadPkg("pscl")
 
 
 ###	What are the principal components for predicting churn rate?
+
 ```{r, Proportion of variance}
 pr.out=prcomp(churn_data_pc, scale =TRUE)
 print("Case: z-score/scaled")
 summary(pr.out)
 pr.out$rotation
 ```
+
 ```{r}
 nrow(train)
 prop.table( table(train$churn) )
@@ -918,6 +921,7 @@ plot(reg.churn , scale = "bic", main = "BIC")
 plot(reg.churn , scale = "Cp", main = "Cp")
 summary(reg.churn )
 ```
+
 Using exhaustive search we found that the variables country,gender,age,balance,active_member predict the churn of customer which is a 5 variable best model with adjusted R^2 value 0.14.
 
 The  best model predicted using BIC is gender,age,balance,active_member which is a 4 variable model with BIC value -1400.
@@ -927,19 +931,20 @@ The best model predicted using Cp is credit_score,country,gender,age,tenure,bala
 ```{r}
 loadPkg("car")
 
-
 # Adjusted R2
 car::subsets(reg.churn, statistic="adjr2", legend = FALSE, min.size = 2, main = "Adjusted R^2")
 
 subsets(reg.churn, statistic="cp", legend = FALSE, min.size = 4, main = "Mallow Cp")
 abline(a = 1, b = 1, lty = 3)  
 ```
+
 The best model predicted using adjusted R^2 plot is credit_score,country,gender,age,tenure,balance,products_number,active_member,
 estimated_salary which is a 9 variable model with R^2 value 0.135.
 
 The best model predicted using Mallow Cp plot is crdt_s-cn-g-ag-t-b-p-a_e which is a 9 variable model and crdt_s-cn-g-ag-b-a_ 7 var model.
 
 **Feature selection using forward search**
+
 ```{r}
 reg.churnforward <- regsubsets(churn~.-prob, data = churn_data_pc_target, nvmax =9, nbest = 1, method = "forward")
 plot(reg.churnforward , scale = "adjr2", main = "Adjusted R^2")
@@ -952,6 +957,7 @@ The  best model predicted using BIC is gender,age,balance,active_member which is
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member which is a 7 variable model with Cp value 6.8
 
 **Feature selection using backward search**
+
 ```{r}
 reg.churnback <- regsubsets(churn~.-prob, data = churn_data_pc_target, method = "backward", nvmax = 9, nbest = 1)
 plot(reg.churnback, scale = "adjr2", main = "Adjusted R^2")
@@ -964,6 +970,7 @@ The  best model predicted using BIC is gender,age,balance,active_member which is
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member which is a 7 variable model with Cp value 6.8
 
 **Feature selection using Sequential Replacement**
+
 ```{r}
 reg.churnseqrep <- regsubsets(churn~.-prob, data =churn_data_pc_target, nvmax = 9, nbest = 1 , method = "seqrep")
 plot(reg.churnseqrep, scale = "adjr2", main = "Adjusted R^2")

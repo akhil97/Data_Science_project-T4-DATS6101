@@ -818,10 +818,11 @@ churn_data_pc$churn = as.numeric(churn_data_pc$churn)
 churn_data_pc_target = churn_data_pc #includes 'churn'
 ```
 ```{r}
-churn_data_logit <- churn_data_pc_target[-c(1)]
+churn_data_logit <- churn_data_pc_target
+str(churn_data_logit)
 ```
 ```{r}                                        
-churn_data_pc <- churn_data_logit[-c(11)]
+churn_data_pc <- churn_data_logit[-c(11)] #No churn
 str(churn_data_pc)
 ```
 
@@ -982,7 +983,7 @@ summary(churnglm2)
 ```
 
 ```{r}
-churnglm3 <- glm(churn ~ Credit_score+country+gender+age+balance+active_member, data = churn_data_logit)
+churnglm3 <- glm(churn ~ credit_score+country+gender+age+balance+active_member, data = churn_data_logit)
 summary(churnglm3)
 ```
 
@@ -993,12 +994,12 @@ summary(churnglm4)
 ```
 
 ```{r}
-churnglm5 <- glm(churn ~ Credit_score+country+gender+age+tenure+balance+active_member+estimated_salary, data = churn_data_logit)
+churnglm5 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+active_member+estimated_salary, data = churn_data_logit)
 summary(churnglm5)
 ```
 
 ```{r}
-churnglm6 <- glm(churn ~ Credit_score+country+gender+age+tenure+balance+products_number +active_member+estimated_salary, data = churn_data_logit)
+churnglm6 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+products_number +active_member+estimated_salary, data = churn_data_logit)
 summary(churnglm6)
 ```
 

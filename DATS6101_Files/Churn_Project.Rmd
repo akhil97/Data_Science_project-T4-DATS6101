@@ -961,6 +961,19 @@ unloadPkg("ResourceSelection")
 admitLogitHoslem_SM3
 ```
 
+```{r roc_auc_SM3}
+loadPkg("pROC")
+prob_SM3 = predict(churnLogit_SM3, type = "response" )
+churn_data_pc_target$prob_SM3 = prob_SM3
+h_SM3 <- roc(churn~prob_SM3, data=churn_data_pc_target)
+auc(h_SM3)
+plot(h_SM3)
+```
+
+```{r}
+unloadPkg("pROC")
+```
+
 ###	What are the principal components for predicting churn rate?
 
 ```{r, Proportion of variance}

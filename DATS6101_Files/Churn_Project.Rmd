@@ -933,6 +933,16 @@ churnLogitpr2_SM2
 unloadPkg("pscl") 
 ```
 
+### Customers with a higher salary and account balance are more likely to churn?
+
+```{r logitmodel_SM3,results='markup'}
+
+churnLogit_SM3 <- glm(churn ~ estimated_salary + balance, data = churn_data_pc_target, family = "binomial")
+summary(churnLogit_SM3)
+
+xkabledply(churnLogit_SM3, title = paste("Logistic Regression :", format(formula(churnLogit_SM3)) ))
+```
+
 ###	What are the principal components for predicting churn rate?
 
 ```{r, Proportion of variance}

@@ -767,6 +767,10 @@ corre
 corrplot(corre, method = "number")
 ```
 
+```{r count of each country before oversampling}
+table(churn_data$churn)
+table(churn_data$country)
+```
 
 ```{r, Balancing data using oversampling, results='markup', include=TRUE}
 library(ROSE)
@@ -778,16 +782,18 @@ ind <- sample(2, nrow(churn_data), replace = TRUE, prob = c(0.7, 0.3))
 train <- churn_data[ind==1,]
 test <- churn_data[ind==2,]
 ```
-```{r}
+```{r count of each country after oversampling}
 data_balanced_over <- ovun.sample(churn ~ ., data = train, method = "over",N = 10000,seed=123)$data
+table(data_balanced_over$churn)
 table(data_balanced_over$country)
 ```
-
 ```{r}
-table(data_balanced_over$churn)
-str(data_balanced_over)
+ggplot(data=data_balanced_over,aes(x=country,fill=country))+
+  geom_bar(col="black")+
+  scale_fill_brewer(palette="Reds") +
+  labs(title = "Bank Customer vs Country",x="Country",y="Customer Count")+
+  theme_minimal()
 ```
-
 
 ### Model Building and trainig
 
@@ -832,7 +838,7 @@ str(churn_data_logit)
 ```
 
 ```{r}                                        
-churn_data_pc <- churn_data_logit[-c(11)] #No churn
+churn_data_pc <- churn_data_logit[-c(12)] #No churn
 str(churn_data_pc)
 ```
 

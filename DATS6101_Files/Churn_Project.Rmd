@@ -976,7 +976,7 @@ The best model predicted using Cp is credit_score,country,gender,age,tenure,bala
 ```{r, Model1}
 churnglm1 <- glm(churn ~  gender + age + balance +active_member, data = churn_data_logit)
 summary(churnglm1)
-xkabledply( confusion_matrix(churnglm1), title = "Confusion matrix from Logit Model" )
+xkabledply( confusion_matrix(churnglm1), title = "Confusion matrix from Logit Model-1" )
 prob1=predict(churnglm1, type = "response" )
 churn_data_logit$prob=prob1
 h1 <- roc(churn~prob, data = churn_data_logit)
@@ -984,9 +984,15 @@ auc(h1)
 plot(h1)
 ```
 
-```{r}
+```{r, Model2}
 churnglm2 <- glm(churn ~ country+ gender + age + balance + active_member, data = churn_data_logit)
 summary(churnglm2)
+xkabledply( confusion_matrix(churnglm2), title = "Confusion matrix from Logit Model-2" )
+prob2=predict(churnglm2, type = "response" )
+churn_data_logit$prob=prob2
+h2 <- roc(churn~prob, data = churn_data_logit)
+auc(h2) 
+plot(h2)
 ```
 
 ```{r}

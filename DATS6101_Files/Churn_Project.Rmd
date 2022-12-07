@@ -955,9 +955,6 @@ The  best model predicted using BIC is gender,age,balance,active_member which is
 
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member,estimated_salary which is a 8 variable model with Cp value 7.6
 
-```{r, Model1}
-churnglm1 <- glm(churn ~  gender + age + balance +active_member, data = churn_data_logit)
-
 
 ### Logistic Regression model
 
@@ -988,7 +985,8 @@ plot(h)
 ```
 
 
-```{r results='markup'}
+
+```{r Model1,results='markup'}
 churnglm1 <- glm(churn ~  age + balance, data = churn_data_logit)
 summary(churnglm1)
 xkabledply( confusion_matrix(churnglm1), title = "Confusion matrix from Logit Model-1" )
@@ -999,23 +997,8 @@ auc(h1)
 plot(h1)
 ```
 
-```{r, Model2}
-churnglm2 <- glm(churn ~ country+ gender + age + balance + active_member, data = churn_data_logit)
-```{r confusionMatrix_FS1, results='markup'}
-loadPkg("regclass")
-xkabledply( confusion_matrix(churnglm1), title = "Confusion matrix from Logit Model" )
-```
 
-```{r roc_auc_FS1, results='markup'}
-loadPkg("pROC") 
-prob=predict(churnglm1, type = "response" )
-churn_data_logit$prob=prob
-h <- roc(churn~prob, data = churn_data_logit)
-auc(h) 
-plot(h)
-```
-
-```{r results='markup'}
+```{r Model2,results='markup'}
 churnglm2 <- glm(churn ~ credit_score+age+tenure+ balance + active_member+estimated_salary, data = churn_data_logit)
 summary(churnglm2)
 xkabledply( confusion_matrix(churnglm2), title = "Confusion matrix from Logit Model-2" )
@@ -1026,23 +1009,9 @@ auc(h2)
 plot(h2)
 ```
 
-```{r, Model3}
-churnglm3 <- glm(churn ~ credit_score+country+gender+age+balance+active_member, data = churn_data_logit)
-```{r confusionMatrix_FS2, results='markup'}
-loadPkg("regclass")
-xkabledply( confusion_matrix(churnglm2), title = "Confusion matrix from Logit Model" )
-```
 
-```{r roc_auc_FS2, results='markup'}
-loadPkg("pROC") 
-prob=predict(churnglm2, type = "response" )
-churn_data_logit$prob=prob
-h <- roc(churn~prob, data = churn_data_logit)
-auc(h) 
-plot(h)
-```
 
-```{r results='markup'}
+```{r Model3,results='markup'}
 churnglm3 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary, data = churn_data_logit)
 summary(churnglm3)
 xkabledply( confusion_matrix(churnglm3), title = "Confusion matrix from Logit Model-3" )
@@ -1053,21 +1022,6 @@ auc(h3)
 plot(h3)
 ```
 
-```{r, Model4}
-churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member
-```{r confusionMatrix_FS3, results='markup'}
-loadPkg("regclass")
-xkabledply( confusion_matrix(churnglm3), title = "Confusion matrix from Logit Model" )
-```
-
-```{r roc_auc_FS3, results='markup'}
-loadPkg("pROC") 
-prob=predict(churnglm3, type = "response" )
-churn_data_logit$prob=prob
-h <- roc(churn~prob, data = churn_data_logit)
-auc(h) 
-plot(h)
-```
 
 ```{r results='markup'}
 churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary
@@ -1081,23 +1035,9 @@ auc(h4)
 plot(h4)
 ```
 
-```{r, Model5}
-churnglm5 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+active_member+estimated_salary, data = churn_data_logit)
-```{r confusionMatrix_FS4, results='markup'}
-loadPkg("regclass")
-xkabledply( confusion_matrix(churnglm4), title = "Confusion matrix from Logit Model" )
-```
 
-```{r roc_auc_FS4, results='markup'}
-loadPkg("pROC") 
-prob=predict(churnglm4, type = "response" )
-churn_data_logit$prob=prob
-h <- roc(churn~prob, data = churn_data_logit)
-auc(h) 
-plot(h)
-```
 
-```{r results='markup'}
+```{r Model5,results='markup'}
 churnglm5 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
 summary(churnglm5)
 xkabledply( confusion_matrix(churnglm5), title = "Confusion matrix from Logit Model-5" )
@@ -1108,23 +1048,9 @@ auc(h5)
 plot(h5)
 ```
 
-```{r, Model6}
-churnglm6 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+products_number +active_member+estimated_salary, data = churn_data_logit)
-```{r confusionMatrix_FS5, results='markup'}
-loadPkg("regclass")
-xkabledply( confusion_matrix(churnglm5), title = "Confusion matrix from Logit Model" )
-```
 
-```{r roc_auc_FS5, results='markup'}
-loadPkg("pROC") 
-prob=predict(churnglm5, type = "response" )
-churn_data_logit$prob=prob
-h <- roc(churn~prob, data = churn_data_logit)
-auc(h) 
-plot(h)
-```
 
-```{r results='markup'}
+```{r Model6, results='markup'}
 churnglm6 <- glm(churn ~ credit_score+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
 summary(churnglm6)
 xkabledply( confusion_matrix(churnglm6), title = "Confusion matrix from Logit Model-6" )
@@ -1135,18 +1061,6 @@ auc(h6)
 plot(h6)
 ```
 
-```{r confusionMatrix_FS6, results='markup'}
-loadPkg("regclass")
-xkabledply( confusion_matrix(churnglm6), title = "Confusion matrix from Logit Model" )
-```
 
-```{r roc_auc_FS6, results='markup'}
-loadPkg("pROC") 
-prob=predict(churnglm6, type = "response" )
-churn_data_logit$prob=prob
-h <- roc(churn~prob, data = churn_data_logit)
-auc(h) 
-plot(h)
-```
 
 

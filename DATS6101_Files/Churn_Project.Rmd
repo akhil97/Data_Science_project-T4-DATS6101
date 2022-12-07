@@ -838,7 +838,7 @@ str(churn_data_logit)
 ```
 
 ```{r}                                        
-churn_data_pc <- churn_data_logit[-c(12)] #No churn
+churn_data_pc <- churn_data_logit[-c(11)] #No churn
 str(churn_data_pc)
 ```
 

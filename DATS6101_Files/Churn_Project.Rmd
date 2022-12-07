@@ -973,10 +973,17 @@ The  best model predicted using BIC is gender,age,balance,active_member which is
 
 The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member,estimated_salary which is a 8 variable model with Cp value 7.6
 
-```{r}
+```{r, Model1}
 churnglm1 <- glm(churn ~  gender + age + balance +active_member, data = churn_data_logit)
 summary(churnglm1)
+xkabledply( confusion_matrix(churnglm1), title = "Confusion matrix from Logit Model" )
+prob1=predict(churnglm1, type = "response" )
+churn_data_logit$prob=prob1
+h1 <- roc(churn~prob, data = churn_data_logit)
+auc(h1) 
+plot(h1)
 ```
+
 ```{r}
 churnglm2 <- glm(churn ~ country+ gender + age + balance + active_member, data = churn_data_logit)
 summary(churnglm2)

@@ -1018,9 +1018,15 @@ auc(h4)
 plot(h4)
 ```
 
-```{r}
+```{r, Model5}
 churnglm5 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+active_member+estimated_salary, data = churn_data_logit)
 summary(churnglm5)
+xkabledply( confusion_matrix(churnglm5), title = "Confusion matrix from Logit Model-5" )
+prob5=predict(churnglm5, type = "response" )
+churn_data_logit$prob=prob5
+h5 <- roc(churn~prob, data = churn_data_logit)
+auc(h5) 
+plot(h5)
 ```
 
 ```{r}

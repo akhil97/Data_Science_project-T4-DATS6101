@@ -850,7 +850,28 @@ xkabledply(cor(churn_data_scale))
 xkabledply(cov(churn_data_scale))
 
 ```
+### SMART QUESTIONS
 
+### Does the combination of customer demographic variables country, age group, gender influence the churn rate?
+
+```{r LMmodel1,results='markup'}
+churnLM <- lm(churn~country+age+gender,data=churn_data_pc_target)
+summary(churnLM)
+xkabledply(churnLM, title = "churn Model summary")
+
+confint(churnLM)
+```
+
+### Whether the customers using fewer products with higher salary,account balance and status of the account affect the churn rate?
+
+```{r LMmodel2,results='markup'}
+churnLM2 <- lm(churn~products_number+estimated_salary+balance+active_member,data=churn_data_pc_target)
+summary(churnLM2)
+xkabledply(churnLM2, title = "churn Model summary")
+
+
+confint(churnLM2)
+```
 
 ###	What are the principal components for predicting churn rate?
 

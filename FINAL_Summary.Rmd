@@ -467,7 +467,11 @@ plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative P
 
 From the graph for Proportion of variance we can see that almost 90% of variance is explained by 9 principal components.
 
-# Chapter 6: Bibliography
+# Chapter 6:
+
+
+
+# Chapter 7: Bibliography
 
 Kaemingk, D. (2018, August 29). Reducing customer churn for banks and financial institutions. Qualtrics. Retrieved November 2, 2022, from <https://www.qualtrics.com/blog/customer-churn-banking/>
 

@@ -107,8 +107,6 @@ By using the outlierKD function we can observe that outliers were found only in 
 
 ## Customer Analysis Review
 
-In this section we are going to analyze each variable in the Bank churn dataset by using plots along with finding calculated mean, SD and percentages for each variable.
-
 ### What is the average credit score of the customers?
 
 The average credit score of the customer is 650.529,most of the customers having credit score fall between 600 to 700 and standard deviation is 96.953. The below histogram shows the range of credit scores.
@@ -472,3 +470,5 @@ From the graph for Proportion of variance we can see that almost 90% of variance
 Kaemingk, D. (2018, August 29). Reducing customer churn for banks and financial institutions. Qualtrics. Retrieved November 2, 2022, from <https://www.qualtrics.com/blog/customer-churn-banking/>
 
 Guliyev, H., & Yerdelen Tatoğlu, F. (2021). Customer churn analysis in banking sector: Evidence from explainable machine learning models. Journal of Applied Microeconometrics, 1(2), 85--99. <https://doi.org/10.53753/jame.1.2.03>
+
+

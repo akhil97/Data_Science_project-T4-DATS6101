@@ -622,11 +622,11 @@ auc(h7)
 plot(h7)
 ```
 
-### Methods of Model Evaluation
+### Best Model
 
-When evaluating the models, we are **focusing particularly on False negatives** because it is vital for any bank to correctly predict churn and in an ideal scenario without any errors. False negatives are of highest importance as we do not want to incorrectly predict that the customers are retained, when they are in fact churned.
+**Model 5** - Credit_score, country, gender, age, tenure, balance, active_member,estimated_salary
 
-The second way we will be evaluating the models is by Area Under the Curve. The higher this number is, the better our model.
+Based on our criteria for best model, **Model 5** to be the best model which has comparatively lower False Negatives (1994) and area under curve (0.745).
 
 # Chapter 7: Bibliography
 

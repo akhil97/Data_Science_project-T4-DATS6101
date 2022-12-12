@@ -399,17 +399,44 @@ ggplot(data=data_balanced_over,aes(x=churn,fill=churn))+
 ## Finding the Best Model
 
 ##### 4. What are the **principal components** for predicting churn rate?
+Before we work on PCA, we need to ensure that the data is scaled and all the variables are either numeric or int type.
+```{r, Scaling data}
+str(churn_data)
+churn_data_pc<-data_balanced_over
+churn_data_pc$country[churn_data$country == 'France'] <- 0
+churn_data_pc$country[churn_data$country == 'Germany'] <- 1
+churn_data_pc$country[churn_data$country == 'Spain'] <- 2
 
+churn_data_pc$gender[churn_data$gender == 'Male'] <- 0
+churn_data_pc$gender[churn_data$gender == 'Female'] <- 1
+
+churn_data_pc$credit_card[churn_data$credit_card == 'No-Credit Card'] <- 0
+churn_data_pc$credit_card[churn_data$credit_card == 'Credit Card'] <- 1
+
+churn_data_pc$active_member[churn_data$active_member == 'In Active'] <- 0
+churn_data_pc$active_member[churn_data$active_member == 'Active'] <- 1
+
+churn_data_pc$active_member = as.numeric(churn_data_pc$active_member)
+churn_data_pc$credit_card = as.numeric(churn_data_pc$credit_card)
+churn_data_pc$country = as.numeric(churn_data_pc$country)
+churn_data_pc$credit_score = as.numeric(churn_data_pc$credit_score)
+churn_data_pc$gender = as.numeric(churn_data_pc$gender)
+churn_data_pc$churn = as.numeric(churn_data_pc$churn)
+
+churn_data_pc_target = churn_data_pc #includes 'churn'
+```
 
 ```{r, PCA}
-churn_data_pc<-data_balanced_over
+churn_data_pc<-churn_data_pc[-c(1)] #Remove customer_id
+churn_data_pc<-churn_data_pc[-c(10)] #Remove churn variable
+str(churn_data_pc)
 pr.out=prcomp(churn_data_pc, scale =TRUE)
 print("Case: z-score/scaled")
 summary(pr.out)
 pr.out$rotation
 ```
 
-```{r}
+```{r, Proportion of variance explained}
 pr.var <- (pr.out$sdev^2)
 pve <- pr.var/sum(pr.var)
 plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative Proportion of Variance Explained",ylim=c(0,1),type="b")

@@ -401,6 +401,7 @@ ggplot(data=data_balanced_over,aes(x=churn,fill=churn))+
 ##### 4. What are the **principal components** for predicting churn rate?
 
 ```{r}
+churn_data_pc<-data_balanced_over
 pr.out=prcomp(churn_data_pc, scale =TRUE)
 print("Case: z-score/scaled")
 summary(pr.out)

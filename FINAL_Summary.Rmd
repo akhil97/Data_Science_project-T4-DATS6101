@@ -282,7 +282,6 @@ So, now the big question was what factors affected the 20% churn rate in the mul
 
 ### Variables' Influence on Churn
 
-
 ```{r Correlation between balance and customer churn, include=FALSE, echo=FALSE}
 library(corrplot)
 churn_data_to_numeric <- churn_data
@@ -395,10 +394,26 @@ ggplot(data=data_balanced_over,aes(x=churn,fill=churn))+
 
 ##### 
 
-
 ##### 2. Whether the customers using **fewer products** with higher **salary**,**account balance** and **status** of the account affect the churn rate?
 
 ## Finding the Best Model
+
+##### 4. What are the **principal components** for predicting churn rate?
+
+```{r}
+pr.out=prcomp(churn_data_pc, scale =TRUE)
+print("Case: z-score/scaled")
+summary(pr.out)
+pr.out$rotation
+```
+
+```{r}
+pr.var <- (pr.out$sdev^2)
+pve <- pr.var/sum(pr.var)
+plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative Proportion of Variance Explained",ylim=c(0,1),type="b")
+```
+
+From the graph for Proportion of variance we can see that almost 90% of variance is explained by 9 principal components.
 
 ### Feature Selection
 
@@ -450,26 +465,168 @@ plot(reg.churnseqrep, scale = "bic", main = "BIC")
 plot(reg.churnseqrep, scale = "Cp", main = "Cp")
 ```
 
-##### 4. What are the **principal components** for predicting churn rate?
+**1 Age, balance(2 variable model)**
 
-```{r}
-pr.out=prcomp(churn_data_pc, scale =TRUE)
-print("Case: z-score/scaled")
-summary(pr.out)
-pr.out$rotation
+-   Forward search: Adj R\^2,
+
+-   Exhaustive search: Adj R\^2
+
+-   Backward search: Adj R\^2
+
+-   Sequential search:Adj R\^2
+
+**2 Credit_score,age,balance(3 variable model)**
+
+-   Forward search: BIC
+
+-   Exhaustive search: BIC
+
+-   Backward search: BIC
+
+-   Sequential search:BIC
+
+**3 Credit_score,age,tenure,balance,estimated_salary(5 variable model)**
+
+-   Exhaustive search: CP
+
+-   Forward search: CP
+
+-   Backward search: CP
+
+-   Sequential search:CP
+
+**4.Credit_score, gender, age, balance,  estimated_salary(5 variable model)**
+
+-   Mallow CPG
+
+**5.Credit_score, country, gender, age, tenure, balance, estimated_salary(7 variable model)**
+
+-   Mallow CPG
+
+**6 Credit_score,country,gender,age,tenure,balance,active_member,estimated_salary(8 variable model)**
+
+-   Mallow CPG
+
+**7 Credit_score, country, gender, age,tenure,balance,credit_card       active_member,estimated_salary(9 variable model)**
+
+-   Mallow CPG
+
+-   Adj R\^2
+
+# Chapter 6: Comparing the Models Chosen in Feature Selection
+
+### Methods of Model Evaluation
+
+When evaluating the models, we are **focusing particularly on False negatives** because it is vital for any bank to correctly predict churn and in an ideal scenario without any errors. False negatives are of highest importance as we do not want to incorrectly predict that the customers are retained, when they are in fact churned.
+
+The second way we will be evaluating the models is by Area Under the Curve. The higher this number is, the better our model.
+
+Model with all variables:
+
+```{r, Logistic Regression,results='markup'}
+
+churn_logit <- glm(churn ~., data = churn_data_logit, family = 'binomial')
+
+summary(churn_logit)
 ```
 
-```{r}
-pr.var <- (pr.out$sdev^2)
-pve <- pr.var/sum(pr.var)
-plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative Proportion of Variance Explained",ylim=c(0,1),type="b")
+Model 1 - churn \~ age + balance
+
+```{r Model1,results='markup'}
+churnglm1 <- glm(churn ~  age + balance, data = churn_data_logit)
+summary(churnglm1)
+xkabledply( confusion_matrix(churnglm1), title = "Confusion matrix from Logit Model-1" )
+prob1=predict(churnglm1, type = "response" )
+churn_data_logit$prob=prob1
+h1 <- roc(churn~prob, data = churn_data_logit)
+auc(h1) 
+plot(h1)
 ```
 
-From the graph for Proportion of variance we can see that almost 90% of variance is explained by 9 principal components.
+Model 2 - churn \~ credit_card+age + balance
 
-# Chapter 6:
+```{r Model2,results='markup'}
+churnglm2 <- glm(churn ~  credit_card+age + balance, data = churn_data_logit)
+summary(churnglm2)
+xkabledply( confusion_matrix(churnglm2), title = "Confusion matrix from Logit Model-2" )
+prob2=predict(churnglm2, type = "response" )
+churn_data_logit$prob=prob2
+h2 <- roc(churn~prob, data = churn_data_logit)
+auc(h2) 
+plot(h2)
+```
 
+Model 3 - churn \~ credit_score+age+tenure+ balance + active_member+estimated_salary
 
+```{r Model3,results='markup'}
+churnglm3 <- glm(churn ~ credit_score+age+tenure+ balance + active_member+estimated_salary, data = churn_data_logit)
+summary(churnglm3)
+xkabledply( confusion_matrix(churnglm3), title = "Confusion matrix from Logit Model-3" )
+prob3=predict(churnglm3, type = "response" )
+churn_data_logit$prob=prob3
+h3 <- roc(churn~prob, data = churn_data_logit)
+auc(h3) 
+plot(h3)
+```
+
+Model 4 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary
+
+```{r Model4,results='markup'}
+churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary, data = churn_data_logit)
+summary(churnglm4)
+xkabledply( confusion_matrix(churnglm4), title = "Confusion matrix from Logit Model-4" )
+prob4=predict(churnglm4, type = "response" )
+churn_data_logit$prob=prob4
+h4 <- roc(churn~prob, data = churn_data_logit)
+auc(h4) 
+plot(h4)
+```
+
+Model 5 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary
+
+```{r Model5,results='markup'}
+churnglm5 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary
+, data = churn_data_logit)
+summary(churnglm5)
+xkabledply( confusion_matrix(churnglm5), title = "Confusion matrix from Logit Model-5" )
+prob5=predict(churnglm5, type = "response" )
+churn_data_logit$prob=prob5
+h5 <- roc(churn~prob, data = churn_data_logit)
+auc(h5) 
+plot(h5)
+```
+
+Model 6 - churn \~ credit_score+country+gender+age+tenure+balance+estimated_salary
+
+```{r Model6,results='markup'}
+churnglm6 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
+summary(churnglm6)
+xkabledply( confusion_matrix(churnglm6), title = "Confusion matrix from Logit Model-6" )
+prob6=predict(churnglm6, type = "response" )
+churn_data_logit$prob=prob6
+h6 <- roc(churn~prob, data = churn_data_logit)
+auc(h6) 
+plot(h6)
+```
+
+Model 7 - churn \~ credit_score+gender+age+tenure+balance+estimated_salary
+
+```{r Model7, results='markup'}
+churnglm7 <- glm(churn ~ credit_score+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
+summary(churnglm7)
+xkabledply( confusion_matrix(churnglm7), title = "Confusion matrix from Logit Model-7" )
+prob7=predict(churnglm7, type = "response" )
+churn_data_logit$prob=prob7
+h7 <- roc(churn~prob, data = churn_data_logit)
+auc(h7) 
+plot(h7)
+```
+
+### Methods of Model Evaluation
+
+When evaluating the models, we are **focusing particularly on False negatives** because it is vital for any bank to correctly predict churn and in an ideal scenario without any errors. False negatives are of highest importance as we do not want to incorrectly predict that the customers are retained, when they are in fact churned.
+
+The second way we will be evaluating the models is by Area Under the Curve. The higher this number is, the better our model.
 
 # Chapter 7: Bibliography
 

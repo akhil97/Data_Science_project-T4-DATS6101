@@ -1,5 +1,5 @@
 ---
-title: "AMultinational Bank Customer Churn"
+title: "A Multinational Bank Customer Churn"
 author: "T4-Analytical Avengers"
 date: "`r Sys.Date()`"
 output:
@@ -36,16 +36,27 @@ str(churn_data) #printing the data frame structure
 
 The churn data frame as `r nrow(churn_data)` customers from the  with  each customer  having `r ncol(churn_data)`  following attributes;
 Customer ID :The Unique ID of each individual customer
+
 Credit Score : A number depicting the customer's creditworthiness
+
 Country : The country the customer banks from
+
 Gender : The gender the customer identifies with
+
 Age : Depicts the customers age
+
 Tenure : Indicates how length in years the customer has been with the bank
+
 Balance : The amount currently available in the customer's account
+
 Products Number : The number of products purchased by the customer through the bank
+
 Credit Card : Indicates the customer has a credit card
+
 Active Member : Indicates if the customer is an active or inactive
+
 Estimated Salary : Bank Estimation of the income of the customer
+
 Churn : Indicator of if the customer has left the bank or not
 
 
@@ -71,7 +82,7 @@ summary(churn_data) #looking for summary of the data frame
 Credit score:We see that minimum credit score of the customer is 350 with average score being 651 and 850 being maximum score.
 Age:Minimum age of the customer is 18 with average age being 38.9 and maximum age being 92.
 Tenure:The customers has been with bank for an average of 5 years and upto 10 years.
-Balance:Maximum account balance of the cutsomer is 250898 with average balance being 76486.
+Balance:Maximum account balance of the customer is 250898 with average balance being 76486.
 Country,gender,active member,credit card,product n umber and churn are categorical variables.
 
 
@@ -427,6 +438,8 @@ ttestbalance50$conf.int
 
 ## Churned Customer Analysis
 
+### Mid term Analysis
+
 ### SMART Questions:
 
 ### Does churn depend on Gender?
@@ -742,6 +755,17 @@ chichurn_age$p.value
 
 ```
 
+
+### Final Project Analysis
+
+***We observed that correlation of age variable is very high,so we decided to combine different columns and find if the correlation score improves or not**
+
+```{r}
+corre<-cor(churn_data_numeric)
+corre
+corrplot(corre, method = "number")
+```
+
 Churn & Age are about to moderately correlated (Positive) - 0.29.
 
 ```{r Correlation combining multiple variables, results='markup', include=TRUE}
@@ -761,11 +785,9 @@ corr5
 ```
 The correlation score is the highest for the age variable. After combining different columns and finding the correlation score we see that it starts decreasing from 0.285
 
-```{r}
-corre<-cor(churn_data_numeric)
-corre
-corrplot(corre, method = "number")
-```
+***Since data set is unbalanced we decided to use oversampling technique to balance the dataset using library called ROSE***
+
+The data set was unbalance majorly because the variable country had most of the data which belongs to France,Hence we need to do perform data balancing.
 
 ```{r count of each country before oversampling}
 table(churn_data$churn)
@@ -782,11 +804,13 @@ ind <- sample(2, nrow(churn_data), replace = TRUE, prob = c(0.7, 0.3))
 train <- churn_data[ind==1,]
 test <- churn_data[ind==2,]
 ```
+
 ```{r count of each country after oversampling}
 data_balanced_over <- ovun.sample(churn ~ ., data = train, method = "over",N = 10000,seed=123)$data
 table(data_balanced_over$churn)
 table(data_balanced_over$country)
 ```
+
 ```{r}
 ggplot(data=data_balanced_over,aes(x=country,fill=country))+
   geom_bar(col="black")+
@@ -913,12 +937,11 @@ plot(reg.churn , scale = "Cp", main = "Cp")
 summary(reg.churn )
 ```
 
-Using exhaustive search we found that the variables age,balance,active_member predict the churn of customer which is a 3 variable best model with adjusted R^2 value 0.18.
+Using exhaustive search age,balance were selected  which is a two variable model with adjusted R^2 value 0.14.
 
-The  best model predicted using BIC is age,balance,active_member which is a 3 variable model with BIC value -1900.
+The  best model selected using BIC is credit_score,age,balance which is a 3 variable model with BIC value -1500.
 
-The best model predicted using Cp is credit_score,age,tenure,balance,active_member,estimated_salary which is a 6 variable model. with Cp value 4.2
-
+The best model selected using Cp is credit_score,age,tenure,balance,estimated_salary which is a 5 variable model. with Cp value 7.
 
 
 ```{r}
@@ -931,9 +954,13 @@ subsets(reg.churn, statistic="cp", legend = FALSE, min.size = 4, main = "Mallow 
 abline(a = 1, b = 1, lty = 3)  
 ```
 
-The best model predicted using adjusted R^2 plot is credit_score, country, gender, age, tenure, balance, products_number, active_member, estimated_salary which is a 9 variable model with R^2 value 0.135.
+The best model selected using adjusted R^2 plot is credit_score,gender,age,country,tenure,balance,credit_card,active_member which is a 8 variable model with R^2 value 0.1440
 
-The best model predicted using Mallow Cp plot is crdt_s-cn-g-ag-t-b-p-a_e which is a 9 variable model and crdt_s-cn-g-ag-b-a_ 7 var model.
+The Mallow Cp plot selected four best models with highest mallow Cp value 9.5.
+1)credit_score,country,gender,age,tenure,balance,credit_card,ative_member,estimated salary 9 variable model
+2)credit_score,country,gender,age,tenure,balance,active_member,estimated salary 8 variable model
+3)credit_score,country,gender,age,tenure,balance,estimated_salary.
+4)credit_score,gender,tenure,balance,estimated salary 5 variable model
 
 **Feature selection using forward search**
 
@@ -945,11 +972,11 @@ plot(reg.churnforward , scale = "Cp", main = "Cp")
 summary(reg.churnforward)
 ```
 
-The best model using forward search is age,balance,active_member which is a 3 variable model with adjusted R^2 value of 0.18.
+The best model selected using forward search is age,balance which is a 2 variable model with adjusted R^2 value of 0.14.
 
-The  best model predicted using BIC is age,balance,active_member which is a 3 variable model with value -1900 Cp.
+The  best model selected using BIC is credit_card,age,balance which is a 3 variable model with value -1500 Cp.
 
-The best model predicted using Cp is credit_score,age,tenure,balance,active_member_estimated_salary which is a 6 variable model with Cp value 4.2
+The best model selected using Cp is credit_score,age,tenure,balance,estimated_salary which is a 5 variable model with Cp value 7.
 
 **Feature selection using backward search**
 
@@ -961,11 +988,11 @@ plot(reg.churnback, scale = "Cp", main = "Cp")
 summary(reg.churnback)
 ```
 
-The best model using backward search is age,balance,active_member which is a 3 variable model with adjusted R^2 value of 0.18.
+The best model selected using backward search is age,balance which is a 2 variable model with adjusted R^2 value of 0.14.
 
-The  best model predicted using BIC is age,balance,active_member which is a 3 variable model with value -1900 Cp.
+The  best model selected using BIC is credit_card,age,balance which is a 3 variable model with value -1500 Cp.
 
-The best model predicted using Cp is credit_score,age,tenure,balance,active_member,estimated_salary which is a 6 variable model with Cp value 4.2
+The best model selected using Cp is credit_score,age,tenure,balance,estimated_salary which is a 5 variable model with Cp value 7.
 
 **Feature selection using Sequential Replacement**
 
@@ -976,14 +1003,16 @@ plot(reg.churnseqrep, scale = "bic", main = "BIC")
 plot(reg.churnseqrep, scale = "Cp", main = "Cp")
 ```
 
-The best model using Adj R^2 is country,gender,age,balance,active_member which is a 5 variable model with adjusted R^2 value of 0.14.
+The best model selected using sequential search is age,balance which is a 2 variable model with adjusted R^2 value of 0.14.
 
-The  best model predicted using BIC is gender,age,balance,active_member which is a 4 variable model with value -1400 Cp.
+The  best model selected using BIC is credit_card,age,balance,estimated_salary which is a 4 variable model with value -1500 Cp.
 
-The best model predicted using Cp is credit_score,country,gender,age,tenure,balance,active_member,estimated_salary which is a 8 variable model with Cp value 7.6
+The best model selected using Cp is credit_score,age,tenure,balance,estimated_salary which is a 5 variable model with Cp value 7.
 
 
 ### Logistic Regression model
+
+### What factors affect the customer churn rate significantly?
 
 ```{r, Logistic Regression,results='markup'}
 
@@ -1011,7 +1040,7 @@ auc(h)
 plot(h)
 ```
 
-
+Based on the models obtained from feature selection we are using logistic regression to check the churn rate of the customers.
 
 ```{r Model1,results='markup'}
 churnglm1 <- glm(churn ~  age + balance, data = churn_data_logit)
@@ -1047,7 +1076,6 @@ plot(h3)
 ```
 
 
-
 ```{r Model4,results='markup'}
 churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary, data = churn_data_logit)
 summary(churnglm4)
@@ -1073,7 +1101,6 @@ plot(h5)
 ```
 
 
-
 ```{r Model6,results='markup'}
 churnglm6 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
 summary(churnglm6)
@@ -1084,7 +1111,6 @@ h6 <- roc(churn~prob, data = churn_data_logit)
 auc(h6) 
 plot(h6)
 ```
-
 
 
 ```{r Model7, results='markup'}

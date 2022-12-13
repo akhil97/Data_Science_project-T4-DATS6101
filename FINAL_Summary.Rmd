@@ -564,6 +564,7 @@ Model 1 - churn \~ age + balance
 
 ```{r Model1,results='markup'}
 loadPkg("regclass")
+loadPkg("pROC") 
 churnglm1 <- glm(churn ~  age + balance, data = churn_data_logit)
 summary(churnglm1)
 xkabledply( confusion_matrix(churnglm1), title = "Confusion matrix from Logit Model-1" )

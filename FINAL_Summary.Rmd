@@ -553,6 +553,7 @@ The second way we will be evaluating the models is by Area Under the Curve. The 
 Model with all variables:
 
 ```{r, Logistic Regression,results='markup'}
+churn_data_logit <- churn_data_pc_target
 
 churn_logit <- glm(churn ~., data = churn_data_logit, family = 'binomial')
 

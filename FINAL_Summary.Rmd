@@ -669,7 +669,7 @@ plot(h3)
 ```
 
 **Model 4 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary**
-
+For model4, we need to look at Mallow Cp plot in order to understand the feature selection method used for this model. We can see that for a value of 7 for Mallow Cp we have two models overlapping so, we can't quite figure out which model to be chosen. The next best value for Mallow Cp is 7.5 with the following features credit_score,country,gender,age,tenure,balance,estimated_salary. We select these features for model4.
 ```{r Model4,results='markup'}
 churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary
 , data = churn_data_logit)

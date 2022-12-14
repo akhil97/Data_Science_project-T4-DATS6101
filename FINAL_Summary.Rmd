@@ -46,7 +46,11 @@ Of course you want to keep customers, but it also is cheaper to retain your cust
 
 We chose to analyze a multinational bank's churn for several reasons. As an international team, we were interested in topics that spanned multiple countries, with a particular focus on either business or environment, our personal interests. When we were pitching topics, nearly every suggestion was geared towards sales or customer experience, or global environmental issues.
 
-The aim of this project is to identify the most useful model for predicting churn churn, across three countries serviced by a multinational bank. The model identified can then be used to inform banks of what customer activity trends and attributes should be monitored so the bank can make efforts to retain the customers before the account has been closed.
+The aim of this project is to identify the most useful model for predicting churn churn, across three countries serviced by a multinational bank. 
+
+## Customer Analysis Overview
+
+From our EDA in the mid term we found that more than 50% of the customer are based in France with majority of customer of average age group of 39 being in relation with bank for more than a year,51% of active customers while Male customers are predominantly higher than Female customers and also 71% of the customer uses credit card with average credit score of 650 by this analysis we found that 20% of the customer are churned,hence we decided to predict what factors are significantly affecting the customer churn in multinational bank.The model identified can then be used to inform banks of what customer activity trends and attributes should be monitored so the bank can make efforts to retain the customers before the account has been closed.
 
 # Chapter 2: Description of the Data
 
@@ -382,23 +386,20 @@ ggplot(data=data_balanced_over,aes(x=churn,fill=churn))+
 
 # Chapter 5: SMART QUESTIONS
 
--   Does the combination of customer demographic variables **country**, **age group**, **gender** influence the **churn rate**?
+## Linear Regression 
 
--   Whether the customers using **fewer products** with higher **salary**,**account balance** and **status** of the account affect the churn rate?
+### 1.Does the combination of customer demographic variables **country**, **age group**, **gender** influence the **churn rate** of the customers? 
 
--   Which model can give the **best results** based on adjusted R square value, along with lower BIC and Cp?
 
--   What are the **principal components** for predicting churn rate?
 
-##### 1. Does the combination of customer demographic variables **country**, **age group**, **gender** influence the **churn rate**?
+### 2.Whether the customers using **fewer products** with higher **salary**,**account balance** and **status** of the account affect the churn rate?
 
-##### 
 
-##### 2. Whether the customers using **fewer products** with higher **salary**,**account balance** and **status** of the account affect the churn rate?
 
 ## Finding the Best Model
 
-##### 4. What are the **principal components** for predicting churn rate?
+### 3. What are the **principal components** for predicting churn rate?
+
 Before we work on PCA, we need to ensure that the data is scaled and all the variables are either numeric or int type.
 ```{r, Scaling data}
 str(churn_data)
@@ -448,51 +449,88 @@ From the graph for Proportion of variance we can see that almost 90% of variance
 
 ##### 3. Which model can give the **best results** based on adjusted R square value, along with lower BIC and Cp?
 
-Exhaustive Search
+**Feature selection using Exhaustive Search**
 
 ```{r, results='asis'}
 loadPkg("leaps")
 
 reg.churn <- regsubsets(churn~., data = churn_data_pc_target, nvmax =9, nbest = 1, method = "exhaustive")  
 plot(reg.churn , scale = "adjr2", main = "Adjusted R^2")
-plot(reg.churn , scale = "r2", main = "R^2")
 plot(reg.churn , scale = "bic", main = "BIC")
 plot(reg.churn , scale = "Cp", main = "Cp")
-summary(reg.churn )
+
+```
+Using exhaustive search age,balance were selected  which is a two variable model with adjusted R^2 value 0.14.
+
+The  best model selected using BIC is credit_score,age,balance which is a 3 variable model with BIC value -1500.
+
+The best model selected using Cp is credit_score,age,tenure,balance,estimated_salary which is a 5 variable model. with Cp value 7.
+
+```{r}
+loadPkg("car")
+
+# Adjusted R2
+car::subsets(reg.churn, statistic="adjr2", legend = FALSE, min.size = 2, main = "Adjusted R^2")
+
+subsets(reg.churn, statistic="cp", legend = FALSE, min.size = 4, main = "Mallow Cp")
+abline(a = 1, b = 1, lty = 3)  
 ```
 
-\*\*Feature selection using forward search\*\*
+The best model selected using adjusted R^2 plot is credit_score,gender,age,country,tenure,balance,credit_card,active_member which is a 8 variable model with R^2 value 0.1440
+
+The Mallow Cp plot selected four best models with highest mallow Cp value 9.5.
+1)credit_score,country,gender,age,tenure,balance,credit_card,ative_member,estimated salary 9 variable model
+2)credit_score,country,gender,age,tenure,balance,active_member,estimated salary 8 variable model
+3)credit_score,country,gender,age,tenure,balance,estimated_salary.
+4)credit_score,gender,tenure,balance,estimated salary 5 variable model
+
+**Feature selection using forward search**
 
 ```{r}
 reg.churnforward <- regsubsets(churn~., data = churn_data_pc_target, nvmax =9, nbest = 1, method = "forward")
 plot(reg.churnforward , scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churnforward , scale = "bic", main = "BIC")
 plot(reg.churnforward , scale = "Cp", main = "Cp")
-summary(reg.churnforward)
+
 ```
 
-\*\*Feature selection using backward search\*\*
+The best model selected using forward search is age,balance which is a 2 variable model with adjusted R^2 value of 0.14.
+
+The  best model selected using BIC is credit_card,age,balance which is a 3 variable model with value -1500 Cp.
+
+The best model selected using Cp is credit_score,age,tenure,balance,estimated_salary which is a 5 variable model with Cp value 7.
+
+**Feature selection using backward search**
 
 ```{r}
 reg.churnback <- regsubsets(churn~., data = churn_data_pc_target, method = "backward", nvmax = 9, nbest = 1)
 plot(reg.churnback, scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churnback, scale = "bic", main = "BIC")
 plot(reg.churnback, scale = "Cp", main = "Cp")
-summary(reg.churnback)
-```
 
-\*\*Feature selection using Sequential Replacement\*\*
+```
+The best model selected using backward search is age,balance which is a 2 variable model with adjusted R^2 value of 0.14.
+
+The  best model selected using BIC is credit_card,age,balance which is a 3 variable model with value -1500 Cp.
+
+The best model selected using Cp is credit_score,age,tenure,balance,estimated_salary which is a 5 variable model with Cp value 7.
+
+**Feature selection using Sequential Replacement**
 
 ```{r}
 
 reg.churnseqrep <- regsubsets(churn~., data =churn_data_pc_target, nvmax = 9, nbest = 1 , method = "seqrep")
-
 plot(reg.churnseqrep, scale = "adjr2", main = "Adjusted R^2")
-
 plot(reg.churnseqrep, scale = "bic", main = "BIC")
-
 plot(reg.churnseqrep, scale = "Cp", main = "Cp")
 ```
+The best model selected using sequential search is age,balance which is a 2 variable model with adjusted R^2 value of 0.14.
+
+The  best model selected using BIC is credit_card,age,balance,estimated_salary which is a 4 variable model with value -1500 Cp.
+
+The best model selected using Cp is credit_score,age,tenure,balance,estimated_salary which is a 5 variable model with Cp value 7.
+
+**The best models selected using feature selection methods are**
 
 **1 Age, balance(2 variable model)**
 
@@ -542,6 +580,7 @@ plot(reg.churnseqrep, scale = "Cp", main = "Cp")
 
 -   Adj R\^2
 
+
 # Chapter 6: Comparing the Models Chosen in Feature Selection
 
 ### Methods of Model Evaluation
@@ -560,7 +599,7 @@ churn_logit <- glm(churn ~., data = churn_data_logit, family = 'binomial')
 summary(churn_logit)
 ```
 
-Model 1 - churn \~ age + balance
+**Model 1 - churn \~ age + balance**
 
 ```{r Model1,results='markup'}
 loadPkg("regclass")
@@ -575,7 +614,7 @@ auc(h1)
 plot(h1)
 ```
 
-Model 2 - churn \~ credit_card+age + balance
+**Model 2 - churn \~ credit_card+age + balance**
 
 ```{r Model2,results='markup'}
 churnglm2 <- glm(churn ~  credit_card+age + balance, data = churn_data_logit)
@@ -588,7 +627,7 @@ auc(h2)
 plot(h2)
 ```
 
-Model 3 - churn \~ credit_score+age+tenure+ balance + active_member+estimated_salary
+**Model 3 - churn \~ credit_score+age+tenure+ balance + active_member+estimated_salary**
 
 ```{r Model3,results='markup'}
 churnglm3 <- glm(churn ~ credit_score+age+tenure+ balance + active_member+estimated_salary, data = churn_data_logit)
@@ -601,7 +640,7 @@ auc(h3)
 plot(h3)
 ```
 
-Model 4 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary
+**Model 4 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary**
 
 ```{r Model4,results='markup'}
 churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary, data = churn_data_logit)
@@ -614,7 +653,7 @@ auc(h4)
 plot(h4)
 ```
 
-Model 5 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary
+**Model 5 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary**
 
 ```{r Model5,results='markup'}
 churnglm5 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary
@@ -628,7 +667,7 @@ auc(h5)
 plot(h5)
 ```
 
-Model 6 - churn \~ credit_score+country+gender+age+tenure+balance+estimated_salary
+**Model 6 - churn \~ credit_score+country+gender+age+tenure+balance+estimated_salary**
 
 ```{r Model6,results='markup'}
 churnglm6 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
@@ -641,7 +680,7 @@ auc(h6)
 plot(h6)
 ```
 
-Model 7 - churn \~ credit_score+gender+age+tenure+balance+estimated_salary
+**Model 7 - churn \~ credit_score+gender+age+tenure+balance+estimated_salary**
 
 ```{r Model7, results='markup'}
 churnglm7 <- glm(churn ~ credit_score+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)

@@ -643,7 +643,7 @@ plot(h1)
 ```
 
 **Model 2 - churn \~ credit_card+age + balance**
-Similarly, for the second model looking at the Adjusted R square results we can see that we get a maximum value of 0.14 with minimum of 2 variables namely age and balance. Similarly, for BIC we get a minimum value of -1500 with 3 variables namely credit_score, age and balance and for minimum value of 7 for Cp from variables credit_score, age, tenure, balance, estimated_salary. From all the 3 parameters (Adjusted R square, BIC, Cp), we can see that age and balance variables are common, so we create the model using these features.
+Similarly, for the second model looking at the BIC values we can see that from feature selection we have a minimum value of -1500 from exhaustive search method with 3 variables namely credit_score, age and balance. We can see the same variables associated in both forward search and backward search. For sequential search, we have an additional variable estimated_salary along with the other three variables. Therefore, if you take the variables common in all these search techniques we are left with credit_score, age and balance so we build model2 with these variables.
 ```{r Model2,results='markup'}
 churnglm2 <- glm(churn ~  credit_card+age + balance, data = churn_data_logit)
 summary(churnglm2)

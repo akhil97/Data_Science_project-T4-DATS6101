@@ -454,6 +454,10 @@ with the scales on the top and right tick marks showing the loadings.
 
 PC1 has more variation than PC2
 
+We have also plotted the graphs in between PC2-PC3, AND PC3-PC4: Observe that PC2 has more variation than PC3 and PC3 has more variation than PC4
+
+Here, all components capture the majority of the variability.
+
 ```{r, Proportion of variance explained}
 pr.var <- (pr.out$sdev^2)
 pve <- pr.var/sum(pr.var)

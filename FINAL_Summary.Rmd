@@ -627,6 +627,8 @@ churn_logit <- glm(churn ~., data = churn_data_logit, family = 'binomial')
 summary(churn_logit)
 ```
 
+First, let us look at our base model, which includes all variables. We find in the summary that the credit_score, age, and balance variables are most significant (lowest p-values, as indicated by \*\*\*), with estimated_salary with slightly higher p-value (\*\*),, and tenure with a higher, but still significant p-value (\*).
+
 **Model 1 - churn \~ age + balance**
 
 ```{r Model1,results='markup'}
@@ -642,6 +644,8 @@ auc(h1)
 plot(h1)
 ```
 
+Model 1 was selected by four different feature selection methods, forward, backward, exhaustive, and sequential AdjR\^2, with the highest adjR\^2 of 0.14. Taking a look at the confusion matrix, we see that there are 2026 false negatives, with an area under the curve of 0.744. Let us see if we can improve on these numbers.
+
 **Model 2 - churn \~ credit_card+age + balance**
 
 ```{r Model2,results='markup'}
@@ -654,6 +658,8 @@ h2 <- roc(churn~prob, data = churn_data_logit)
 auc(h2) 
 plot(h2)
 ```
+
+Model 2 was selected by four different feature selection methods: forward, backward, exhaustive, and sequential BIC, as having the lowest BIC. Age and balance are once again significant variables, whereas credit_card is not. Upon analysis of the confusion matrix, we find that this model has a false negative count of 1996, and an area under the curve of 0.744. This model is an improvement on 1 due to lower false negatives.
 
 **Model 3 - churn \~ credit_score+age+tenure+ balance + active_member+estimated_salary**
 
@@ -668,7 +674,9 @@ auc(h3)
 plot(h3)
 ```
 
-**Model 4 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary**
+Model 3 was selected by four different feature selection methods: forward, backward, exhaustive, and sequential Cp, as having the lowest Cp (7). All variables included are significant, except active_member. Upon analysis of the confusion matrix, we find that this model has a false negative count of 2011, higher than Model 2. The area under the curve is 0.744, same as Models 1 & 2. Thus far, Model 2 is best.
+
+**Model** **4 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary**
 
 ```{r Model4,results='markup'}
 churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary, data = churn_data_logit)
@@ -680,6 +688,8 @@ h4 <- roc(churn~prob, data = churn_data_logit)
 auc(h4) 
 plot(h4)
 ```
+
+Model 4 was selected by one feature selection method, Mallow CPG. Of the nine variables included, only five were significant: credit_score, age, tenure, balance, estimated_salary. Upon analysis of the confusion matrix, we find that this model has a false negative count of 2000 (better than model 3, not as good as Model 2). The area under the curve of 0.744, same as Models 1 & 2.
 
 **Model 5 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary**
 
@@ -695,6 +705,8 @@ auc(h5)
 plot(h5)
 ```
 
+Model 5 was selected by one feature selection method, Mallow CPG. Of the eight variables included, only five were significant: credit_score, age, tenure, balance, estimated salary. Upon analysis of the confusion matrix, we find that this model has a false negative count of 1994, the lowest of the models we have seen so far, and an area under the curve of 0.745, same as Model 4. So far, Model 5 is the best model.
+
 **Model 6 - churn \~ credit_score+country+gender+age+tenure+balance+estimated_salary**
 
 ```{r Model6,results='markup'}
@@ -708,6 +720,8 @@ auc(h6)
 plot(h6)
 ```
 
+Model 6 was selected by one feature selection method: Mallow CPG. The same variables which were significant in Model 5 are significant in this model. Upon analysis of the confusion matrix, we find that this model has a false negative count of 2002, which is higher than the count in Model 5. The area under the curve is 0.745, same as Models 4 & 5. Model 5 is still the best model.
+
 **Model 7 - churn \~ credit_score+gender+age+tenure+balance+estimated_salary**
 
 ```{r Model7, results='markup'}
@@ -720,6 +734,9 @@ h7 <- roc(churn~prob, data = churn_data_logit)
 auc(h7) 
 plot(h7)
 ```
+
+Finally, Model seven was selected by two different feature selection methods: Mallow CPG, and AdjR. All variables are significant, with the exception of gender. Upon analysis of the confusion matrix, we find that this model has a false negative count of 2001 and an area under the curve of 0.745, same as Models 5, and 6. Due to the higher count of false negatives, Model 7 fails to beat out Model 5 as the best model.
+
 
 ### Best Model
 

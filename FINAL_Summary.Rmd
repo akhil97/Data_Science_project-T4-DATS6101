@@ -319,40 +319,24 @@ cor_balance<-cor.test(churn_data$balance,as.numeric(churn_data$churn), method="p
 cor_balance
 ```
 
-```{r Correlation between credit score and customer churn, include=TRUE, echo=FALSE}
-library(corrplot)
-churn_data_to_numeric <- churn_data
+**From the correlation plot we observe that age is highly correlated with churn.After combining different columns and finding the correlation score we see that it starts decreasing from 0.285**
 
-churn_data$churn[churn_data$churn== "Churned"]<-1
-churn_data$churn[churn_data$churn== "Retained"]<-0
+```{r Correlation combining multiple variables, results='markup', include=TRUE}
+corr <- cor(churn_data_numeric$age, churn_data_numeric$churn)
+corr
+corr1 <- cor(churn_data_numeric$age + churn_data_numeric$tenure, churn_data_numeric$churn)
+corr1
+corr2 <- cor(churn_data_numeric$age + churn_data_numeric$products_number, churn_data_numeric$churn)
+corr2
+corr3 <- cor(churn_data_numeric$age + churn_data_numeric$balance, churn_data_numeric$churn)
+corr3
+corr4 <- cor(churn_data_numeric$age + churn_data_numeric$tenure + churn_data_numeric$products_number, churn_data_numeric$churn)
+corr4
+corr5 <- cor(churn_data_numeric$age + churn_data_numeric$products_number + churn_data_numeric$balance, churn_data_numeric$churn)
+corr5
 
-
-churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
-churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
-
-cors_credit <- cor(churn_data_numeric)
-corrplot(cors_credit, method = 'number')
-
-cor_scores <- cor(churn_data_numeric$credit_score, churn_data_numeric$churn)
-cor_scores
 ```
 
-```{r Correlation between age and customer churn, include=TRUE, echo=FALSE}
-library(corrplot)
-churn_data_to_numeric <- churn_data
-
-churn_data$churn[churn_data$churn== "Churned"]<-1
-churn_data$churn[churn_data$churn== "Retained"]<-0
-
-churn_data_to_numeric$churn <- as.numeric(churn_data_to_numeric$churn) 
-churn_data_numeric <- select_if(churn_data_to_numeric, is.numeric)
-
-cors_age_group <- cor(churn_data_numeric)
-corrplot(cors_age_group, method = 'number')
-
-cor_age <- cor(churn_data_numeric$age, churn_data_numeric$churn)
-cor_age
-```
 
 # Chapter 4: Handling Imbalanced Data
 
@@ -390,11 +374,27 @@ ggplot(data=data_balanced_over,aes(x=churn,fill=churn))+
 
 ### 1.Does the combination of customer demographic variables **country**, **age group**, **gender** influence the **churn rate** of the customers? 
 
+```{r LMmodel1,results='markup'}
+churn_data_pc<-data_balanced_over
+churn_data_pc_target = churn_data_pc
+churnLM <- lm(churn~country+age+gender,data=churn_data_pc_target)
+summary(churnLM)
+xkabledply(churnLM, title = "churn Model summary")
 
+confint(churnLM)
+```
+From the results of linear regression model we observe that the variables Country$Germany,age,and Gender are highly significant.While gender is negatively impacting the customer churn but customer with certain age group and from Germany affecting the churn rate positively.
 
 ### 2.Whether the customers using **fewer products** with higher **salary**,**account balance** and **status** of the account affect the churn rate?
+```{r LMmodel2,results='markup'}
+churnLM2 <- lm(churn~products_number+estimated_salary+balance+active_member,data=churn_data_pc_target)
+summary(churnLM2)
+xkabledply(churnLM2, title = "churn Model summary")
 
 
+confint(churnLM2)
+```
+From the results of linear regression model we observe that the variables account balance,account status are highly significant.while the account status impacting the customer churn negatively,but account balance is affecting positively.
 
 ## Finding the Best Model
 
@@ -479,9 +479,13 @@ abline(a = 1, b = 1, lty = 3)
 The best model selected using adjusted R^2 plot is credit_score,gender,age,country,tenure,balance,credit_card,active_member which is a 8 variable model with R^2 value 0.1440
 
 The Mallow Cp plot selected four best models with highest mallow Cp value 9.5.
+
 1)credit_score,country,gender,age,tenure,balance,credit_card,ative_member,estimated salary 9 variable model
+
 2)credit_score,country,gender,age,tenure,balance,active_member,estimated salary 8 variable model
+
 3)credit_score,country,gender,age,tenure,balance,estimated_salary.
+
 4)credit_score,gender,tenure,balance,estimated salary 5 variable model
 
 **Feature selection using forward search**
@@ -698,6 +702,8 @@ plot(h7)
 **Model 5** - Credit_score, country, gender, age, tenure, balance, active_member,estimated_salary
 
 Based on our criteria for best model, **Model 5** to be the best model which has comparatively lower False Negatives (1994) and area under curve (0.745). The reason for choosing False Negatives is that we are okay with the model predicting churn for a customer when it is actually retained. However, if a customer is actually churned and our model is predicting that it is retained then it is a problem and the errors in classifications must be highlighted as it is very critical for the bank to correctly identify churned customers. Therefore, the verdict for the best models is decided based on the which model has lower False Negatives.  
+
+# Chapter 6 :Summary
 
 # Chapter 7: Bibliography
 

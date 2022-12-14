@@ -590,23 +590,14 @@ The best model selected using Cp is credit_score,age,tenure,balance,estimated_sa
 
 -   Sequential search:CP
 
-**4.Credit_score, gender, age, balance,  estimated_salary(5 variable model)**
+*45.Credit_score, country, gender, age, tenure, balance, estimated_salary(7 variable model)**
 
 -   Mallow CPG
 
-**5.Credit_score, country, gender, age, tenure, balance, estimated_salary(7 variable model)**
+**5 Credit_score,country,gender,age,tenure,balance,active_member,estimated_salary(8 variable model)**
 
 -   Mallow CPG
 
-**6 Credit_score,country,gender,age,tenure,balance,active_member,estimated_salary(8 variable model)**
-
--   Mallow CPG
-
-**7 Credit_score, country, gender, age,tenure,balance,credit_card       active_member,estimated_salary(9 variable model)**
-
--   Mallow CPG
-
--   Adj R\^2
 
 
 # Chapter 6: Comparing the Models Chosen in Feature Selection

@@ -913,6 +913,8 @@ prop.table( table(train$churn) )
 
 ```{r, Biplot}
 biplot(pr.out, scale = 0)
+biplot(pr.out,2:3, scale =0)
+biplot(pr.out,3:4, scale =0)
 ```
 
 

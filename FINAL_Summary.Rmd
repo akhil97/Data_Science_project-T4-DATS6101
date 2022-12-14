@@ -727,15 +727,13 @@ plot(h7)
 
 # Chapter 6 :Summary
 
-When creating a model based solely on customer demographics, only the age variable is significant. On the other hand based on salary and account features (number of products, balance, active status), only the balance variable is significant.
+When creating a model based solely on customer demographics, only the **age variable** is significant. On the other hand based on salary and account features (number of products, balance, active status), only the **balance variable** is significant.
 
-In our analysis, 90% of variance explained by 9 principle components with a PC9 Cumulative proportion of variance is 0.92.
+In our analysis, 90% of variance explained by 9 principle components with a **PC9** Cumulative proportion of variance is 0.92.
 
-Best model Adj R^2: Age + Balance
-Best model BIC: Credit Score + Age + Balance
-Best model Cp: Credit Score + Age + Balance + Tenure + Est. Salary
+Best model **Adj R^2**: Age + Balance, **BIC**: Credit Score + Age + Balance, **Cp**: Credit Score + Age + Balance + Tenure + Est. Salary
 
-Best predictor of customer churn over all: Model 5, which includes features Credit_score + country + gender + age + tenure + balance + active_member + estimated_salary is best performing which has comparatively lower False Negatives (1994) and area under curve (0.745). The reason for choosing False Negatives is that we are okay with the model predicting churn for a customer when it is actually retained. However, if a customer is actually churned and our model is predicting that it is retained then it is a problem and the errors in classifications must be highlighted as it is very critical for the bank to correctly identify churned customers. Therefore, the verdict for the best models is decided based on the which model has lower False Negatives.  
+Best predictor of customer churn over all: **Model 5**, which includes features Credit_score + country + gender + age + tenure + balance + active_member + estimated_salary is best performing which has comparatively lower False Negatives (1994) and Area under curve (0.745). The reason for choosing **False Negatives** is that we are okay with the model predicting churn for a customer when it is actually retained. However, if a customer is actually churned and our model is predicting that it is retained then it is a problem and the errors in classifications must be highlighted as it is very critical for the bank to correctly identify churned customers. Therefore, the verdict for the best models is decided based on the which model has lower False Negatives.  
 
 # Chapter 7: Bibliography
 

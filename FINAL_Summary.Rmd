@@ -630,7 +630,7 @@ summary(churn_logit)
 First, let us look at our base model, which includes all variables. We find in the summary that the credit_score, age, and balance variables are most significant (lowest p-values, as indicated by \*\*\*), with estimated_salary with slightly higher p-value (\*\*),, and tenure with a higher, but still significant p-value (\*).
 
 **Model 1 - churn \~ age + balance**
-
+The features for the first model is selected based on the higher vale of Adjusted R square, and lower values of BIC and Cp metrics using the forward search method. Looking at the Adjusted R square results we can see that we get a maximum value of 0.14 with minimum of 2 variables namely age and balance. Similarly, for BIC we get a minimum value of -1500 with 3 variables namely credit_score, age and balance and for minimum value of 7 for Cp from variables credit_score, age, tenure, balance, estimated_salary. From all the 3 parameters (Adjusted R square, BIC, Cp), we can see that age and balance variables are common, so we create the model using these features.
 ```{r Model1,results='markup'}
 loadPkg("regclass")
 loadPkg("pROC") 

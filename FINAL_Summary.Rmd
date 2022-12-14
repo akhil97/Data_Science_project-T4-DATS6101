@@ -590,14 +590,23 @@ The best model selected using Cp is credit_score,age,tenure,balance,estimated_sa
 
 -   Sequential search:CP
 
-*45.Credit_score, country, gender, age, tenure, balance, estimated_salary(7 variable model)**
+**4.Credit_score, gender, age, balance,  estimated_salary(5 variable model)**
 
 -   Mallow CPG
 
-**5 Credit_score,country,gender,age,tenure,balance,active_member,estimated_salary(8 variable model)**
+**5.Credit_score, country, gender, age, tenure, balance, estimated_salary(7 variable model)**
 
 -   Mallow CPG
 
+**6 Credit_score,country,gender,age,tenure,balance,active_member,estimated_salary(8 variable model)**
+
+-   Mallow CPG
+
+**7 Credit_score, country, gender, age,tenure,balance,credit_card       active_member,estimated_salary(9 variable model)**
+
+-   Mallow CPG
+
+-   Adj R\^2
 
 
 # Chapter 6: Comparing the Models Chosen in Feature Selection
@@ -618,10 +627,8 @@ churn_logit <- glm(churn ~., data = churn_data_logit, family = 'binomial')
 summary(churn_logit)
 ```
 
-First, let us look at our base model, which includes all variables. We find in the summary that the credit_score, age, and balance variables are most significant (lowest p-values, as indicated by \*\*\*), with estimated_salary with slightly higher p-value (\*\*),, and tenure with a higher, but still significant p-value (\*).
-
 **Model 1 - churn \~ age + balance**
-The features for the first model is selected based on the higher vale of Adjusted R square, and lower values of BIC and Cp metrics using the forward search method. Looking at the Adjusted R square results we can see that we get a maximum value of 0.14 with minimum of 2 variables namely age and balance. Similarly, for BIC we get a minimum value of -1500 with 3 variables namely credit_score, age and balance and for minimum value of 7 for Cp from variables credit_score, age, tenure, balance, estimated_salary. From all the 3 parameters (Adjusted R square, BIC, Cp), we can see that age and balance variables are common, so we create the model using these features.
+Looking at the Adjusted R square results we can see that we get a maximum value of 0.14 with 2 variables namely age and balance for exhaustive search method. If we look at the variables that give the same value of 0.14 for Adjusted R square for forward search, backward search and sequential search we have the same variables age and balance. Therefore, we build model1 with parameters age and balance. 
 ```{r Model1,results='markup'}
 loadPkg("regclass")
 loadPkg("pROC") 
@@ -635,10 +642,8 @@ auc(h1)
 plot(h1)
 ```
 
-Model 1 was selected by four different feature selection methods, forward, backward, exhaustive, and sequential AdjR\^2, with the highest adjR\^2 of 0.14. Taking a look at the confusion matrix, we see that there are 2026 false negatives, with an area under the curve of 0.744. Let us see if we can improve on these numbers.
-
 **Model 2 - churn \~ credit_card+age + balance**
-
+Similarly, for the second model looking at the Adjusted R square results we can see that we get a maximum value of 0.14 with minimum of 2 variables namely age and balance. Similarly, for BIC we get a minimum value of -1500 with 3 variables namely credit_score, age and balance and for minimum value of 7 for Cp from variables credit_score, age, tenure, balance, estimated_salary. From all the 3 parameters (Adjusted R square, BIC, Cp), we can see that age and balance variables are common, so we create the model using these features.
 ```{r Model2,results='markup'}
 churnglm2 <- glm(churn ~  credit_card+age + balance, data = churn_data_logit)
 summary(churnglm2)
@@ -649,8 +654,6 @@ h2 <- roc(churn~prob, data = churn_data_logit)
 auc(h2) 
 plot(h2)
 ```
-
-Model 2 was selected by four different feature selection methods: forward, backward, exhaustive, and sequential BIC, as having the lowest BIC. Age and balance are once again significant variables, whereas credit_card is not. Upon analysis of the confusion matrix, we find that this model has a false negative count of 1996, and an area under the curve of 0.744. This model is an improvement on 1 due to lower false negatives.
 
 **Model 3 - churn \~ credit_score+age+tenure+ balance + active_member+estimated_salary**
 
@@ -665,12 +668,11 @@ auc(h3)
 plot(h3)
 ```
 
-Model 3 was selected by four different feature selection methods: forward, backward, exhaustive, and sequential Cp, as having the lowest Cp (7). All variables included are significant, except active_member. Upon analysis of the confusion matrix, we find that this model has a false negative count of 2011, higher than Model 2. The area under the curve is 0.744, same as Models 1 & 2. Thus far, Model 2 is best.
-
-**Model** **4 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary**
+**Model 4 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary**
 
 ```{r Model4,results='markup'}
-churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+credit_card+estimated_salary, data = churn_data_logit)
+churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary
+, data = churn_data_logit)
 summary(churnglm4)
 xkabledply( confusion_matrix(churnglm4), title = "Confusion matrix from Logit Model-4" )
 prob4=predict(churnglm4, type = "response" )
@@ -680,13 +682,10 @@ auc(h4)
 plot(h4)
 ```
 
-Model 4 was selected by one feature selection method, Mallow CPG. Of the nine variables included, only five were significant: credit_score, age, tenure, balance, estimated_salary. Upon analysis of the confusion matrix, we find that this model has a false negative count of 2000 (better than model 3, not as good as Model 2). The area under the curve of 0.744, same as Models 1 & 2.
-
-**Model 5 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary**
+**Model 5 - churn \~ credit_score+country+gender+age+tenure+balance+estimated_salary**
 
 ```{r Model5,results='markup'}
-churnglm5 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary
-, data = churn_data_logit)
+churnglm5 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
 summary(churnglm5)
 xkabledply( confusion_matrix(churnglm5), title = "Confusion matrix from Logit Model-5" )
 prob5=predict(churnglm5, type = "response" )
@@ -696,42 +695,10 @@ auc(h5)
 plot(h5)
 ```
 
-Model 5 was selected by one feature selection method, Mallow CPG. Of the eight variables included, only five were significant: credit_score, age, tenure, balance, estimated salary. Upon analysis of the confusion matrix, we find that this model has a false negative count of 1994, the lowest of the models we have seen so far, and an area under the curve of 0.745, same as Model 4. So far, Model 5 is the best model.
-
-**Model 6 - churn \~ credit_score+country+gender+age+tenure+balance+estimated_salary**
-
-```{r Model6,results='markup'}
-churnglm6 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
-summary(churnglm6)
-xkabledply( confusion_matrix(churnglm6), title = "Confusion matrix from Logit Model-6" )
-prob6=predict(churnglm6, type = "response" )
-churn_data_logit$prob=prob6
-h6 <- roc(churn~prob, data = churn_data_logit)
-auc(h6) 
-plot(h6)
-```
-
-Model 6 was selected by one feature selection method: Mallow CPG. The same variables which were significant in Model 5 are significant in this model. Upon analysis of the confusion matrix, we find that this model has a false negative count of 2002, which is higher than the count in Model 5. The area under the curve is 0.745, same as Models 4 & 5. Model 5 is still the best model.
-
-**Model 7 - churn \~ credit_score+gender+age+tenure+balance+estimated_salary**
-
-```{r Model7, results='markup'}
-churnglm7 <- glm(churn ~ credit_score+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
-summary(churnglm7)
-xkabledply( confusion_matrix(churnglm7), title = "Confusion matrix from Logit Model-7" )
-prob7=predict(churnglm7, type = "response" )
-churn_data_logit$prob=prob7
-h7 <- roc(churn~prob, data = churn_data_logit)
-auc(h7) 
-plot(h7)
-```
-
-Finally, Model seven was selected by two different feature selection methods: Mallow CPG, and AdjR. All variables are significant, with the exception of gender. Upon analysis of the confusion matrix, we find that this model has a false negative count of 2001 and an area under the curve of 0.745, same as Models 5, and 6. Due to the higher count of false negatives, Model 7 fails to beat out Model 5 as the best model.
-
 
 ### Best Model
 
-**Model 5** - Credit_score, country, gender, age, tenure, balance, active_member,estimated_salary
+**Model 4** - Credit_score, country, gender, age, tenure, balance, active_member,estimated_salary
 
 # Chapter 6 :Summary
 
@@ -741,7 +708,7 @@ In our analysis, 90% of variance explained by 9 principle components with a **PC
 
 Best model **Adj R^2**: Age + Balance, **BIC**: Credit Score + Age + Balance, **Cp**: Credit Score + Age + Balance + Tenure + Est. Salary
 
-Best predictor of customer churn over all: **Model 5**, which includes features Credit_score + country + gender + age + tenure + balance + active_member + estimated_salary is best performing which has comparatively lower False Negatives (1994) and Area under curve (0.745). The reason for choosing **False Negatives** is that we are okay with the model predicting churn for a customer when it is actually retained. However, if a customer is actually churned and our model is predicting that it is retained then it is a problem and the errors in classifications must be highlighted as it is very critical for the bank to correctly identify churned customers. Therefore, the verdict for the best models is decided based on the which model has lower False Negatives.  
+Best predictor of customer churn over all: **Model 4**, which includes features Credit_score + country + gender + age + tenure + balance + active_member + estimated_salary is best performing which has comparatively lower False Negatives (1994) and Area under curve (0.745). The reason for choosing **False Negatives** is that we are okay with the model predicting churn for a customer when it is actually retained. However, if a customer is actually churned and our model is predicting that it is retained then it is a problem and the errors in classifications must be highlighted as it is very critical for the bank to correctly identify churned customers. Therefore, the verdict for the best models is decided based on the which model has lower False Negatives.  
 
 # Chapter 7: Bibliography
 

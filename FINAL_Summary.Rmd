@@ -481,6 +481,7 @@ plot(reg.churn , scale = "bic", main = "BIC")
 plot(reg.churn , scale = "Cp", main = "Cp")
 
 ```
+
 Using exhaustive search age,balance were selected  which is a two variable model with adjusted R^2 value 0.14.
 
 The  best model selected using BIC is credit_score,age,balance which is a 3 variable model with BIC value -1500.
@@ -497,7 +498,7 @@ subsets(reg.churn, statistic="cp", legend = FALSE, min.size = 4, main = "Mallow 
 abline(a = 1, b = 1, lty = 3)  
 ```
 
-The best model selected using adjusted R^2 plot is credit_score,gender,age,country,tenure,balance,credit_card,active_member which is a 8 variable model with R^2 value 0.1440
+The best model selected using adjusted R^2 plot is credit_score, gender, age, country, tenure, balance, credit_card, active_member which is a 8 variable model with R^2 value 0.1440
 
 The Mallow Cp plot selected four best models with highest mallow Cp value 9.5.
 
@@ -521,7 +522,7 @@ plot(reg.churnforward , scale = "Cp", main = "Cp")
 
 The best model selected using forward search is age,balance which is a 2 variable model with adjusted R^2 value of 0.14.
 
-The  best model selected using BIC is credit_card,age,balance which is a 3 variable model with value -1500 Cp.
+The best model selected using BIC is credit_card,age,balance which is a 3 variable model with value -1500 Cp.
 
 The best model selected using Cp is credit_score,age,tenure,balance,estimated_salary which is a 5 variable model with Cp value 7.
 
@@ -534,6 +535,7 @@ plot(reg.churnback, scale = "bic", main = "BIC")
 plot(reg.churnback, scale = "Cp", main = "Cp")
 
 ```
+
 The best model selected using backward search is age,balance which is a 2 variable model with adjusted R^2 value of 0.14.
 
 The  best model selected using BIC is credit_card,age,balance which is a 3 variable model with value -1500 Cp.
@@ -549,6 +551,7 @@ plot(reg.churnseqrep, scale = "adjr2", main = "Adjusted R^2")
 plot(reg.churnseqrep, scale = "bic", main = "BIC")
 plot(reg.churnseqrep, scale = "Cp", main = "Cp")
 ```
+
 The best model selected using sequential search is age,balance which is a 2 variable model with adjusted R^2 value of 0.14.
 
 The  best model selected using BIC is credit_card,age,balance,estimated_salary which is a 4 variable model with value -1500 Cp.

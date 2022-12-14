@@ -379,20 +379,15 @@ churn_data_pc<-data_balanced_over
 churn_data_pc_target = churn_data_pc
 churnLM <- lm(churn~country+age+gender,data=churn_data_pc_target)
 summary(churnLM)
-xkabledply(churnLM, title = "churn Model summary")
 
-confint(churnLM)
 ```
 From the results of linear regression model we observe that the variables Country$Germany,age,and Gender are highly significant.While gender is negatively impacting the customer churn but customer with certain age group and from Germany affecting the churn rate positively.
 
 ### 2.Whether the customers using **fewer products** with higher **salary**,**account balance** and **status** of the account affect the churn rate?
+
 ```{r LMmodel2,results='markup'}
 churnLM2 <- lm(churn~products_number+estimated_salary+balance+active_member,data=churn_data_pc_target)
 summary(churnLM2)
-xkabledply(churnLM2, title = "churn Model summary")
-
-
-confint(churnLM2)
 ```
 From the results of linear regression model we observe that the variables account balance,account status are highly significant.while the account status impacting the customer churn negatively,but account balance is affecting positively.
 

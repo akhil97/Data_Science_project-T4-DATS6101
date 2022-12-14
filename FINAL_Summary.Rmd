@@ -448,6 +448,12 @@ biplot(pr.out,2:3, scale =0)
 biplot(pr.out,3:4, scale =0)
 ```
 
+From the Biplot between PC1 and PC2 , first of all, it shows the data points plotted (projection) onto the PC1-PC2 plane, 
+with the scales on the bottom and the left tick marks. It also shows the components on this PC1-PC2 plane, 
+with the scales on the top and right tick marks showing the loadings.
+
+PC1 has more variation than PC2
+
 ```{r, Proportion of variance explained}
 pr.var <- (pr.out$sdev^2)
 pve <- pr.var/sum(pr.var)

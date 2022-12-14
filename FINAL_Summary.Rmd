@@ -396,6 +396,7 @@ From the results of linear regression model we observe that the variables accoun
 ### 3. What are the **principal components** for predicting churn rate?
 
 Before we work on PCA, we need to ensure that the data is scaled and all the variables are either numeric or int type.
+
 ```{r, Scaling data}
 str(churn_data)
 churn_data_pc<-data_balanced_over
@@ -422,6 +423,10 @@ churn_data_pc$churn = as.numeric(churn_data_pc$churn)
 churn_data_pc_target = churn_data_pc #includes 'churn'
 ```
 
+To perform dimenstionality reduction while preserving as much as randomness in the high dimensional space as possible. 
+
+Now we will identify correlations in the data
+
 ```{r, PCA}
 churn_data_pc<-churn_data_pc[-c(1)] #Remove customer_id
 churn_data_pc<-churn_data_pc[-c(10)] #Remove churn variable
@@ -431,6 +436,11 @@ print("Case: z-score/scaled")
 summary(pr.out)
 pr.out$rotation
 ```
+
+Correlation can vary from -1 to +1
+Value close to +1 indicates a high degree of positive correlation
+Value close to -1 indicates a high degree of negative correlation
+Value close to zero or 0 indicates no correlation at all
 
 ```{r, Biplot}
 biplot(pr.out, scale = 0)

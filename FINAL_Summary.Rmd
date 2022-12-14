@@ -729,6 +729,10 @@ Based on our criteria for best model, **Model 5** to be the best model which has
 
 # Chapter 6 :Summary
 
+When creating a model based solely on customer demographics, only the age variable is significant. On the other hand based on salary and account features (number of products, balance, active status), only the balance variable is significant.
+
+In our analysis, 90% of variance explained by 9 principle components with a PC9 Cumulative proportion of variance: 0.92.
+
 # Chapter 7: Bibliography
 
 Kaemingk, D. (2018, August 29). Reducing customer churn for banks and financial institutions. Qualtrics. Retrieved November 2, 2022, from <https://www.qualtrics.com/blog/customer-churn-banking/>

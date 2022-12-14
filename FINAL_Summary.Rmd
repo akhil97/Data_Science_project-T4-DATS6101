@@ -628,7 +628,7 @@ summary(churn_logit)
 ```
 
 **Model 1 - churn \~ age + balance**
-Looking at the Adjusted R square results we can see that we get a maximum value of 0.14 with 2 variables namely age and balance for exhaustive search method. If we look at the variables that give the same value of 0.14 for Adjusted R square for forward search, backward search and sequential search we have the same variables age and balance. Therefore, we build model1 with parameters age and balance. 
+Looking at the Adjusted R square results we can see that we get a maximum value of 0.14 with 2 variables namely age and balance for exhaustive search method. If we look at the variables that give the same value of 0.14 for Adjusted R square for forward, backward and sequential search we have the same variables age and balance. Therefore, we build model1 with parameters age and balance. 
 ```{r Model1,results='markup'}
 loadPkg("regclass")
 loadPkg("pROC") 
@@ -656,7 +656,7 @@ plot(h2)
 ```
 
 **Model 3 - churn \~ credit_score+age+tenure+ balance + active_member+estimated_salary**
-
+Now for the third model we repeat the same procedure but we use the Cp metric. We have a minimum value of 7 for Cp with the variables credit_score,age,tenure,balance and estimated_salary for the exhaustive search method. We have the same variables associated with Cp for forward, backward and sequential search. Therefore, we choose model3 with features credit_score,age,tenure,balance and estimated_salary
 ```{r Model3,results='markup'}
 churnglm3 <- glm(churn ~ credit_score+age+tenure+ balance + active_member+estimated_salary, data = churn_data_logit)
 summary(churnglm3)

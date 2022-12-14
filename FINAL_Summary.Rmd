@@ -432,6 +432,12 @@ summary(pr.out)
 pr.out$rotation
 ```
 
+```{r, Biplot}
+biplot(pr.out, scale = 0)
+biplot(pr.out,2:3, scale =0)
+biplot(pr.out,3:4, scale =0)
+```
+
 ```{r, Proportion of variance explained}
 pr.var <- (pr.out$sdev^2)
 pve <- pr.var/sum(pr.var)

@@ -958,11 +958,11 @@ abline(a = 1, b = 1, lty = 3)
 
 The best model selected using adjusted R^2 plot is credit_score,gender,age,country,tenure,balance,credit_card,active_member which is a 8 variable model with R^2 value 0.1440
 
-The Mallow Cp plot selected four best models with highest mallow Cp value 9.5.
-1)credit_score,country,gender,age,tenure,balance,credit_card,ative_member,estimated salary 9 variable model
-2)credit_score,country,gender,age,tenure,balance,active_member,estimated salary 8 variable model
-3)credit_score,country,gender,age,tenure,balance,estimated_salary.
-4)credit_score,gender,tenure,balance,estimated salary 5 variable model
+The Mallow Cp plot selected tw0 best models with highest mallow Cp value 9.5.
+
+1)credit_score,country,gender,age,tenure,balance,active_member,estimated salary 8 variable model
+2)credit_score,country,gender,age,tenure,balance,estimated_salary 7 variable model.
+
 
 **Feature selection using forward search**
 

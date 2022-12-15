@@ -1080,7 +1080,7 @@ plot(h3)
 churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary
 , data = churn_data_logit)
 summary(churnglm4)
-xkabledply( confusion_matrix(churnglm4), title = "Confusion matrix from Logit Model-5" )
+xkabledply( confusion_matrix(churnglm4), title = "Confusion matrix from Logit Model-4" )
 prob4=predict(churnglm4, type = "response" )
 churn_data_logit$prob=prob4
 h4 <- roc(churn~prob, data = churn_data_logit)
@@ -1092,7 +1092,7 @@ plot(h4)
 ```{r Model5,results='markup'}
 churnglm5 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
 summary(churnglm5)
-xkabledply( confusion_matrix(churnglm5), title = "Confusion matrix from Logit Model-6" )
+xkabledply( confusion_matrix(churnglm5), title = "Confusion matrix from Logit Model-5" )
 prob5=predict(churnglm5, type = "response" )
 churn_data_logit$prob=prob5
 h5 <- roc(churn~prob, data = churn_data_logit)

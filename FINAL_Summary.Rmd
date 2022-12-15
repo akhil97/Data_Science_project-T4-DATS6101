@@ -493,6 +493,9 @@ From the results of linear regression model we observe that the variables accoun
 ### Feature Selection
 
 #####  Which model can give the **best results** based on adjusted R square value, along with lower BIC and Cp?
+### Feature Selection
+
+##### Which model can give the **best results** based on adjusted R square value, along with lower BIC and Cp?
 
 **Feature selection using Exhaustive Search**
 

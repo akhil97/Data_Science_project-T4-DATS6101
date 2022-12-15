@@ -642,11 +642,10 @@ auc(h3)
 plot(h3)
 ```
 
-**Model 4 - churn \~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary**
+**Model 4 - churn \~ credit_score + country+ gender+age+tenure+balance+estimated_salary**
 For model4, we need to look at Mallow Cp plot in order to understand the feature selection method used for this model. We can see that for a value of 7 for Mallow Cp we have two models overlapping so, we can't quite figure out which model to be chosen. The next best value for Mallow Cp is 7.5 with the following features credit_score,country,gender,age,tenure,balance,estimated_salary. We select these features for model4.
 ```{r Model4,results='markup'}
-churnglm4 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary
-, data = churn_data_logit)
+churnglm4 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
 summary(churnglm4)
 xkabledply( confusion_matrix(churnglm4), title = "Confusion matrix from Logit Model-4" )
 prob4=predict(churnglm4, type = "response" )
@@ -656,10 +655,11 @@ auc(h4)
 plot(h4)
 ```
 
-**Model 5 - churn \~ credit_score+country+gender+age+tenure+balance+estimated_salary**
+**Model 5 - churn \~ credit_score+country+gender+age+tenure+balance+active_member+estimated_salary**
 
 ```{r Model5,results='markup'}
-churnglm5 <- glm(churn ~ credit_score+country+gender+age+tenure+balance+estimated_salary, data = churn_data_logit)
+churnglm5 <- glm(churn ~ credit_score + country+ gender+age+tenure+balance+active_member+estimated_salary
+, data = churn_data_logit)
 summary(churnglm5)
 xkabledply( confusion_matrix(churnglm5), title = "Confusion matrix from Logit Model-5" )
 prob5=predict(churnglm5, type = "response" )
@@ -682,7 +682,7 @@ In our analysis, 90% of variance explained by 9 principle components with a **PC
 
 Best model **Adj R^2**: Age + Balance, **BIC**: Credit Score + Age + Balance, **Cp**: Credit Score + Age + Balance + Tenure + Est. Salary
 
-Best predictor of customer churn over all: **Model 4**, which includes features Credit_score + country + gender + age + tenure + balance + active_member + estimated_salary is best performing which has comparatively lower False Negatives (1994) and Area under curve (0.745). The reason for choosing **False Negatives** is that we are okay with the model predicting churn for a customer when it is actually retained. However, if a customer is actually churned and our model is predicting that it is retained then it is a problem and the errors in classifications must be highlighted as it is very critical for the bank to correctly identify churned customers. Therefore, the verdict for the best models is decided based on the which model has lower False Negatives.  
+Best predictor of customer churn over all: **Model 5**, which includes features Credit_score + country + gender + age + tenure + balance + active_member + estimated_salary is best performing which has comparatively lower False Negatives (1994) and Area under curve (0.745). The reason for choosing **False Negatives** is that we are okay with the model predicting churn for a customer when it is actually retained. However, if a customer is actually churned and our model is predicting that it is retained then it is a problem and the errors in classifications must be highlighted as it is very critical for the bank to correctly identify churned customers. Therefore, the verdict for the best models is decided based on the which model has lower False Negatives.  
 
 # Chapter 7: Bibliography
 

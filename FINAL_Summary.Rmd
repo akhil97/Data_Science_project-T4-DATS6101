@@ -370,8 +370,6 @@ ggplot(data=data_balanced_over,aes(x=churn,fill=churn))+
 
 # Chapter 5: SMART QUESTIONS
 
-## Linear Regression 
-
 
 Before we work on PCA, we need to ensure that the data is scaled and all the variables are either numeric or int type.
 
@@ -443,7 +441,7 @@ From the results of linear regression model we observe that the variables accoun
 
 ## Finding the Best Model
 
-### 3. What are the **principal components** for predicting churn rate?
+### What are the **principal components** for predicting churn rate?
 ```{r, PCA}
 pr.out=prcomp(churn_data_pc, scale =TRUE)
 print("Case: z-score/scaled")
@@ -484,11 +482,9 @@ plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative P
 
 From the graph for Proportion of variance we can see that almost 90% of variance is explained by 9 principal components.
 
-
-
 ### Feature Selection
 
-##### 3. Which model can give the **best results** based on adjusted R square value, along with lower BIC and Cp?
+##### Which model can give the **best results** based on adjusted R square value, along with lower BIC and Cp?
 
 **Feature selection using Exhaustive Search**
 

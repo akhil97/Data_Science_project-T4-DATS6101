@@ -370,30 +370,10 @@ ggplot(data=data_balanced_over,aes(x=churn,fill=churn))+
 
 # Chapter 5: SMART QUESTIONS
 
-## Linear Regression 
-
-### 1.Does the combination of customer demographic variables **country**, **age group**, **gender** influence the **churn rate** of the customers? 
-
-```{r LMmodel1,results='markup'}
-churn_data_pc<-data_balanced_over
-churn_data_pc_target = churn_data_pc
-churnLM <- lm(churn~country+age+gender,data=churn_data_pc_target)
-summary(churnLM)
-
-```
-From the results of linear regression model we observe that the variables Country$Germany,age,and Gender are highly significant.While gender is negatively impacting the customer churn but customer with certain age group and from Germany affecting the churn rate positively.
-
-### 2.Whether the customers using **fewer products** with higher **salary**,**account balance** and **status** of the account affect the churn rate?
-
-```{r LMmodel2,results='markup'}
-churnLM2 <- lm(churn~products_number+estimated_salary+balance+active_member,data=churn_data_pc_target)
-summary(churnLM2)
-```
-From the results of linear regression model we observe that the variables account balance,account status are highly significant.while the account status impacting the customer churn negatively,but account balance is affecting positively.
 
 ## Finding the Best Model
 
-### 3. What are the **principal components** for predicting churn rate?
+### What are the **principal components** for predicting churn rate?
 
 Before we work on PCA, we need to ensure that the data is scaled and all the variables are either numeric or int type.
 
@@ -466,9 +446,29 @@ plot(cumsum(pve), xlab="Principal Component (standardized)", ylab ="Cumulative P
 
 From the graph for Proportion of variance we can see that almost 90% of variance is explained by 9 principal components.
 
+## Linear Regression 
+
+### Does the combination of customer demographic variables **country**, **age group**, **gender** influence the **churn rate** of the customers? 
+
+```{r LMmodel1,results='markup'}
+
+churnLM <- lm(churn~country+age+gender,data=churn_data_pc_target)
+summary(churnLM)
+
+```
+From the results of linear regression model we observe that the variables Country$Germany,age,and Gender are highly significant.While gender is negatively impacting the customer churn but customer with certain age group and from Germany affecting the churn rate positively.
+
+### Whether the customers using **fewer products** with higher **salary**,**account balance** and **status** of the account affect the churn rate?
+
+```{r LMmodel2,results='markup'}
+churnLM2 <- lm(churn~products_number+estimated_salary+balance+active_member,data=churn_data_pc_target)
+summary(churnLM2)
+```
+From the results of linear regression model we observe that the variables account balance,account status are highly significant.while the account status impacting the customer churn negatively,but account balance is affecting positively.
+
 ### Feature Selection
 
-##### 3. Which model can give the **best results** based on adjusted R square value, along with lower BIC and Cp?
+#####  Which model can give the **best results** based on adjusted R square value, along with lower BIC and Cp?
 
 **Feature selection using Exhaustive Search**
 

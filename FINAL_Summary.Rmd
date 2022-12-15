@@ -488,27 +488,12 @@ The  best model selected using BIC is credit_score,age,balance which is a 3 vari
 
 The best model selected using Cp is credit_score,age,tenure,balance,estimated_salary which is a 5 variable model. with Cp value 7.
 
-```{r}
-loadPkg("car")
+**Mallow Cp Plot**
+The Mallow Cp plot selected two best models.
 
-# Adjusted R2
-car::subsets(reg.churn, statistic="adjr2", legend = FALSE, min.size = 2, main = "Adjusted R^2")
+1)credit_score,country,gender,age,tenure,balance,active_member,estimated salary 8 variable model
 
-subsets(reg.churn, statistic="cp", legend = FALSE, min.size = 4, main = "Mallow Cp")
-abline(a = 1, b = 1, lty = 3)  
-```
-
-The best model selected using adjusted R^2 plot is credit_score, gender, age, country, tenure, balance, credit_card, active_member which is a 8 variable model with R^2 value 0.1440
-
-The Mallow Cp plot selected four best models with highest mallow Cp value 9.5.
-
-1)credit_score,country,gender,age,tenure,balance,credit_card,ative_member,estimated salary 9 variable model
-
-2)credit_score,country,gender,age,tenure,balance,active_member,estimated salary 8 variable model
-
-3)credit_score,country,gender,age,tenure,balance,estimated_salary.
-
-4)credit_score,gender,tenure,balance,estimated salary 5 variable model
+2)credit_score,country,gender,age,tenure,balance,estimated_salary.
 
 **Feature selection using forward search**
 
@@ -590,24 +575,13 @@ The best model selected using Cp is credit_score,age,tenure,balance,estimated_sa
 
 -   Sequential search:CP
 
-**4.Credit_score, gender, age, balance,  estimated_salary(5 variable model)**
+**4.Credit_score, country, gender, age, tenure, balance, estimated_salary(7 variable model)**
 
 -   Mallow CPG
 
-**5.Credit_score, country, gender, age, tenure, balance, estimated_salary(7 variable model)**
+**5 Credit_score,country,gender,age,tenure,balance,active_member,estimated_salary(8 variable model)**
 
 -   Mallow CPG
-
-**6 Credit_score,country,gender,age,tenure,balance,active_member,estimated_salary(8 variable model)**
-
--   Mallow CPG
-
-**7 Credit_score, country, gender, age,tenure,balance,credit_card       active_member,estimated_salary(9 variable model)**
-
--   Mallow CPG
-
--   Adj R\^2
-
 
 # Chapter 6: Comparing the Models Chosen in Feature Selection
 
@@ -658,7 +632,7 @@ plot(h2)
 **Model 3 - churn \~ credit_score+age+tenure+ balance + active_member+estimated_salary**
 Now for the third model we repeat the same procedure but we use the Cp metric. We have a minimum value of 7 for Cp with the variables credit_score,age,tenure,balance and estimated_salary for the exhaustive search method. We have the same variables associated with Cp for forward, backward and sequential search. Therefore, we choose model3 with features credit_score,age,tenure,balance and estimated_salary
 ```{r Model3,results='markup'}
-churnglm3 <- glm(churn ~ credit_score+age+tenure+ balance + active_member+estimated_salary, data = churn_data_logit)
+churnglm3 <- glm(churn ~ credit_score+age+tenure+ balance + estimated_salary, data = churn_data_logit)
 summary(churnglm3)
 xkabledply( confusion_matrix(churnglm3), title = "Confusion matrix from Logit Model-3" )
 prob3=predict(churnglm3, type = "response" )
